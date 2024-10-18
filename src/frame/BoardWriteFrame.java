@@ -2,6 +2,7 @@ package frame;
 
 import java.awt.BorderLayout;
 import java.awt.Container;
+import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
@@ -52,6 +53,10 @@ public class BoardWriteFrame extends JFrame {
 
 		setVisible(true);
 
+	}
+
+	public BoardWriteFrame(Frame mainFrame) {
+		// TODO Auto-generated constructor stub
 	}
 
 	private JPanel initInput() {
@@ -109,3 +114,96 @@ public class BoardWriteFrame extends JFrame {
 	}
 
 }
+/*
+ * package frame;
+
+import java.awt.Button;
+import java.awt.Frame;
+import java.awt.TextArea;
+import java.awt.TextField;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
+import javax.swing.JOptionPane;
+
+public class WriteBoard {
+
+	private Frame mainFrame;
+	private Frame writeFrame;
+
+	public WriteBoard(Frame ma) {
+		this.mainFrame = ma;
+
+		Frame writeFrame = new Frame("글 작성");
+		writeFrame.setBounds(700, 100, 500, 850); // 위치와 크기
+		writeFrame.setLayout(null); // 절대 레이아웃 사용
+
+		// 제목 및 내용 입력
+		TextField titleField = new TextField("제목을 입력하세요");
+		TextArea contentField = new TextArea("내용을 입력하세요");
+
+		titleField.setBounds(50, 350, 400, 30);
+		contentField.setBounds(50, 400, 400, 300);
+
+		writeFrame.add(titleField);
+		writeFrame.add(contentField);
+
+		// 마우스 클릭 시 기본 텍스트 지우기
+		titleField.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (titleField.getText().equals("제목을 입력하세요")) {
+					titleField.setText(""); // 클릭 시 텍스트 초기화
+				}
+			}
+		});
+
+		contentField.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				if (contentField.getText().equals("내용을 입력하세요")) {
+					contentField.setText(""); // 클릭 시 텍스트 초기화
+				}
+			}
+		});
+
+		// 작성 완료 버튼
+		Button btnWrite = new Button("작성 완료");
+		btnWrite.setBounds(250, 100, 100, 30);
+		writeFrame.add(btnWrite);
+
+		// 버튼 클릭 이벤트
+		btnWrite.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				// 작성된 내용 처리
+				String title = titleField.getText();
+				String content = contentField.getText();
+
+				if (title.isEmpty() || content.isEmpty() 
+				|| title.equals("제목을 입력하세요") || content.equals("내용을 입력하세요"))
+
+				{
+					JOptionPane.showMessageDialog(writeFrame, "제목과 내용을 입력하세요!");
+				} else {
+					JOptionPane.showMessageDialog(writeFrame, "작성 완료: " + title);
+					BoardNotice.addWrite(title, content); // 제목과 내용을 NoticeBoard에 추가
+					writeFrame.dispose(); // 글 작성 프레임 닫기
+					mainFrame.setVisible(true); // 메인 프레임 보이기
+				}
+			}
+		});
+
+		// 종료 이벤트
+		writeFrame.addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				writeFrame.dispose(); // 프레임 닫기
+			}
+		});
+
+		writeFrame.setVisible(true);
+	}
+}*/
