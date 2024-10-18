@@ -2,26 +2,14 @@
 <!-- mapper DTD 선언 -->
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="board">
-	<insert id="insertAddress" parameterType="dto.AddressDTO">
-		INSERT INTO address (
-			search,
-			road,
-			jibun,
-			x,
-			y,
-			filePath
+	<insert id="insertBoard" parameterType="dto.BoardDTO">
+		<selectKey resultType="String" keyProperty="boardId" order="BEFORE">
+			SELECT MAX(IFNULL(BOARD_ID))+1 FROM BOARD
+		</selectKey>
+		INSERT INTO BOARD (
+			BOARD_ID, BOARD_TITLE, BOARD_WORD_DATE, BOARD_WORD_TIME, BOARD_CONTENT, BOARD_FILE_PATH, USER_ID
 		) VALUES (
-			#{searchAddress},
-			#{roadAddress},
-			#{jibunAddress},
-			#{x},
-			#{y},
-			#{filePath}
-		);
-					
+			#{boardId}, #{boardTitle}, #{boardContent}, #{boardWordDate}, #{boardWordTime}, #{boardFilePath}, #{userId}
+		)
 	</insert>
-	
-	<select id="">
-		
-	</select>
 </mapper>
