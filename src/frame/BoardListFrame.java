@@ -88,7 +88,7 @@ public class BoardListFrame {
 		btnWrite.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				new BoardWriteFrame(mainFrame); // WriteBoard 프레임 열기
+				new BoardWriteFrame(); // WriteBoard 프레임 열기
 				mainFrame.setVisible(false); // 메인 프레임 숨기기
 			}
 		});

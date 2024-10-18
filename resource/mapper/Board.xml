@@ -4,10 +4,10 @@
 <mapper namespace="board">
 	<insert id="insertBoard" parameterType="dto.BoardDTO">
 		<selectKey resultType="String" keyProperty="boardId" order="BEFORE">
-			SELECT MAX(IFNULL(BOARD_ID))+1 FROM BOARD
+			SELECT NVL(MAX(BOARD_ID), 0)+1 FROM BOARD
 		</selectKey>
 		INSERT INTO BOARD (
-			BOARD_ID, BOARD_TITLE, BOARD_WORD_DATE, BOARD_WORD_TIME, BOARD_CONTENT, BOARD_FILE_PATH, USER_ID
+			BOARD_ID, BOARD_TITLE, BOARD_CONTENT, BOARD_WORD_DATE, BOARD_WORD_TIME, BOARD_FILE_PATH, USER_ID
 		) VALUES (
 			#{boardId}, #{boardTitle}, #{boardContent}, #{boardWordDate}, #{boardWordTime}, #{boardFilePath}, #{userId}
 		)
