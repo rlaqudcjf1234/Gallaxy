@@ -159,6 +159,7 @@ public class LoginRegiFrame extends JFrame {
 	// 입력 필드 초기화 메서드
 	private void resetFields() {
 		tfId.setText("");
+		
 		tfPw.setText("");
 		tfRe.setText("");
 		tfName.setText("");
