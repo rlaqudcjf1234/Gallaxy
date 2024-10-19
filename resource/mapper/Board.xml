@@ -7,9 +7,36 @@
 			SELECT NVL(MAX(BOARD_ID), 0)+1 FROM BOARD
 		</selectKey>
 		INSERT INTO BOARD (
-			BOARD_ID, BOARD_TITLE, BOARD_CONTENT, BOARD_WORD_DATE, BOARD_WORD_TIME, BOARD_FILE_PATH, USER_ID
+			BOARD_ID, BOARD_TITLE, BOARD_CONTENT, BOARD_WORD_DATE, BOARD_WORD_TIME,
+			BOARD_FILE_PATH, USER_ID
 		) VALUES (
-			#{boardId}, #{boardTitle}, #{boardContent}, #{boardWordDate}, #{boardWordTime}, #{boardFilePath}, #{userId}
+			#{boardId}, #{boardTitle}, #{boardContent}, #{boardWordDate}, #{boardWordTime},
+			#{boardFilePath}, #{userId}
 		)
 	</insert>
+
+	<update id="updateBoard" parameterType="dto.BoardDTO">
+		UPDATE BOARD SET
+			BOARD_TITLE = #{boardTitle},
+			BOARD_CONTENT = #{boardContent},
+			BOARD_WORD_DATE = #{boardWordDate},
+			BOARD_WORD_TIME = #{boardWordTime},
+			BOARD_LUP_DT = SYSDATE,
+			BOARD_FILE_PATH = #{boardFilePath}
+		WHERE BOARD_ID = #{boardId}
+	</update>
+
+	<select id="selectBoard" parameterType="dto.BoardDTO">
+		SELECT
+			BOARD_ID, BOARD_TITLE, BOARD_CONTENT, BOARD_WORD_DATE, BOARD_WORD_TIME,
+			BOARD_REG_DT, BOARD_LUP_DT, BOARD_FILE_PATH, USER_ID
+		FROM BOARD
+		<where>
+			<if test="boardId != null and boardId > 0">
+				BOARD_ID = #{boardId}
+			</if>
+		</where>
+		ORDER BY BOARD_ID DESC
+		OFFSET (#{pageNo} -1) * #{pageSize} ROWS FETCH NEXT #{pageSize} ROWS ONLY
+	</select>
 </mapper>
