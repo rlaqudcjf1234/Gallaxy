@@ -42,8 +42,8 @@ public class Calendarpp {
 	private JLabel monthLabel;
 	private JTable calendarTable;
 	private JScrollPane calendarScrollpane;
-	private JTextArea healthMemorun;// 거리 입력란
-	private JTextArea healthMemotime;// 거리 입력란
+	private JTextField healthMemorun;// 거리 입력란
+	private JTextField healthMemotime;// 거리 입력란
 	private JPanel monthhealthMemo;// 월별평균 뛴 거리 시간 총칼로리
 	private JTextArea memoLabel;
 	private DefaultTableModel calendarTableModel;
@@ -80,8 +80,8 @@ public class Calendarpp {
 		calendarTable.setFillsViewportHeight(true);
 
 		// 메모칸 만들기
-		JTextField healthMemorun = new JTextField(10); // 거리 입력란 초기화
-		JTextField healthMemotime = new JTextField(10); // 시간 입력란 초기화
+		healthMemorun = new JTextField(10); // 거리 입력란 초기화
+		healthMemotime = new JTextField(10); // 시간 입력란 초기화
 
 		JPanel inputPanel = new JPanel();
 		inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.Y_AXIS));
@@ -227,18 +227,18 @@ public class Calendarpp {
 					double distance = Double.parseDouble(distanceText);// km
 					double time = Double.parseDouble(timeText);// 분
 					// 월간 통계 업데이트
-					calendarmonthly.addEntry(distance, time);
-					updateMonthlyStats();
-					// 평균속도계산
+					calendarmonthly.removeEntry(date);
+					calendarmonthly.addEntry(date, distance, time);
+					// 평균속도 및 칼로리 계산
 					double averageSpeed = (distance / (time / 60));
-					// 30분에 220Kcal소모
 					double calories = time * 7.33;
 					String result = String.format("거리: %.2f km, 시간: %.2f 분, 평균 속도: %.2f km/h, 칼로리: %.2f kcal", distance,
 							time, averageSpeed, calories);
-					JOptionPane.showConfirmDialog(frame, "저장되었습니다");
+					JOptionPane.showMessageDialog(frame, "저장되었습니다.");
 					memoData.put(date, result);
-				} catch (Exception e) {
-					JOptionPane.showConfirmDialog(frame, "거리는 km,시간은 분으로 입력하세요.", "입력오류입니다", JOptionPane.ERROR_MESSAGE);
+					updateMonthlyStats();
+				} catch (NumberFormatException e) {
+					JOptionPane.showMessageDialog(frame, e.getMessage(), "입력오류", JOptionPane.ERROR_MESSAGE);
 				}
 				updateMonthHealthMemo();
 
@@ -246,20 +246,19 @@ public class Calendarpp {
 
 			private void updateMonthHealthMemo() {
 				monthhealthMemo.removeAll();
-				JPanel distancepane = new JPanel();
-				JLabel distanceLabel = new JLabel(String.format("총거리: %.2f km", calendarmonthly.getTotalDistane()));
-				distancepane.add(distanceLabel);
-				monthhealthMemo.add(distancepane);
-
-				JPanel timepane = new JPanel();
+				monthhealthMemo.setLayout(new BoxLayout(monthhealthMemo, BoxLayout.Y_AXIS));
+				//거리
+				JLabel distanceLabel = new JLabel(String.format("총거리: %.2f km", calendarmonthly.getTotalDistance()));
+				distanceLabel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
+				monthhealthMemo.add(distanceLabel);
+				//시간
 				JLabel timeLabel = new JLabel(String.format("총시간: %.2f 분", calendarmonthly.getTotalTime()));
-				timepane.add(timeLabel);
-				monthhealthMemo.add(timepane);
-
-				JPanel caloriespane = new JPanel();
+				timeLabel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
+				monthhealthMemo.add(timeLabel);
+				//칼로리
 				JLabel caloriesLabel = new JLabel(String.format("총칼로리: %.2f Kcal", calendarmonthly.getTotalCalories()));
-				caloriespane.add(caloriesLabel);
-				monthhealthMemo.add(caloriespane);
+				caloriesLabel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
+				monthhealthMemo.add(caloriesLabel);
 
 				monthhealthMemo.revalidate();
 				monthhealthMemo.repaint();
