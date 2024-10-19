@@ -7,6 +7,7 @@ import java.awt.event.ActionListener;
 
 import javax.swing.BorderFactory;
 import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.border.Border;
@@ -14,7 +15,7 @@ import javax.swing.border.Border;
 public class myPageBegin extends JPanel {
 	// 임시 =============================
 	private JLabel infoLabel; // 정보를 표시할 JLabel 추가
-	private UserData loggedInUser; // 사용자 정보를 위한 UserData 객체
+//	private UserData loggedInUser; // 사용자 정보를 위한 UserData 객체
 // 임시 =====================================================
 
 	public myPageBegin() {
@@ -22,7 +23,7 @@ public class myPageBegin extends JPanel {
 		setLayout(null);
 		setSize(500, 850);
 
-		loggedInUser = new UserData("홍길동", "hong@example.com"); // 사용자 정보 초기화 임시)))))
+		// loggedInUser = new UserData("홍길동", "hong@example.com"); // 사용자 정보 초기화 임시)))))
 
 		// 하단의 버튼 설정 (뒤로가기 - btnBack // 회원정보 변경/ 로그아웃 - btnEdit )
 		JButton btnBack = new JButton("뒤로가기");
@@ -49,7 +50,8 @@ public class myPageBegin extends JPanel {
 		add(btnEdit);
 
 		// 정보 표시용 JLabel 설정
-		infoLabel = new JLabel(loggedInUser.getInfo()); // 정보 가져오기 (임시 클래스 가져옴 )
+		infoLabel = new JLabel("사용자 정보"); // 초기화 추가
+		// infoLabel = new JLabel(loggedInUser.getInfo()); // 정보 가져오기 (임시 클래스 가져옴 )
 		infoLabel.setFont(new Font("굴림", Font.PLAIN, 14));
 
 		// 배경색 설정
@@ -61,8 +63,8 @@ public class myPageBegin extends JPanel {
 		infoLabel.setBorder(border); // JLabel에 테두리 추가
 
 		// 크기 설정
-		int labelWidth = 450; // 넓이 300
-		int labelHeight = 150; // 높이 30
+		int labelWidth = 450; 
+		int labelHeight = 150;
 		infoLabel.setSize(labelWidth, labelHeight); // JLabel 크기 설정
 
 		// 위치 설정
@@ -77,21 +79,34 @@ public class myPageBegin extends JPanel {
 		btnBack.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent panel) {
 				// backToMainPage 클래스 미구현으로 이동만 가능
-				myPageBase.getInstance(new backToMainPage());
+				myPageBase.getInstance(new myPageBegin());
 			}
 		});
 
 		btnEdit.addActionListener(new ActionListener() {
 
 			@Override
-			public void actionPerformed(ActionEvent e) {
+			public void actionPerformed(ActionEvent panel) {
+				System.out.println("btnEdit 클릭클릭");
 				// myPageEdit 클래스 미구현.
 				myPageBase.getInstance(new myPageEdit());
 
 			}
 		});
 
+	}
+
+	public static void main(String[] args) {
+		// myPageBegin 클래스의 인스턴스를 생성하고, 이를 화면에 표시합니다.
+		JFrame frame = new JFrame("마이페이지");
+		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		frame.setSize(500, 850);
+
+		myPageBegin panel = new myPageBegin(); // myPageBegin 패널 생성
+		frame.add(panel); // 패널을 프레임에 추가
+
+		frame.setVisible(true); // 프레임을 보이도록 설정
 	}
 }
