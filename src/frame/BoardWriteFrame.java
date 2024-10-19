@@ -1,30 +1,31 @@
 package frame;
 
 import java.awt.BorderLayout;
+import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
-import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
-import java.io.File;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
-import dto.AddressDTO;
 import dto.BoardDTO;
 import service.BoardService;
 import service.NaverApiService;
@@ -32,17 +33,6 @@ import service.RetrieveNewAdress;
 import service.impl.BoardServiceImpl;
 import service.impl.NaverApiServiceImpl;
 import service.impl.RetrieveNewAdressImpl;
-import javax.swing.JTextField;
-import javax.swing.Icon;
-import javax.swing.SwingConstants;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.DropMode;
-import javax.swing.JComboBox;
-import javax.swing.JCheckBox;
-import javax.swing.BoxLayout;
-import java.awt.Component;
-import javax.swing.JScrollBar;
-import javax.swing.JScrollPane;
 
 public class BoardWriteFrame extends JFrame {
 
@@ -167,28 +157,28 @@ public class BoardWriteFrame extends JFrame {
 				// TODO Auto-generated method stub
 				int page = 1;
 				String serarch = addressFld.getText();
-				if(serarch.length() < 2) {
+				if (serarch.length() < 2) {
 					JOptionPane.showMessageDialog(null, "한 글자만으로는 검색이 불가합니다.", "알림", JOptionPane.INFORMATION_MESSAGE);
 					return;
 				}
-				if((result = rna.getAddress(serarch, page)) != null) {
+				if ((result = rna.getAddress(serarch, page)) != null) {
 					String errorCode = (String) result.get("errorCode");
 					String errorMessage = (String) result.get("errorMessage");
-					
-					if(errorCode.equals("0")) {
+
+					if (errorCode.equals("0")) {
 						totalPage = (int) result.get("totalPage");
-						if(totalPage > 0) {
+						if (totalPage > 0) {
 							addrs = (List<String>) result.get("list");
 						} else {
 							JOptionPane.showMessageDialog(null, "조회 결과가 없습니다.", "알림", JOptionPane.INFORMATION_MESSAGE);
 							return;
 						}
-					}else {
+					} else {
 						JOptionPane.showMessageDialog(null, errorMessage, "알림", JOptionPane.ERROR_MESSAGE);
 						return;
 					}
 				}
-				
+
 				BoardSearchFrame();
 				/*
 				if (addrs != null && addrs.size() > 0) {
@@ -320,7 +310,7 @@ public class BoardWriteFrame extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				// 작성된 내용 처리
 				String title = textFld.getText();
-				String content = detailFld.getText();
+				String content = detailFld.getText();			
 
 				if (title.isEmpty() || title.equals(textInit)) {
 					JOptionPane.showMessageDialog(null, textInit, "알림", JOptionPane.INFORMATION_MESSAGE);
@@ -335,11 +325,17 @@ public class BoardWriteFrame extends JFrame {
 				BoardDTO dto = new BoardDTO();
 				dto.setBoardTitle(title);
 				dto.setBoardContent(content);
-				dto.setBoardFilePath(filePath);
-
+				dto.setBoardFilePath(filePath);			
+				
 				int cnt = bs.insertBoard(dto);
 				if (cnt > 0) {
 					JOptionPane.showMessageDialog(null, "작성이 완료되었습니다.", "알림", JOptionPane.INFORMATION_MESSAGE);
+
+					List<BoardDTO> updatedBoardList = bs.selectBoardList(new BoardDTO());
+					BoardListFrame.updateBoardList(updatedBoardList); // 게시물 목록 갱신
+
+					dispose(); // 현재 프레임 닫기
+					BoardListFrame.showBoardList(); // 게시물 목록 창 열기
 				} else {
 					JOptionPane.showMessageDialog(null, "오류가 발생하였습니다.", "오류", JOptionPane.ERROR_MESSAGE);
 				}

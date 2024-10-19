@@ -1,5 +1,7 @@
 package service.impl;
 
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 
 import config.MySqlSessionFactory;
@@ -35,4 +37,37 @@ public class BoardServiceImpl implements BoardService {
 		return cnt;
 	}
 
+	@Override
+	public int selectBoardCnt(BoardDTO dto) {
+		// TODO Auto-generated method stub
+		SqlSession session = MySqlSessionFactory.getSqlSession();
+		int cnt = 0;
+		try {
+			cnt = boardDAO.selectBoardCnt(session, dto);
+		} catch (Exception e) {
+			// TODO: handle exception\
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+
+		return cnt;
+	}
+
+	@Override
+	public List<BoardDTO> selectBoardList(BoardDTO dto) {
+		// TODO Auto-generated method stub
+		SqlSession session = MySqlSessionFactory.getSqlSession();
+		List<BoardDTO> list = null;
+		try {
+			list = boardDAO.selectBoardList(session, dto);
+		} catch (Exception e) {
+			// TODO: handle exception\
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+
+		return list;
+	}
 }

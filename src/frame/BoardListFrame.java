@@ -1,8 +1,8 @@
 package frame;
 
-import java.awt.Button;
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.Font;
 import java.awt.Frame;
 import java.awt.TextField;
 import java.awt.event.MouseAdapter;
@@ -72,8 +72,7 @@ public class BoardListFrame extends JFrame {
 		mainFrame.setBackground(new Color(247, 244, 242)); // 배경 색
 		mainFrame.setLayout(null); // 절대 레이아웃 사용
 
-		// 두개의 버튼 생성
-		Button btnWrite = new Button("글 작성");
+		// 로고 버튼 생성
 		JButton btnLogo = new JButton();
 
 		ImageIcon logoIcon = new ImageIcon("Running Mate.png");
@@ -89,9 +88,12 @@ public class BoardListFrame extends JFrame {
 				JOptionPane.showMessageDialog(mainFrame, "메인화면!");
 			}
 		});
+		// 글 작성 버튼 생성
+		JButton btnWrite = new JButton("글 작성");
 
 		// 초기 버튼 위치 및 크기 설정 (기준값)
-		btnWrite.setBounds(360, 170, 70, 30);
+		btnWrite.setBounds(360, 170, 80, 30);
+		btnWrite.setFont(new Font("맑은 고딕", Font.PLAIN, 13));
 		btnWrite.setBackground(Color.LIGHT_GRAY);
 
 		// 프레임에 버튼 추가

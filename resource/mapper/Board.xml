@@ -25,8 +25,8 @@
 			BOARD_FILE_PATH = #{boardFilePath}
 		WHERE BOARD_ID = #{boardId}
 	</update>
-
-	<select id="selectBoard" parameterType="dto.BoardDTO">
+	
+	<sql id="selectBoard">
 		SELECT
 			BOARD_ID, BOARD_TITLE, BOARD_CONTENT, BOARD_WORD_DATE, BOARD_WORD_TIME,
 			BOARD_REG_DT, BOARD_LUP_DT, BOARD_FILE_PATH, USER_ID
@@ -36,6 +36,18 @@
 				BOARD_ID = #{boardId}
 			</if>
 		</where>
+	</sql>
+
+	<select id="selectBoardCnt" parameterType="dto.BoardDTO" resultType="int">
+		SELECT COUNT(*) FROM (
+			<include refid="selectBoard" />
+		)
+	</select>
+
+	<select id="selectBoardList" parameterType="dto.BoardDTO" resultType="dto.BoardDTO">
+		SELECT * FROM (
+			<include refid="selectBoard" />
+		)
 		ORDER BY BOARD_ID DESC
 		OFFSET (#{pageNo} -1) * #{pageSize} ROWS FETCH NEXT #{pageSize} ROWS ONLY
 	</select>
