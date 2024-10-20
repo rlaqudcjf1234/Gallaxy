@@ -4,28 +4,28 @@ import java.awt.BorderLayout;
 import java.awt.Component;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.io.File;
 import java.util.Calendar;
 import java.util.List;
 import java.util.Map;
 
-import javax.swing.BoxLayout;
-import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
-import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import dto.AddressDTO;
 import dto.BoardDTO;
 import service.BoardService;
 import service.NaverApiService;
@@ -33,6 +33,17 @@ import service.RetrieveNewAdress;
 import service.impl.BoardServiceImpl;
 import service.impl.NaverApiServiceImpl;
 import service.impl.RetrieveNewAdressImpl;
+import javax.swing.JTextField;
+import javax.swing.Icon;
+import javax.swing.SwingConstants;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.DropMode;
+import javax.swing.JComboBox;
+import javax.swing.JCheckBox;
+import javax.swing.BoxLayout;
+import java.awt.Component;
+import javax.swing.JScrollBar;
+import javax.swing.JScrollPane;
 
 public class BoardWriteFrame extends JFrame {
 
@@ -46,6 +57,7 @@ public class BoardWriteFrame extends JFrame {
 	RetrieveNewAdress rna = new RetrieveNewAdressImpl();
 
 	Map<String, Object> result;
+	int currentPage = 1;
 	int totalPage;
 	List<String> addrs;
 
@@ -103,16 +115,66 @@ public class BoardWriteFrame extends JFrame {
 		jFrame.setBounds(600, 100, 500, 850);
 
 		JPanel contentPane = new JPanel();
-		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+		contentPane.setLayout(new BorderLayout());
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-		JScrollPane listPane = new JScrollPane();
-		listPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		listPane.setLayout(new BoxLayout(listPane, BoxLayout.X_AXIS));
-		contentPane.add(listPane, BorderLayout.CENTER);
+		JPanel pagePane = new JPanel();
+		pagePane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		pagePane.setLayout(new FlowLayout(FlowLayout.CENTER));
+		contentPane.add(pagePane, BorderLayout.NORTH);
+
+		JButton prevButton = new JButton("<");
+		pagePane.add(prevButton);
+
+		textFld = new JTextField(Integer.toString(currentPage), 3);
+		pagePane.add(textFld);
+
+		JLabel totalLbl = new JLabel(" / " + Integer.toString(totalPage));
+		totalLbl.setBorder(new EmptyBorder(5, 5, 5, 5));
+		pagePane.add(totalLbl);
+
+		JButton nextButton = new JButton(">");
+		pagePane.add(nextButton);
+
+		JPanel listPane = new JPanel();
+		listPane.setLayout(new GridLayout(10, 1));
+		JScrollPane scrollPane = new JScrollPane(listPane);
+		scrollPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.add(scrollPane, BorderLayout.CENTER);
 
 		if (addrs != null && addrs.size() > 0) {
+			// 목록 전체 삭제
+			listPane.removeAll(); 
+			for(String addr : addrs) {
 
+				// 목록 추가
+				JPanel buttonPane = new JPanel();
+				buttonPane.setLayout(new BorderLayout());
+				listPane.add(buttonPane);
+
+				JLabel addrLbl = new JLabel(addr);
+				buttonPane.add(addrLbl, BorderLayout.WEST);
+				
+				JButton addrBtn = new JButton("선택");
+				buttonPane.add(addrBtn, BorderLayout.EAST);
+				
+				addrBtn.addMouseListener(new MouseAdapter() {
+		            @Override
+		            public void mouseClicked(MouseEvent e) {
+						List<AddressDTO> list = nas.getGeocode(addr);
+						if (list != null && list.size() > 0) {
+							File file = nas.getStatic(list.get(0));
+							if (file != null && file.length() > 0) {
+								filePath = file.getPath();
+								ImageIcon img = new ImageIcon(filePath);
+								imageLbl.setIcon(img);
+							}
+						}
+		            }
+		        });
+			}
+			listPane.revalidate(); // UI 업데이트
+			listPane.repaint();    // UI 갱신
 		}
 
 		jFrame.setVisible(true);
@@ -137,7 +199,7 @@ public class BoardWriteFrame extends JFrame {
 		JPanel searchPane = new JPanel();
 		searchPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		searchPane.setLayout(new FlowLayout(FlowLayout.CENTER));
-		contentPane.add(searchPane, BorderLayout.NORTH);
+		contentPane.add(searchPane);
 
 		JLabel addressLbl = new JLabel("주소");
 		searchPane.add(addressLbl);
@@ -155,13 +217,12 @@ public class BoardWriteFrame extends JFrame {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				int page = 1;
 				String serarch = addressFld.getText();
 				if (serarch.length() < 2) {
-					JOptionPane.showMessageDialog(null, "한 글자만으로는 검색이 불가합니다.", "알림", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "검색어는 두글자 이상 입력되어야 합니다.", "알림", JOptionPane.INFORMATION_MESSAGE);
 					return;
 				}
-				if ((result = rna.getAddress(serarch, page)) != null) {
+				if ((result = rna.getAddress(serarch, currentPage = 1)) != null) {
 					String errorCode = (String) result.get("errorCode");
 					String errorMessage = (String) result.get("errorMessage");
 
@@ -180,33 +241,21 @@ public class BoardWriteFrame extends JFrame {
 				}
 
 				BoardSearchFrame();
-				/*
-				if (addrs != null && addrs.size() > 0) {
-					List<AddressDTO> list = nas.getGeocode(addrs.get(0));
-				}
-				if (list != null && list.size() > 0) {
-					File file = nas.getStatic(list.get(0));
-					if (file != null && file.length() > 0) {
-						filePath = file.getPath();
-						ImageIcon img = new ImageIcon(filePath);
-						imageLbl.setIcon(img);
-					}
-				}*/
 			}
 		});
 
 		JPanel imagePane = new JPanel();
 		imagePane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		imagePane.setLayout(new BoxLayout(imagePane, BoxLayout.X_AXIS));
-		contentPane.add(imagePane, BorderLayout.CENTER);
+		contentPane.add(imagePane);
 
 		imageLbl = new JLabel(new ImageIcon(filePath));
-		imagePane.add(imageLbl, BorderLayout.CENTER);
+		imagePane.add(imageLbl);
 
 		JPanel titlePane = new JPanel();
 		titlePane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		titlePane.setLayout(new BoxLayout(titlePane, BoxLayout.X_AXIS));
-		contentPane.add(titlePane, BorderLayout.CENTER);
+		contentPane.add(titlePane);
 
 		JLabel textLbl = new JLabel("제목");
 		textLbl.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -228,7 +277,7 @@ public class BoardWriteFrame extends JFrame {
 		JPanel datePane = new JPanel();
 		datePane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		datePane.setLayout(new BoxLayout(datePane, BoxLayout.X_AXIS));
-		contentPane.add(datePane, BorderLayout.CENTER);
+		contentPane.add(datePane);
 
 		JLabel dateLbl = new JLabel("일자");
 		dateLbl.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -250,7 +299,7 @@ public class BoardWriteFrame extends JFrame {
 		JPanel timePane = new JPanel();
 		timePane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		timePane.setLayout(new BoxLayout(timePane, BoxLayout.X_AXIS));
-		contentPane.add(timePane, BorderLayout.CENTER);
+		contentPane.add(timePane);
 
 		JLabel timeLbl = new JLabel("시간");
 		timeLbl.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -270,7 +319,7 @@ public class BoardWriteFrame extends JFrame {
 		JPanel detailPane = new JPanel();
 		detailPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		detailPane.setLayout(new BoxLayout(detailPane, BoxLayout.X_AXIS));
-		contentPane.add(detailPane, BorderLayout.CENTER);
+		contentPane.add(detailPane);
 
 		JLabel detailLbl = new JLabel("내용");
 		detailLbl.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -293,7 +342,7 @@ public class BoardWriteFrame extends JFrame {
 
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.X_AXIS));
-		contentPane.add(buttonPane, BorderLayout.CENTER);
+		contentPane.add(buttonPane);
 
 		// 작성 완료 버튼
 		JButton writeBtn = new JButton("작성 완료");
@@ -310,7 +359,7 @@ public class BoardWriteFrame extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				// 작성된 내용 처리
 				String title = textFld.getText();
-				String content = detailFld.getText();			
+				String content = detailFld.getText();
 
 				if (title.isEmpty() || title.equals(textInit)) {
 					JOptionPane.showMessageDialog(null, textInit, "알림", JOptionPane.INFORMATION_MESSAGE);
@@ -325,8 +374,8 @@ public class BoardWriteFrame extends JFrame {
 				BoardDTO dto = new BoardDTO();
 				dto.setBoardTitle(title);
 				dto.setBoardContent(content);
-				dto.setBoardFilePath(filePath);			
-				
+				dto.setBoardFilePath(filePath);
+
 				int cnt = bs.insertBoard(dto);
 				if (cnt > 0) {
 					JOptionPane.showMessageDialog(null, "작성이 완료되었습니다.", "알림", JOptionPane.INFORMATION_MESSAGE);

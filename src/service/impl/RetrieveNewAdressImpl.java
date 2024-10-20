@@ -28,8 +28,8 @@ public class RetrieveNewAdressImpl extends HttpServiceImpl implements RetrieveNe
 			addParam("confmKey", CONFM_KEY);
 			addParam("resultType", RESULT_TYPE);
 			addParam("keyword", search);
-			addParam("countPerPage", 10);
-			addParam("currentPage", COUNT_PER_PAGE);
+			addParam("countPerPage", COUNT_PER_PAGE);
+			addParam("currentPage", 1);
 			addProperty("Content-type", "application/json");
 			HttpDTO httpDTO = getConn();
 
