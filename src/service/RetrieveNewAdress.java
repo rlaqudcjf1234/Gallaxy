@@ -10,5 +10,5 @@ public interface RetrieveNewAdress extends HttpService{
 	String RESULT_TYPE = "json";
 	
 	// 검색어 주소조회
-	Map<String, Object> getAddress(String search, int page);
+	Map<String, Object> getAddress(String keyword, int currentPage);
 }

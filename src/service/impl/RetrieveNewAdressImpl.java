@@ -15,7 +15,7 @@ import service.RetrieveNewAdress;
 public class RetrieveNewAdressImpl extends HttpServiceImpl implements RetrieveNewAdress {
 
 	@Override
-	public Map<String, Object> getAddress(String search, int page) {
+	public Map<String, Object> getAddress(String keyword, int currentPage) {
 		// TODO Auto-generated method stub
 		Map<String, Object> map = new HashMap<String, Object>();
 		String errorCode = "0";
@@ -27,9 +27,9 @@ public class RetrieveNewAdressImpl extends HttpServiceImpl implements RetrieveNe
 			setHttp(JUSO_URL);
 			addParam("confmKey", CONFM_KEY);
 			addParam("resultType", RESULT_TYPE);
-			addParam("keyword", search);
+			addParam("keyword", keyword);
 			addParam("countPerPage", COUNT_PER_PAGE);
-			addParam("currentPage", 1);
+			addParam("currentPage", currentPage);
 			addProperty("Content-type", "application/json");
 			HttpDTO httpDTO = getConn();
 

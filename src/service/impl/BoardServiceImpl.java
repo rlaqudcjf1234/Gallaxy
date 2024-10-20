@@ -70,4 +70,40 @@ public class BoardServiceImpl implements BoardService {
 
 		return list;
 	}
+
+	@Override
+	public BoardDTO selectBoard(int boardId) {
+		// TODO Auto-generated method stub
+		SqlSession session = MySqlSessionFactory.getSqlSession();
+		BoardDTO dto = null;
+		try {
+			dto = boardDAO.selectBoard(session, boardId);
+		} catch (Exception e) {
+			// TODO: handle exception\
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+
+		return dto;
+	}
+
+	@Override
+	public int updateBoard(BoardDTO dto) {
+		// TODO Auto-generated method stub
+		SqlSession session = MySqlSessionFactory.getSqlSession();
+		int cnt = 0;
+		try {
+			cnt = boardDAO.updateBoard(session, dto);
+		} catch (Exception e) {
+			// TODO: handle exception\
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.commit();
+			session.close();
+		}
+
+		return cnt;
+	}
 }

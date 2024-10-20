@@ -11,17 +11,22 @@ import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
-import java.util.Calendar;
+import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
 
+import javax.swing.BoxLayout;
+import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
+import javax.swing.JComboBox;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import dto.AddressDTO;
@@ -32,28 +37,25 @@ import service.RetrieveNewAdress;
 import service.impl.BoardServiceImpl;
 import service.impl.NaverApiServiceImpl;
 import service.impl.RetrieveNewAdressImpl;
-import javax.swing.JTextField;
-import javax.swing.DefaultComboBoxModel;
-import javax.swing.JComboBox;
-import javax.swing.BoxLayout;
-import javax.swing.JScrollPane;
 
-public class BoardWriteFrame extends JFrame {
+public class BoardModifyFrame extends JFrame {
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = 6032491971534575326L;
+	private static final long serialVersionUID = 7515798435662293739L;
 
 	private BoardService bs = new BoardServiceImpl();
 	private NaverApiService nas = new NaverApiServiceImpl();
 	private RetrieveNewAdress rna = new RetrieveNewAdressImpl();
 
-	private Map<String, Object> result;
 	private String serarch = "";
 	private int currentPage = 1;
+	private Map<String, Object> result;
 	private int totalPage;
 	private List<String> addrs;
+	private String filePath;
+	private BoardDTO dto;
 
 	private String textInit = "제목을 입력하세요";
 	private String detailInit = "내용을 입력하세요";
@@ -78,7 +80,6 @@ public class BoardWriteFrame extends JFrame {
 	private JComboBox<String> apmCbx;
 	private JComboBox<String> hhCbx;
 	private JComboBox<String> miCbx;
-	private String filePath = "temp/서울특별시 종로구 종로 13-3 구두수선대.jpg";
 
 	/* BoardSFrame */
 	private JFrame searchFrame;
@@ -92,7 +93,7 @@ public class BoardWriteFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					BoardWriteFrame frame = new BoardWriteFrame();
+					BoardModifyFrame frame = new BoardModifyFrame(31);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -104,7 +105,16 @@ public class BoardWriteFrame extends JFrame {
 	/**
 	 * Create the frame.
 	 */
-	public BoardWriteFrame() {
+	public BoardModifyFrame(int boardId) {
+
+		// 대상 조회
+		dto = bs.selectBoard(boardId);
+		if (dto == null) {
+			JOptionPane.showMessageDialog(null, "대상을 찾을 수 없습니다.", "오류", JOptionPane.ERROR_MESSAGE);
+			dispose();
+			return;
+		}
+
 		// 프레임 타이틀바
 		setTitle("BoardWriteFrame");
 		// X버튼 종료
@@ -170,7 +180,7 @@ public class BoardWriteFrame extends JFrame {
 		imagePane.setLayout(new BoxLayout(imagePane, BoxLayout.X_AXIS));
 		contentPane.add(imagePane);
 
-		imageLbl = new JLabel(new ImageIcon(filePath));
+		imageLbl = new JLabel(new ImageIcon(dto.getBoardFilePath()));
 		imagePane.add(imageLbl);
 
 		JPanel titlePane = new JPanel();
@@ -182,19 +192,9 @@ public class BoardWriteFrame extends JFrame {
 		textLbl.setBorder(new EmptyBorder(5, 5, 5, 5));
 		titlePane.add(textLbl);
 
-		textFld = new JTextField(textInit);
+		textFld = new JTextField(dto.getBoardTitle());
 		textFld.setFont(new Font("맑은 고딕", Font.PLAIN, 13));
 		titlePane.add(textFld);
-
-		// 클릭 이벤트 기본 텍스트(textFld) 삭제
-		textFld.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (textFld.getText().equals(textInit)) {
-					textFld.setText(""); // 클릭 시 텍스트 초기화
-				}
-			}
-		});
 
 		JPanel datePane = new JPanel();
 		datePane.setBorder(new EmptyBorder(5, 5, 5, 5));
@@ -205,17 +205,16 @@ public class BoardWriteFrame extends JFrame {
 		dateLbl.setBorder(new EmptyBorder(5, 5, 5, 5));
 		datePane.add(dateLbl);
 
-		Calendar cal = Calendar.getInstance();
-
 		yyyyCbx = new JComboBox<String>(new DefaultComboBoxModel<String>(yyyy));
+		yyyyCbx.setSelectedIndex(Arrays.asList(yyyy).indexOf(dto.getBoardWordYyyy()));
 		datePane.add(yyyyCbx);
 
 		mmCbx = new JComboBox<String>(new DefaultComboBoxModel<String>(mm));
-		mmCbx.setSelectedIndex(cal.get(Calendar.MONTH));
+		mmCbx.setSelectedIndex(Arrays.asList(mm).indexOf(dto.getBoardWordMm()));
 		datePane.add(mmCbx);
 
 		ddCbx = new JComboBox<String>(new DefaultComboBoxModel<String>(dd));
-		ddCbx.setSelectedIndex(cal.get(Calendar.DAY_OF_MONTH) - 1);
+		ddCbx.setSelectedIndex(Arrays.asList(dd).indexOf(dto.getBoardWordDd()));
 		datePane.add(ddCbx);
 
 		JPanel timePane = new JPanel();
@@ -228,14 +227,15 @@ public class BoardWriteFrame extends JFrame {
 		timePane.add(timeLbl);
 
 		apmCbx = new JComboBox<String>(new DefaultComboBoxModel<String>(apm));
-		apmCbx.setSelectedIndex(cal.get(Calendar.AM_PM));
+		apmCbx.setSelectedIndex(Arrays.asList(apm).indexOf(dto.getBoardWordApm()));
 		timePane.add(apmCbx);
 
 		hhCbx = new JComboBox<String>(new DefaultComboBoxModel<String>(hh));
-		hhCbx.setSelectedIndex(cal.get(Calendar.HOUR) - 1);
+		hhCbx.setSelectedIndex(Arrays.asList(hh).indexOf(dto.getBoardWordHh()));
 		timePane.add(hhCbx);
 
 		miCbx = new JComboBox<String>(new DefaultComboBoxModel<String>(mi));
+		miCbx.setSelectedIndex(Arrays.asList(mi).indexOf(dto.getBoardWordMi()));
 		timePane.add(miCbx);
 
 		JPanel detailPane = new JPanel();
@@ -247,20 +247,10 @@ public class BoardWriteFrame extends JFrame {
 		detailLbl.setBorder(new EmptyBorder(5, 5, 5, 5));
 		detailPane.add(detailLbl);
 
-		detailFld = new JTextArea(detailInit);
+		detailFld = new JTextArea(dto.getBoardContent());
 		detailFld.setColumns(35);
 		detailFld.setRows(10);
 		detailPane.add(detailFld);
-
-		// 클릭 이벤트 기본 텍스트(contentFld) 삭제
-		detailFld.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (detailFld.getText().equals(detailInit)) {
-					detailFld.setText(""); // 클릭 시 텍스트 초기화
-				}
-			}
-		});
 
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.X_AXIS));
@@ -294,7 +284,6 @@ public class BoardWriteFrame extends JFrame {
 					return;
 				}
 
-				BoardDTO dto = new BoardDTO();
 				dto.setBoardTitle(sTitle);
 				dto.setBoardContent(sContent);
 
@@ -307,10 +296,10 @@ public class BoardWriteFrame extends JFrame {
 				dto.setBoardWordMi(sMi);
 
 				dto.setBoardFilePath(filePath);
-				
+
 				dto.setUserId("test");
 
-				int cnt = bs.insertBoard(dto);
+				int cnt = bs.updateBoard(dto);
 				if (cnt > 0) {
 					JOptionPane.showMessageDialog(null, "작성이 완료되었습니다.", "알림", JOptionPane.INFORMATION_MESSAGE);
 

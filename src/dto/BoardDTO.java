@@ -6,20 +6,36 @@ public class BoardDTO extends PageDTO {
 
 	// 게시판 아이디
 	private String boardId;
+
 	// 게시판 제목
 	private String boardTitle;
+
 	// 게시판 내용
 	private String boardContent;
+
 	// 게시판 약속 일자
-	private String boardWordDate;
+	private String boardWordYyyy;
+	// 게시판 약속 일자
+	private String boardWordMm;
+	// 게시판 약속 일자
+	private String boardWordDd;
+
 	// 게시판 약속 시간
-	private String boardWordTime;
+	private String boardWordApm;
+	// 게시판 약속 시간
+	private String boardWordHh;
+	// 게시판 약속 시간
+	private String boardWordMi;
+
 	// 게시판 파일 경로
 	private String boardFilePath;
+
 	// 게시판 최초작성 일자
 	private Date boardRegDt;
+
 	// 게시판 최종수정 일자
 	private Date boardLupDt;
+
 	// 게시판 작성자
 	private String userId;
 
@@ -47,20 +63,52 @@ public class BoardDTO extends PageDTO {
 		this.boardContent = boardContent;
 	}
 
-	public String getBoardWordDate() {
-		return boardWordDate;
+	public String getBoardWordYyyy() {
+		return boardWordYyyy;
 	}
 
-	public void setBoardWordDate(String boardWordDate) {
-		this.boardWordDate = boardWordDate;
+	public void setBoardWordYyyy(String boardWordYyyy) {
+		this.boardWordYyyy = boardWordYyyy;
 	}
 
-	public String getBoardWordTime() {
-		return boardWordTime;
+	public String getBoardWordMm() {
+		return boardWordMm;
 	}
 
-	public void setBoardWordTime(String boardWordTime) {
-		this.boardWordTime = boardWordTime;
+	public void setBoardWordMm(String boardWordMm) {
+		this.boardWordMm = boardWordMm;
+	}
+
+	public String getBoardWordDd() {
+		return boardWordDd;
+	}
+
+	public void setBoardWordDd(String boardWordDd) {
+		this.boardWordDd = boardWordDd;
+	}
+
+	public String getBoardWordApm() {
+		return boardWordApm;
+	}
+
+	public void setBoardWordApm(String boardWordApm) {
+		this.boardWordApm = boardWordApm;
+	}
+
+	public String getBoardWordHh() {
+		return boardWordHh;
+	}
+
+	public void setBoardWordHh(String boardWordHh) {
+		this.boardWordHh = boardWordHh;
+	}
+
+	public String getBoardWordMi() {
+		return boardWordMi;
+	}
+
+	public void setBoardWordMi(String boardWordMi) {
+		this.boardWordMi = boardWordMi;
 	}
 
 	public String getBoardFilePath() {
