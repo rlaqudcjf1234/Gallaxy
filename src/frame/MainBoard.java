@@ -87,7 +87,11 @@ public class MainBoard extends JFrame {
 		// 버튼 이벤트 -> 마이페이지
 		btnMyP.addActionListener(e -> {
 			System.out.println("마이 페이지 버튼 클릭됨!"); // 디버그용 메시지
+<<<<<<< HEAD
 			new myPageBegin(); //
+=======
+			new myPageBegin(); // 이후에 BoardListFrame을 마이 페이지 파일로 변경
+>>>>>>> branch 'main' of https://github.com/rlaqudcjf1234/Gallaxy.git
 			
 			dispose(); // 현재 창 닫기
 		});
