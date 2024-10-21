@@ -30,7 +30,7 @@ import service.impl.BoardServiceImpl;
 public class BoardListFrame extends JFrame {
 
 	private static JPanel postListPanel = new JPanel(); // 게시물 목록 패널
-	private static Frame mainFrame;
+	private Frame mainFrame;
 
 	// 게시물 목록을 갱신하는 메서드
 	public static void updateBoardList(List<BoardDTO> boardList) {
@@ -150,23 +150,23 @@ public class BoardListFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				String content = contentSearch.getText();
-				if (content == "" || content.equals("검색할 글 제목을 입력하세요")) {
+				if (content.equals("") || content.equals("검색할 글 제목을 입력하세요")) {
 					// 검색어 없음 경고
+					JOptionPane.showMessageDialog(mainFrame, "검색어를 입력하지 않았습니다.");
 					
-					
-					return;
+					return; 
 				}
 
 				boardDTO.setBoardTitle(content);
 
 				List<BoardDTO> list = bs.selectBoardList(boardDTO);
-				if (list == null || list.isEmpty()) {
+				if (list.equals(null) || list.isEmpty()) {
 					// 검색 결과 없음
-					
+					JOptionPane.showMessageDialog(mainFrame, "검색결과가 존재하지 않습니다.");
 					
 				} else {
 					// 검색 목록 변경
-					
+					JOptionPane.showMessageDialog(mainFrame, "테스트");
 					
 				}
 
@@ -243,8 +243,8 @@ public class BoardListFrame extends JFrame {
 
 	}
 
-	public static void main(String[] args) {
-		showBoardList();
-	}
+//	public static void main(String[] args) {
+//		showBoardList();
+//	}
 
 }
