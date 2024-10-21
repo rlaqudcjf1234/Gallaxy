@@ -80,16 +80,13 @@ public class MainBoard extends JFrame {
 		// 버튼 이벤트 -> 헬스 케어
 		btnHC.addActionListener(e -> {
 			System.out.println("헬스 케어 버튼 클릭됨!"); // 디버그용 메시지
-			new BoardListFrame(); // 이후에 BoardListFrame을 헬스케어 파일로 변경
-			
+			new Calendarpp(); // 이후에 BoardListFrame을 헬스케어 파일로 변경
 			dispose(); // 현재 창 닫기
 		});
 		// 버튼 이벤트 -> 마이페이지
 		btnMyP.addActionListener(e -> {
 			System.out.println("마이 페이지 버튼 클릭됨!"); // 디버그용 메시지
-
 			new myPageBegin(); // 이후에 BoardListFrame을 마이 페이지 파일로 변경
-			
 			dispose(); // 현재 창 닫기
 		});
 		// 패널을 JFrame에 추가
