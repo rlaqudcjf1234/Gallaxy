@@ -32,7 +32,7 @@ import service.impl.UserServiceImpl;
 public class BoardDetailFrame extends JFrame {
 
 	private final long serialVersionUID = 6032491971534575326L;
-
+	
 	CommentService cs = new CommentServiceImpl();
 
 	// 게시물 정보를 표시할 라벨과 텍스트 영역
