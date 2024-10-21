@@ -6,6 +6,7 @@ import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
@@ -20,25 +21,28 @@ import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
 import dto.BoardDTO;
+import dto.CommentDTO;
 import dto.UserDTO;
 import main.Main;
+import service.CommentService;
 import service.UserService;
+import service.impl.CommentServiceImpl;
 import service.impl.UserServiceImpl;
 
 public class BoardDetailFrame extends JFrame {
 
 	private final long serialVersionUID = 6032491971534575326L;
-	UserService us = new UserServiceImpl();
+
+	CommentService cs = new CommentServiceImpl();
 
 	// 게시물 정보를 표시할 라벨과 텍스트 영역
 	private JLabel titleLabel;
 	private JTextArea contentArea;
 	private JLabel imageLabel;
-	
 
 	// 게시물 정보 클래스 변수
 	private BoardDTO board;
-	
+
 	private JTextField commentField;
 	private JPanel commentPanel;
 	private ArrayList<String> comments; // 댓글 목록
@@ -114,7 +118,19 @@ public class BoardDetailFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 				String comment = commentField.getText();
 				if (!comment.trim().isEmpty()) {
+					/*
 					comments.add(comment); // 댓글 저장
+					*/
+					CommentDTO dto = new CommentDTO();
+					dto.setBoardId(board.getBoardId());
+					dto.setCommentContent(comment);
+					dto.setUserId("test");
+
+					int cnt = cs.insertComment(dto);
+					if (cnt == 0) {
+						// 뎃글 등록 실패 알림 추가
+						return;
+					}
 					updateCommentPanel(); // 댓글 목록 갱신
 					commentField.setText(""); // 입력 필드 초기화
 				} else {
@@ -124,29 +140,25 @@ public class BoardDetailFrame extends JFrame {
 		});
 		contentPane.add(commentButton);
 
-		
-		
-		
 		JLabel authorLabel = new JLabel(board.getUserId());
 		authorLabel.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
 		authorLabel.setBounds(0, 350, 460, 30);
 		authorLabel.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 		contentPane.add(authorLabel);
 
-		JLabel dateLabel = new JLabel(
-				"날짜 : " + board.getBoardWordYyyy() + " " + board.getBoardWordMm() + " " 
-						+ board.getBoardWordDd() + "  /  시간 : " + board.getBoardWordApm() + " " 
-						+ board.getBoardWordHh() + " " + board.getBoardWordMi());
-		
+		JLabel dateLabel = new JLabel("날짜 : " + board.getBoardWordYyyy() + " " + board.getBoardWordMm() + " "
+				+ board.getBoardWordDd() + "  /  시간 : " + board.getBoardWordApm() + " " + board.getBoardWordHh() + " "
+				+ board.getBoardWordMi());
+
 		dateLabel.setFont(new Font("맑은 고딕", Font.PLAIN, 16));
 		dateLabel.setBounds(50, 385, 460, 30);
 		contentPane.add(dateLabel);
 
-//		JLabel timeLabel = new JLabel(
-//				"시간 : " + board.getBoardWordApm() + " " + board.getBoardWordHh() + " " + board.getBoardWordMi());
-//		timeLabel.setBounds(30, 430, 460, 30);
-//		timeLabel.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
-//		contentPane.add(timeLabel);
+		//		JLabel timeLabel = new JLabel(
+		//				"시간 : " + board.getBoardWordApm() + " " + board.getBoardWordHh() + " " + board.getBoardWordMi());
+		//		timeLabel.setBounds(30, 430, 460, 30);
+		//		timeLabel.setFont(new Font("맑은 고딕", Font.PLAIN, 20));
+		//		contentPane.add(timeLabel);
 
 		// 버튼 패널 추가
 		JPanel buttonPane = new JPanel();
@@ -163,6 +175,8 @@ public class BoardDetailFrame extends JFrame {
 				dispose(); // 창 닫기
 			}
 		});
+		
+		updateCommentPanel();
 
 		contentPane.add(buttonPane);
 
@@ -171,17 +185,22 @@ public class BoardDetailFrame extends JFrame {
 		setContentPane(contentPane);
 		setVisible(true);
 	}
-	
+
 	private void updateCommentPanel() {
-        commentPanel.removeAll(); // 기존 댓글 초기화
-        for (String comment : comments) {
-            JLabel commentLabel = new JLabel(comment);
-            commentLabel.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
-            commentPanel.add(commentLabel); // 댓글 추가
-        }
-        commentPanel.revalidate(); // UI 업데이트
-        commentPanel.repaint(); // UI 갱신
-    }
+		CommentDTO dto = new CommentDTO();
+		dto.setBoardId(board.getBoardId());
+		List<CommentDTO> list = cs.selectCommentList(dto);
+		if (list != null && list.size() > 0) {
+			commentPanel.removeAll(); // 기존 댓글 초기화
+			for (CommentDTO result : list) {
+				JLabel commentLabel = new JLabel(result.getCommentContent());
+				commentLabel.setFont(new Font("맑은 고딕", Font.PLAIN, 14));
+				commentPanel.add(commentLabel); // 댓글 추가
+			}
+			commentPanel.revalidate(); // UI 업데이트
+			commentPanel.repaint(); // UI 갱신
+		}
+	}
 
 	// 게시물 세부 정보를 출력하는 메서드 (예: 게시물 선택 시 호출)
 	public void showBoardDetail(BoardDTO board) {
