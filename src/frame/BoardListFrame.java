@@ -34,9 +34,13 @@ import service.impl.BoardServiceImpl;
 
 public class BoardListFrame extends JFrame {
 
-	private static JPanel postListPanel = new JPanel(); // 게시물 목록 패널
-	private Frame mainFrame;
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 5543592341811617934L;
 	
+	private static JPanel postListPanel = new JPanel(); // 게시물 목록 패널
+
 	/**
 	 * Launch the application.
 	 */
@@ -44,12 +48,17 @@ public class BoardListFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					new BoardListFrame().showBoardList();
+					new BoardListFrame();
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
+	}
+
+	public BoardListFrame() {
+		// TODO Auto-generated constructor stub
+		showBoardList();
 	}
 
 	// 게시물 목록을 갱신하는 메서드
@@ -178,7 +187,6 @@ public class BoardListFrame extends JFrame {
 		searchButton.addActionListener(new ActionListener() {
 
 			@Override
-			@SuppressWarnings("unchecked")
 			public void actionPerformed(ActionEvent e) {
 
 				String content = contentSearch.getText();
@@ -206,7 +214,7 @@ public class BoardListFrame extends JFrame {
 		});
 
 		mainFrame.add(contentSearch);
-		
+
 		JButton btnAd = new JButton();
 
 		ImageIcon logoIcon2 = new ImageIcon("SolDesk_Ad.png");
@@ -221,12 +229,12 @@ public class BoardListFrame extends JFrame {
 			public void mouseClicked(MouseEvent e) {
 				String url = "https://soldesk.com/";
 
-		        try {
-		            // URI로 변환하고 기본 웹 브라우저에서 열기
-		            Desktop.getDesktop().browse(new URI(url));
-		        } catch (IOException | URISyntaxException ex) {
-		            ex.printStackTrace(); // 예외 처리
-		        }	
+				try {
+					// URI로 변환하고 기본 웹 브라우저에서 열기
+					Desktop.getDesktop().browse(new URI(url));
+				} catch (IOException | URISyntaxException ex) {
+					ex.printStackTrace(); // 예외 처리
+				}
 			}
 		});
 		mainFrame.add(btnAd);
