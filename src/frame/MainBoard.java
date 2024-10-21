@@ -2,8 +2,6 @@ package frame;
 
 import java.awt.Color;
 import java.awt.Image;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
 
@@ -11,9 +9,10 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.SwingUtilities;
 
 public class MainBoard extends JFrame {
-
+	
 	private ImageIcon imgComm, imgMyP, imgHC, imgLogoA;
 	private JButton btnComm, btnMyP, btnHC;
 
@@ -72,9 +71,24 @@ public class MainBoard extends JFrame {
 		mainBoard.add(btnMyP);
 
 		// 버튼 이벤트 -> 커뮤니티
-		btnComm.addActionListener(e -> {
+		btnComm.addActionListener(e -> { //BoardListFrame 및 다른 파일에 생성자 있어야됨
 			System.out.println("커뮤니티 버튼 클릭됨!"); // 디버그용 메시지
-			new BoardListFrame(); // 새로운 창 열기
+			 new BoardListFrame().setVisible(true); // 새로운 창 열기
+			 
+			dispose(); // 현재 창 닫기
+		});
+		// 버튼 이벤트 -> 헬스 케어
+		btnHC.addActionListener(e -> {
+			System.out.println("헬스 케어 버튼 클릭됨!"); // 디버그용 메시지
+			new BoardListFrame().setVisible(true); // 이후에 BoardListFrame을 헬스케어 파일로 변경
+			
+			dispose(); // 현재 창 닫기
+		});
+		// 버튼 이벤트 -> 커뮤니티
+		btnMyP.addActionListener(e -> {
+			System.out.println("마이 페이지 버튼 클릭됨!"); // 디버그용 메시지
+			new BoardListFrame().setVisible(true); // 이후에 BoardListFrame을 마이 페이지 파일로 변경
+			
 			dispose(); // 현재 창 닫기
 		});
 		// 패널을 JFrame에 추가
@@ -83,6 +97,6 @@ public class MainBoard extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		new MainBoard();
+		SwingUtilities.invokeLater(() -> new MainBoard());
 	}
 }
