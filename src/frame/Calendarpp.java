@@ -198,8 +198,10 @@ public class Calendarpp {
 			public void mouseClicked(MouseEvent me) {
 				int row = calendarTable.getSelectedRow();
 				int col = calendarTable.getSelectedColumn();
-				String date = calendarTableModel.getValueAt(row, col).toString();
-				if (!date.equals("")) {
+				String date =(String) calendarTableModel.getValueAt(row, col);
+				if (date==null||date.isEmpty()) {
+					memoLabel.setText("유효한 날짜를 선택하세요");
+				}else {
 					showMemo(date);
 				}
 			}
@@ -224,16 +226,19 @@ public class Calendarpp {
 					JOptionPane.showMessageDialog(frame, "날짜를 선택하세요.");
 					return;
 				}
-				String selectedDate = calendarTableModel.getValueAt(row, col).toString();
+				String selectedDate = (String)calendarTableModel.getValueAt(row, col);
+				System.out.println("selected"+selectedDate);
+				if(selectedDate==null||selectedDate.isEmpty()) {
+					JOptionPane.showMessageDialog(frame, "유효한 날짜를 선택하세요");
+					return;
+				}
 				String distanceText = healthMemorun.getText();
 				String timeText = healthMemotime.getText();
-
-				String[] dateParts = selectedDate.split("/");
-				int yyyy = Integer.parseInt(dateParts[0]);
-				int mm = Integer.parseInt(dateParts[1]);
-				int dd = Integer.parseInt(dateParts[2]);
 				// 입력값을 숫자로 변환
 				try {
+					int yyyy = currentYear;
+					int mm = currentMonth;
+					int dd = Integer.parseInt(selectedDate);
 					double distance = Double.parseDouble(distanceText);// km
 					double time = Double.parseDouble(timeText);// 분
 					// 평균속도 및 칼로리 계산
