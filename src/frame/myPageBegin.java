@@ -86,6 +86,7 @@ public class myPageBegin extends JPanel {
             @Override
             public void actionPerformed(ActionEvent e) {
                 myPageBase.getInstance(new myPageBegin());
+                
             }
         });
 
