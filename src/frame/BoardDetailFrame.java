@@ -79,13 +79,18 @@ public class BoardDetailFrame extends JFrame {
 		scrollPane.setBounds(40, 520, 400, 250);
 		contentPane.add(scrollPane);
 
-		JLabel dateLabel = new JLabel("³¯Â¥: " + board.getBoardWordDate());
+		JLabel authorLabel = new JLabel("ÀÛ¼ºÀÚ :   " + board.getUserId());
+		authorLabel.setFont(new Font("¸¼Àº °íµñ", Font.PLAIN, 18));
+		authorLabel.setBounds(20, 400, 460, 30);
+		contentPane.add(authorLabel);
+		
+		JLabel dateLabel = new JLabel("³¯Â¥ : " + board.getBoardWordYyyy() + " " + board.getBoardWordMm() + " " + board.getBoardWordDd());
 		dateLabel.setFont(new Font("¸¼Àº °íµñ", Font.PLAIN, 23));
-		dateLabel.setBounds(50, 420, 460, 30);
+		dateLabel.setBounds(30, 440, 460, 30);
 		contentPane.add(dateLabel);
 
-		JLabel timeLabel = new JLabel("½Ã°£: " + board.getBoardWordTime());
-		timeLabel.setBounds(50, 470, 460, 30);
+		JLabel timeLabel = new JLabel("½Ã°£ : " + board.getBoardWordApm() +  " " + board.getBoardWordHh() +  " " + board.getBoardWordMi());
+		timeLabel.setBounds(30, 480, 460, 30);
 		timeLabel.setFont(new Font("¸¼Àº °íµñ", Font.PLAIN, 23));
 		contentPane.add(timeLabel);
 
@@ -97,7 +102,7 @@ public class BoardDetailFrame extends JFrame {
 		JButton closeButton = new JButton("´Ý±â");
 		closeButton.setFont(new Font("¸¼Àº °íµñ", Font.PLAIN, 13));
 		closeButton.setBackground(Color.LIGHT_GRAY);
-		closeButton.setBounds(400, 20, 60, 30);
+		closeButton.setBounds(400, 17, 60, 30);
 		closeButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
