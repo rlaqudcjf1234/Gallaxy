@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- mapper DTD 선언 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="health">
+
+	<insert id="insertHealth" parameterType="dto.HealthDTO">
+		INSERT INTO HEALTH (
+			USER_ID, HEALTH_YYYY, HEALTH_MM, HEALTH_DD, 
+			HEALTH_DISTANCE, HEALTH_TIME, HEALTH_SPEED, HEALTH_CALORIES
+		) VALUES (
+			#{userId}, #{healthYyyy}, #{healthMm}, #{healthDd}, 
+			#{healthDistance}, #{healthTime}, #{healthSpeed}, #{healthCalories}
+		)
+	</insert>
+	
+	
+	
+</mapper>
