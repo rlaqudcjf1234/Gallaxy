@@ -2,6 +2,7 @@ package frame;
 
 import java.awt.Color;
 import java.awt.Cursor;
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.TextField;
@@ -31,6 +32,21 @@ public class BoardListFrame extends JFrame {
 
 	private static JPanel postListPanel = new JPanel(); // 게시물 목록 패널
 	private Frame mainFrame;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					new BoardListFrame().showBoardList();
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
 	// 게시물 목록을 갱신하는 메서드
 	public static void updateBoardList(List<BoardDTO> boardList) {
@@ -248,3 +264,4 @@ public class BoardListFrame extends JFrame {
 //	}
 
 }
+
