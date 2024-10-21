@@ -5,6 +5,8 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.io.DataInputStream;
+import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.Map;
 import javax.swing.BorderFactory;
@@ -20,10 +22,13 @@ import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.SwingUtilities;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.util.Calendar;
+import java.util.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -138,8 +143,8 @@ public class Calendarpp {
 		// 버튼 판넬 크기 넣기
 
 		inputPanel.setBounds(25, 570, 220, 120);
-		saveMemoButton.setBounds(27, 690, 216, 27);//기록하기 버튼
-		calendarScrollpane.setBounds(25, 70, 440, 400);//달력전체
+		saveMemoButton.setBounds(27, 690, 216, 27);
+		calendarScrollpane.setBounds(25, 70, 440, 400);
 		prevButton.setBounds(25, 30, 50, 30);// 월 이전버튼
 		nextButton.setBounds(415, 30, 50, 30);// 월 다음버튼
 		monthLabel.setBounds(150, 30, 200, 30);// 년월 보여주는 판넬
@@ -155,7 +160,7 @@ public class Calendarpp {
 			@Override
 			public void actionPerformed(ActionEvent ae) {
 				frame.dispose();
-				// new (메인페이지);
+				// ->메인페이지로 돌아가기(코드넣기)
 
 			}
 		});
