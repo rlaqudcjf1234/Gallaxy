@@ -248,3 +248,4 @@ public class BoardListFrame extends JFrame {
 //	}
 
 }
+
