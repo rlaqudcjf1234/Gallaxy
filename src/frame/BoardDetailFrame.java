@@ -20,7 +20,7 @@ import dto.BoardDTO;
 
 public class BoardDetailFrame extends JFrame {
 
-	private static final long serialVersionUID = 6032491971534575326L;
+	private final long serialVersionUID = 6032491971534575326L;
 
 	// 게시물 정보를 표시할 라벨과 텍스트 영역
 	private JLabel titleLabel;
@@ -119,7 +119,7 @@ public class BoardDetailFrame extends JFrame {
 	}
 
 	// 게시물 세부 정보를 출력하는 메서드 (예: 게시물 선택 시 호출)
-	public static void showBoardDetail(BoardDTO board) {
+	public void showBoardDetail(BoardDTO board) {
 		new BoardDetailFrame(board);
 	}
 }
