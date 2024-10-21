@@ -7,48 +7,69 @@
 			SELECT NVL(MAX(BOARD_ID), 0)+1 FROM BOARD
 		</selectKey>
 		INSERT INTO BOARD (
-			BOARD_ID, BOARD_TITLE, BOARD_CONTENT, BOARD_WORD_DATE, BOARD_WORD_TIME,
-			BOARD_FILE_PATH, USER_ID
+		BOARD_ID, BOARD_TITLE, BOARD_CONTENT,
+		BOARD_WORD_YYYY, BOARD_WORD_MM, BOARD_WORD_DD,
+		BOARD_WORD_APM, BOARD_WORD_HH, BOARD_WORD_MI,
+		BOARD_FILE_PATH, USER_ID
 		) VALUES (
-			#{boardId}, #{boardTitle}, #{boardContent}, #{boardWordDate}, #{boardWordTime},
-			#{boardFilePath}, #{userId}
+		#{boardId}, #{boardTitle}, #{boardContent},
+		#{boardWordYyyy}, #{boardWordMm}, #{boardWordDd},
+		#{boardWordApm}, #{boardWordHh}, #{boardWordMi},
+		#{boardFilePath}, #{userId}
 		)
 	</insert>
 
 	<update id="updateBoard" parameterType="dto.BoardDTO">
 		UPDATE BOARD SET
-			BOARD_TITLE = #{boardTitle},
-			BOARD_CONTENT = #{boardContent},
-			BOARD_WORD_DATE = #{boardWordDate},
-			BOARD_WORD_TIME = #{boardWordTime},
-			BOARD_LUP_DT = SYSDATE,
-			BOARD_FILE_PATH = #{boardFilePath}
-		WHERE BOARD_ID = #{boardId}
+		BOARD_TITLE = #{boardTitle},
+		BOARD_CONTENT = #{boardContent},
+		BOARD_WORD_YYYY= #{boardWordYyyy},
+		BOARD_WORD_MM = #{boardWordMm},
+		BOARD_WORD_DD = #{boardWordDd},
+		BOARD_WORD_APM = #{boardWordApm},
+		BOARD_WORD_HH = #{boardWordHh},
+		BOARD_WORD_MI = #{boardWordMi},
+		BOARD_FILE_PATH = #{boardFilePath},
+		BOARD_LUP_DT = SYSDATE
+		WHERE
+		BOARD_ID = #{boardId}
 	</update>
-	
+
 	<sql id="selectBoard">
 		SELECT
-			BOARD_ID, BOARD_TITLE, BOARD_CONTENT, BOARD_WORD_DATE, BOARD_WORD_TIME,
-			BOARD_REG_DT, BOARD_LUP_DT, BOARD_FILE_PATH, USER_ID
+		BOARD_ID, BOARD_TITLE, BOARD_CONTENT,
+		BOARD_WORD_YYYY, BOARD_WORD_MM, BOARD_WORD_DD,
+		BOARD_WORD_APM, BOARD_WORD_HH, BOARD_WORD_MI,
+		BOARD_FILE_PATH, BOARD_REG_DT, BOARD_LUP_DT, USER_ID
 		FROM BOARD
-		<where>
-			<if test="boardId != null and boardId > 0">
-				BOARD_ID = #{boardId}
-			</if>
-		</where>
 	</sql>
 
 	<select id="selectBoardCnt" parameterType="dto.BoardDTO" resultType="int">
 		SELECT COUNT(*) FROM (
-			<include refid="selectBoard" />
+		<include refid="selectBoard" />
 		)
 	</select>
 
 	<select id="selectBoardList" parameterType="dto.BoardDTO" resultType="dto.BoardDTO">
 		SELECT * FROM (
-			<include refid="selectBoard" />
+		<include refid="selectBoard" />
 		)
+		<where>
+			BOARD_TITLE LIKE '%'||#{boardTitle}||'%'
+		</where>
 		ORDER BY BOARD_ID DESC
-		OFFSET (#{pageNo} -1) * #{pageSize} ROWS FETCH NEXT #{pageSize} ROWS ONLY
+		OFFSET (#{pageNo} -1) * #{pageSize} ROWS FETCH
+		NEXT #{pageSize} ROWS ONLY
+	</select>
+	
+	<select id="selectBoardOne" parameterType="int" resultType="dto.BoardDTO">
+		SELECT * FROM (
+		<include refid="selectBoard" />
+		)
+		<where>
+			<if test="boardId != null and boardId > 0">
+				BOARD_ID = #{boardId}
+			</if>
+		</where>
 	</select>
 </mapper>

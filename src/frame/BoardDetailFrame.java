@@ -20,7 +20,7 @@ import dto.BoardDTO;
 
 public class BoardDetailFrame extends JFrame {
 
-	private static final long serialVersionUID = 6032491971534575326L;
+	private final long serialVersionUID = 6032491971534575326L;
 
 	// 게시물 정보를 표시할 라벨과 텍스트 영역
 	private JLabel titleLabel;
@@ -79,13 +79,18 @@ public class BoardDetailFrame extends JFrame {
 		scrollPane.setBounds(40, 520, 400, 250);
 		contentPane.add(scrollPane);
 
-		JLabel dateLabel = new JLabel("날짜: " + board.getBoardWordDate());
+		JLabel authorLabel = new JLabel("작성자 :   " + board.getUserId());
+		authorLabel.setFont(new Font("맑은 고딕", Font.PLAIN, 18));
+		authorLabel.setBounds(20, 400, 460, 30);
+		contentPane.add(authorLabel);
+		
+		JLabel dateLabel = new JLabel("날짜 : " + board.getBoardWordYyyy() + " " + board.getBoardWordMm() + " " + board.getBoardWordDd());
 		dateLabel.setFont(new Font("맑은 고딕", Font.PLAIN, 23));
-		dateLabel.setBounds(50, 420, 460, 30);
+		dateLabel.setBounds(30, 440, 460, 30);
 		contentPane.add(dateLabel);
 
-		JLabel timeLabel = new JLabel("시간: " + board.getBoardWordTime());
-		timeLabel.setBounds(50, 470, 460, 30);
+		JLabel timeLabel = new JLabel("시간 : " + board.getBoardWordApm() +  " " + board.getBoardWordHh() +  " " + board.getBoardWordMi());
+		timeLabel.setBounds(30, 480, 460, 30);
 		timeLabel.setFont(new Font("맑은 고딕", Font.PLAIN, 23));
 		contentPane.add(timeLabel);
 
@@ -97,7 +102,7 @@ public class BoardDetailFrame extends JFrame {
 		JButton closeButton = new JButton("닫기");
 		closeButton.setFont(new Font("맑은 고딕", Font.PLAIN, 13));
 		closeButton.setBackground(Color.LIGHT_GRAY);
-		closeButton.setBounds(400, 20, 60, 30);
+		closeButton.setBounds(400, 17, 60, 30);
 		closeButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -114,7 +119,7 @@ public class BoardDetailFrame extends JFrame {
 	}
 
 	// 게시물 세부 정보를 출력하는 메서드 (예: 게시물 선택 시 호출)
-	public static void showBoardDetail(BoardDTO board) {
+	public void showBoardDetail(BoardDTO board) {
 		new BoardDetailFrame(board);
 	}
 }

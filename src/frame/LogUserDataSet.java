@@ -78,10 +78,10 @@ class User {
     }
 }
 
-public class LoginUserDataSet {
+public class LogUserDataSet {
 	private ArrayList<User> users;
 	
-	public LoginUserDataSet() {
+	public LogUserDataSet() {
 		users = new ArrayList<User>();
 	}
 	

@@ -23,5 +23,15 @@ public class BoardDAO {
 		return session.selectList("board.selectBoardList", dto);
 	}
 
+	public BoardDTO selectBoard(SqlSession session, int boardId) {
+		// TODO Auto-generated method stub
+		return session.selectOne("board.selectBoardOne", boardId);
+	}
+
+	public int updateBoard(SqlSession session, BoardDTO dto) {
+		// TODO Auto-generated method stub
+		return session.update("board.updateBoard", dto);
+	}
+
 	
 }
