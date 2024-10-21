@@ -5,6 +5,8 @@ import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Frame;
 import java.awt.TextField;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
@@ -117,7 +119,7 @@ public class BoardListFrame extends JFrame {
 				mainFrame.dispose();
 			}
 		});
-		
+
 		// 글 검색 필드  
 		TextField contentSearch = new TextField("검색할 글 제목을 입력하세요"); // 제목 입력
 		contentSearch.setBounds(50, 640, 300, 30);
@@ -127,9 +129,9 @@ public class BoardListFrame extends JFrame {
 		searchButton.setFont(new Font("맑은 고딕", Font.PLAIN, 13));
 		searchButton.setBackground(Color.LIGHT_GRAY);
 		searchButton.setBounds(360, 640, 80, 30);
-		
+
 		// 프레임에 검색 버튼 추가
-	    mainFrame.add(searchButton);
+		mainFrame.add(searchButton);
 
 		contentSearch.addMouseListener(new MouseAdapter() {
 			@Override
@@ -137,6 +139,37 @@ public class BoardListFrame extends JFrame {
 				if (contentSearch.getText().equals("검색할 글 제목을 입력하세요")) {
 					contentSearch.setText(""); // 클릭 시 텍스트 초기화
 				}
+			}
+		});
+
+		// 버튼(searchBtn) 클릭 이벤트
+		searchButton.addActionListener(new ActionListener() {
+
+			@Override
+			@SuppressWarnings("unchecked")
+			public void actionPerformed(ActionEvent e) {
+
+				String content = contentSearch.getText();
+				if (content == "" || content.equals("검색할 글 제목을 입력하세요")) {
+					// 검색어 없음 경고
+					
+					
+					return;
+				}
+
+				boardDTO.setBoardTitle(content);
+
+				List<BoardDTO> list = bs.selectBoardList(boardDTO);
+				if (list == null || list.isEmpty()) {
+					// 검색 결과 없음
+					
+					
+				} else {
+					// 검색 목록 변경
+					
+					
+				}
+
 			}
 		});
 
