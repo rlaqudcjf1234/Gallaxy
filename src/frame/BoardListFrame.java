@@ -27,45 +27,42 @@ import service.impl.BoardServiceImpl;
 
 public class BoardListFrame extends JFrame {
 
-
 	private static JPanel postListPanel = new JPanel(); // 게시물 목록 패널
 	private static Frame mainFrame;
-	
+
 	// 게시물 목록을 갱신하는 메서드
 	public static void updateBoardList(List<BoardDTO> boardList) {
-	    postListPanel.removeAll(); // 기존 게시물 목록 초기화
-	    for (BoardDTO board : boardList) {
-	        JButton postButton = new JButton(board.getBoardTitle()); // 게시물 제목으로 버튼 생성
-	        postButton.setHorizontalAlignment(SwingConstants.LEFT); // 버튼 내 글자 정렬
-	        postButton.setBorderPainted(false); // 테두리 제거
-	        postButton.setFocusPainted(false); // 포커스 제거
-	        postButton.setBackground(Color.WHITE); // 배경 색
+		postListPanel.removeAll(); // 기존 게시물 목록 초기화
+		for (BoardDTO board : boardList) {
+			JButton postButton = new JButton(board.getBoardTitle()); // 게시물 제목으로 버튼 생성
+			postButton.setHorizontalAlignment(SwingConstants.LEFT); // 버튼 내 글자 정렬
+			postButton.setBorderPainted(false); // 테두리 제거
+			postButton.setFocusPainted(false); // 포커스 제거
+			postButton.setBackground(Color.WHITE); // 배경 색
 
-	        postButton.addMouseListener(new MouseAdapter() {
-	            @Override
-	            public void mouseClicked(MouseEvent e) {
-	                // 내용 상세
-	            	new BoardDetailFrame(board);
-	            }
-	        });
+			postButton.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					// 내용 상세
+					new BoardDetailFrame(board);
+				}
+			});
 
-	        postListPanel.add(postButton); // 패널에 게시물 추가
-	    }
-	    postListPanel.revalidate(); // UI 업데이트
-	    postListPanel.repaint();    // UI 갱신
+			postListPanel.add(postButton); // 패널에 게시물 추가
+		}
+		postListPanel.revalidate(); // UI 업데이트
+		postListPanel.repaint(); // UI 갱신
 	}
-	
-	
 
 	public static void showBoardList() {
 
 		BoardService bs = new BoardServiceImpl();
 
 		BoardDTO boardDTO = new BoardDTO();
-		
-		 // 프로그램 시작 시 게시물 목록 불러오기
-        List<BoardDTO> boardList = bs.selectBoardList(new BoardDTO()); // 게시물 리스트 가져오기
-        updateBoardList(boardList); // 게시물 목록 UI 업데이트
+
+		// 프로그램 시작 시 게시물 목록 불러오기
+		List<BoardDTO> boardList = bs.selectBoardList(new BoardDTO()); // 게시물 리스트 가져오기
+		updateBoardList(boardList); // 게시물 목록 UI 업데이트
 
 		Frame mainFrame = new Frame("러닝 메이트 게시판");
 		mainFrame.setBounds(700, 100, 500, 850); // 위치와 크기
@@ -120,9 +117,19 @@ public class BoardListFrame extends JFrame {
 				mainFrame.dispose();
 			}
 		});
-
+		
+		// 글 검색 필드  
 		TextField contentSearch = new TextField("검색할 글 제목을 입력하세요"); // 제목 입력
 		contentSearch.setBounds(50, 640, 300, 30);
+
+		// 검색 버튼 생성
+		JButton searchButton = new JButton("검색");
+		searchButton.setFont(new Font("맑은 고딕", Font.PLAIN, 13));
+		searchButton.setBackground(Color.LIGHT_GRAY);
+		searchButton.setBounds(360, 640, 80, 30);
+		
+		// 프레임에 검색 버튼 추가
+	    mainFrame.add(searchButton);
 
 		contentSearch.addMouseListener(new MouseAdapter() {
 			@Override
@@ -134,37 +141,6 @@ public class BoardListFrame extends JFrame {
 		});
 
 		mainFrame.add(contentSearch);
-
-		//		// TextField와 TextArea 추가
-		//		TextField textFieldTitle = new TextField("제목을 입력하세요"); // 제목 입력
-		//		TextArea textAreaContent = new TextArea("내용을 입력하세요"); // 내용
-		//
-		//		// 입력 칸 위치 및 크기 설정
-		//		textFieldTitle.setBounds(50, 220, 400, 30); // 제목 입력칸 위치와 크기
-		//		textAreaContent.setBounds(50, 270, 400, 200); // 내용 입력칸 위치와 크기
-		//
-		//		// 마우스 클릭 시 기본 텍스트 지우기
-		//		textFieldTitle.addMouseListener(new MouseAdapter() {
-		//			@Override
-		//			public void mouseClicked(MouseEvent e) {
-		//				if (textFieldTitle.getText().equals("제목을 입력하세요")) {
-		//					textFieldTitle.setText(""); // 클릭 시 텍스트 초기화
-		//				}
-		//			}
-		//		});
-		//
-		//		textAreaContent.addMouseListener(new MouseAdapter() {
-		//			@Override
-		//			public void mouseClicked(MouseEvent e) {
-		//				if (textAreaContent.getText().equals("내용을 입력하세요")) {
-		//					textAreaContent.setText(""); // 클릭 시 텍스트 초기화
-		//				}
-		//			}
-		//		});
-		//
-		//        // 프레임에 TextField와 TextArea 추가
-		//        mainFrame.add(textFieldTitle);
-		//        mainFrame.add(textAreaContent);
 
 		// 게시물 목록 패널 설정
 		postListPanel.setLayout(new BoxLayout(postListPanel, BoxLayout.Y_AXIS)); // 세로로 버튼 나열
@@ -228,14 +204,14 @@ public class BoardListFrame extends JFrame {
 			@Override
 			public void windowClosing(WindowEvent e) {
 				System.exit(0);
-			
+
 			}
 		});
-		
+
 	}
-	
+
 	public static void main(String[] args) {
 		showBoardList();
 	}
-	
+
 }
