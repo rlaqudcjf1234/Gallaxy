@@ -1,209 +1,519 @@
 package frame;
 
 import java.awt.BorderLayout;
-import java.awt.Container;
-import java.awt.Frame;
+import java.awt.Component;
+import java.awt.EventQueue;
+import java.awt.FlowLayout;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.io.File;
+import java.util.Calendar;
 import java.util.List;
+import java.util.Map;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
-import javax.swing.JTextField;
+import javax.swing.JTextArea;
+import javax.swing.border.EmptyBorder;
 
 import dto.AddressDTO;
+import dto.BoardDTO;
+import service.BoardService;
 import service.NaverApiService;
 import service.RetrieveNewAdress;
+import service.impl.BoardServiceImpl;
 import service.impl.NaverApiServiceImpl;
 import service.impl.RetrieveNewAdressImpl;
+import javax.swing.JTextField;
+import javax.swing.DefaultComboBoxModel;
+import javax.swing.JComboBox;
+import javax.swing.BoxLayout;
+import javax.swing.JScrollPane;
 
 public class BoardWriteFrame extends JFrame {
-
-	RetrieveNewAdress rna = new RetrieveNewAdressImpl();
-	NaverApiService nas = new NaverApiServiceImpl();
-	
-	String filePath = "temp/서울특별시 종로구 삼일대로17길 42-4.jpg";
 
 	/**
 	 * 
 	 */
-	private static final long serialVersionUID = -9174227746682050944L;
+	private static final long serialVersionUID = 6032491971534575326L;
 
+	private BoardService bs = new BoardServiceImpl();
+	private NaverApiService nas = new NaverApiServiceImpl();
+	private RetrieveNewAdress rna = new RetrieveNewAdressImpl();
+
+	private Map<String, Object> result;
+	private String serarch = "";
+	private int currentPage = 1;
+	private int totalPage;
+	private List<String> addrs;
+
+	private String textInit = "제목을 입력하세요";
+	private String detailInit = "내용을 입력하세요";
+
+	private String yyyy[] = { "2024년", "2025년" };
+	private String mm[] = { "1월", "2월", "3월", "4월", "5월", "6월", "7월", "8월", "9월", "10월", "11월", "12월" };
+	private String dd[] = { "1일", "2일", "3일", "4일", "5일", "6일", "7일", "8일", "9일", "10일", "11일", "12일", "13일", "14일",
+			"15일", "16일", "17일", "18일", "19일", "20일", "21일", "22일", "23일", "24일", "25일", "26일", "27일", "28일", "29일",
+			"30일", "31일" };
+	private String apm[] = { "오전", "오후" };
+	private String hh[] = { "1시", "2시", "3시", "4시", "5시", "6시", "7시", "8시", "9시", "10시", "11시", "12시" };
+	private String mi[] = { "00분", "30분" };
+
+	/* BoardWriteFrame */
+	private JTextField addressFld;
+	private JLabel imageLbl;
+	private JTextField textFld;
+	private JTextArea detailFld;
+	private JComboBox<String> yyyyCbx;
+	private JComboBox<String> mmCbx;
+	private JComboBox<String> ddCbx;
+	private JComboBox<String> apmCbx;
+	private JComboBox<String> hhCbx;
+	private JComboBox<String> miCbx;
+	private String filePath = "temp/서울특별시 종로구 종로 13-3 구두수선대.jpg";
+
+	/* BoardSFrame */
+	private JFrame searchFrame;
+	private JLabel pageLbl;
+	private JPanel listPane;
+
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					BoardWriteFrame frame = new BoardWriteFrame();
+					frame.setVisible(true);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+	/**
+	 * Create the frame.
+	 */
 	public BoardWriteFrame() {
-		//프레임 타이틀바
+		// 프레임 타이틀바
 		setTitle("BoardWriteFrame");
-		//프레임 크기(픽셀)
-		setSize(500, 850);
-		//X버튼 종료
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 프레임의 X 클릭 시 종료.
+		// X버튼 종료
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		// 프레임 위치, 크기(픽셀)
+		setBounds(100, 100, 500, 850);
 
-		// JFrame 안쪽 영역.
-		Container container = getContentPane();
+		JPanel contentPane = new JPanel();
+		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-		// JFrame 안쪽 영역 상단에 들어갈 주소입력
-		JPanel search = initSearch();
-		container.add(BorderLayout.NORTH, search); // 상단 pan 세팅
-		
-		JPanel input = initInput();
-		container.add(BorderLayout.CENTER, input); // 중단 pan 세팅
+		JPanel searchPane = new JPanel();
+		searchPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		searchPane.setLayout(new FlowLayout(FlowLayout.CENTER));
+		contentPane.add(searchPane);
 
-		setVisible(true);
+		JLabel addressLbl = new JLabel("주소");
+		searchPane.add(addressLbl);
 
-	}
+		addressFld = new JTextField(30);
+		searchPane.add(addressFld);
 
-	public BoardWriteFrame(Frame mainFrame) {
-		// TODO Auto-generated constructor stub
-	}
+		JButton searchBtn = new JButton("조회");
+		searchPane.add(searchBtn);
 
-	private JPanel initInput() {
-		// TODO Auto-generated method stub
-		JPanel pan = new JPanel();
-		
-		
-		
-		return pan;
-	}
-
-	public JPanel initSearch() {
-		JPanel pan = new JPanel();
-		JLabel addressLbl = new JLabel("주소입력"); // 주소 조회 label
-		pan.add(addressLbl);
-
-		JTextField address = new JTextField(30); // 주소 조회 input
-		pan.add(address);
-
-		JButton btn = new JButton("클릭"); // 주소 조회 실행
-		pan.add(btn);
-		
-		ImageIcon img = new ImageIcon(filePath);
-		JLabel imageLbl = new JLabel(img);
-		pan.add(imageLbl);
-
-		// pan에 생성한 버튼(btn) 클릭 시 처리하는 이벤트 핸들러.
-		btn.addActionListener(new ActionListener() {
+		// 버튼(searchBtn) 클릭 이벤트
+		searchBtn.addActionListener(new ActionListener() {
 
 			@Override
+			@SuppressWarnings("unchecked")
 			public void actionPerformed(ActionEvent e) {
 				// TODO Auto-generated method stub
-				String serarch = address.getText();
-				List<String> addrs = rna.getAddress(serarch);
+				serarch = addressFld.getText();
+				if (serarch.length() < 2) {
+					JOptionPane.showMessageDialog(null, "검색어는 두글자 이상 입력되어야 합니다.", "알림",
+							JOptionPane.INFORMATION_MESSAGE);
+					return;
+				}
+				if ((result = rna.getAddress(serarch, currentPage = 1)) != null) {
+					String errorCode = (String) result.get("errorCode");
+					String errorMessage = (String) result.get("errorMessage");
 
-				if (addrs != null && addrs.size() > 0) {
-					List<AddressDTO> list = nas.getGeocode(addrs.get(0));
-					if (list != null && list.size() > 0) {
-						File file = nas.getStatic(list.get(0));
-						if (file != null && file.length() > 0) {
-							filePath = file.getPath();
-							ImageIcon img = new ImageIcon(filePath);
-							imageLbl.setIcon(img);
+					if (errorCode.equals("0")) {
+						totalPage = (int) result.get("totalPage");
+						if (totalPage > 0) {
+							addrs = (List<String>) result.get("list");
+						} else {
+							JOptionPane.showMessageDialog(null, "조회 결과가 없습니다.", "알림", JOptionPane.INFORMATION_MESSAGE);
+							return;
 						}
+					} else {
+						JOptionPane.showMessageDialog(null, errorMessage, "알림", JOptionPane.ERROR_MESSAGE);
+						return;
 					}
 				}
+
+				BoardSearchFrame();
 			}
 		});
 
-		return pan;
-	}
+		JPanel imagePane = new JPanel();
+		imagePane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		imagePane.setLayout(new BoxLayout(imagePane, BoxLayout.X_AXIS));
+		contentPane.add(imagePane);
 
-	public static void main(String[] args) {
-		new BoardWriteFrame();
-	}
+		imageLbl = new JLabel(new ImageIcon(filePath));
+		imagePane.add(imageLbl);
 
-}
-/*
- * package frame;
+		JPanel titlePane = new JPanel();
+		titlePane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		titlePane.setLayout(new BoxLayout(titlePane, BoxLayout.X_AXIS));
+		contentPane.add(titlePane);
 
-import java.awt.Button;
-import java.awt.Frame;
-import java.awt.TextArea;
-import java.awt.TextField;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+		JLabel textLbl = new JLabel("제목");
+		textLbl.setBorder(new EmptyBorder(5, 5, 5, 5));
+		titlePane.add(textLbl);
 
-import javax.swing.JOptionPane;
+		textFld = new JTextField(textInit);
+		textFld.setFont(new Font("맑은 고딕", Font.PLAIN, 13));
+		titlePane.add(textFld);
 
-public class WriteBoard {
-
-	private Frame mainFrame;
-	private Frame writeFrame;
-
-	public WriteBoard(Frame ma) {
-		this.mainFrame = ma;
-
-		Frame writeFrame = new Frame("글 작성");
-		writeFrame.setBounds(700, 100, 500, 850); // 위치와 크기
-		writeFrame.setLayout(null); // 절대 레이아웃 사용
-
-		// 제목 및 내용 입력
-		TextField titleField = new TextField("제목을 입력하세요");
-		TextArea contentField = new TextArea("내용을 입력하세요");
-
-		titleField.setBounds(50, 350, 400, 30);
-		contentField.setBounds(50, 400, 400, 300);
-
-		writeFrame.add(titleField);
-		writeFrame.add(contentField);
-
-		// 마우스 클릭 시 기본 텍스트 지우기
-		titleField.addMouseListener(new MouseAdapter() {
+		// 클릭 이벤트 기본 텍스트(textFld) 삭제
+		textFld.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (titleField.getText().equals("제목을 입력하세요")) {
-					titleField.setText(""); // 클릭 시 텍스트 초기화
+				if (textFld.getText().equals(textInit)) {
+					textFld.setText(""); // 클릭 시 텍스트 초기화
 				}
 			}
 		});
 
-		contentField.addMouseListener(new MouseAdapter() {
+		JPanel datePane = new JPanel();
+		datePane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		datePane.setLayout(new BoxLayout(datePane, BoxLayout.X_AXIS));
+		contentPane.add(datePane);
+
+		JLabel dateLbl = new JLabel("일자");
+		dateLbl.setBorder(new EmptyBorder(5, 5, 5, 5));
+		datePane.add(dateLbl);
+
+		Calendar cal = Calendar.getInstance();
+
+		yyyyCbx = new JComboBox<String>(new DefaultComboBoxModel<String>(yyyy));
+		datePane.add(yyyyCbx);
+
+		mmCbx = new JComboBox<String>(new DefaultComboBoxModel<String>(mm));
+		mmCbx.setSelectedIndex(cal.get(Calendar.MONTH));
+		datePane.add(mmCbx);
+
+		ddCbx = new JComboBox<String>(new DefaultComboBoxModel<String>(dd));
+		ddCbx.setSelectedIndex(cal.get(Calendar.DAY_OF_MONTH) - 1);
+		datePane.add(ddCbx);
+
+		JPanel timePane = new JPanel();
+		timePane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		timePane.setLayout(new BoxLayout(timePane, BoxLayout.X_AXIS));
+		contentPane.add(timePane);
+
+		JLabel timeLbl = new JLabel("시간");
+		timeLbl.setBorder(new EmptyBorder(5, 5, 5, 5));
+		timePane.add(timeLbl);
+
+		apmCbx = new JComboBox<String>(new DefaultComboBoxModel<String>(apm));
+		apmCbx.setSelectedIndex(cal.get(Calendar.AM_PM));
+		timePane.add(apmCbx);
+
+		hhCbx = new JComboBox<String>(new DefaultComboBoxModel<String>(hh));
+		hhCbx.setSelectedIndex(cal.get(Calendar.HOUR) - 1);
+		timePane.add(hhCbx);
+
+		miCbx = new JComboBox<String>(new DefaultComboBoxModel<String>(mi));
+		timePane.add(miCbx);
+
+		JPanel detailPane = new JPanel();
+		detailPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		detailPane.setLayout(new BoxLayout(detailPane, BoxLayout.X_AXIS));
+		contentPane.add(detailPane);
+
+		JLabel detailLbl = new JLabel("내용");
+		detailLbl.setBorder(new EmptyBorder(5, 5, 5, 5));
+		detailPane.add(detailLbl);
+
+		detailFld = new JTextArea(detailInit);
+		detailFld.setColumns(35);
+		detailFld.setRows(10);
+		detailPane.add(detailFld);
+
+		// 클릭 이벤트 기본 텍스트(contentFld) 삭제
+		detailFld.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (contentField.getText().equals("내용을 입력하세요")) {
-					contentField.setText(""); // 클릭 시 텍스트 초기화
+				if (detailFld.getText().equals(detailInit)) {
+					detailFld.setText(""); // 클릭 시 텍스트 초기화
 				}
 			}
 		});
+
+		JPanel buttonPane = new JPanel();
+		buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.X_AXIS));
+		contentPane.add(buttonPane);
 
 		// 작성 완료 버튼
-		Button btnWrite = new Button("작성 완료");
-		btnWrite.setBounds(250, 100, 100, 30);
-		writeFrame.add(btnWrite);
+		JButton writeBtn = new JButton("작성 완료");
+		buttonPane.add(writeBtn);
 
-		// 버튼 클릭 이벤트
-		btnWrite.addMouseListener(new MouseAdapter() {
+		// 버튼(writeBtn) 클릭 이벤트
+		writeBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				// 작성된 내용 처리
-				String title = titleField.getText();
-				String content = contentField.getText();
+				String sTitle = textFld.getText();
+				String sContent = detailFld.getText();
+				String sYyyy = yyyy[yyyyCbx.getSelectedIndex()];
+				String sMm = mm[mmCbx.getSelectedIndex()];
+				String sDd = dd[ddCbx.getSelectedIndex()];
+				String sApm = apm[apmCbx.getSelectedIndex()];
+				String sHh = hh[hhCbx.getSelectedIndex()];
+				String sMi = mi[miCbx.getSelectedIndex()];
 
-				if (title.isEmpty() || content.isEmpty() 
-				|| title.equals("제목을 입력하세요") || content.equals("내용을 입력하세요"))
-
-				{
-					JOptionPane.showMessageDialog(writeFrame, "제목과 내용을 입력하세요!");
-				} else {
-					JOptionPane.showMessageDialog(writeFrame, "작성 완료: " + title);
-					BoardNotice.addWrite(title, content); // 제목과 내용을 NoticeBoard에 추가
-					writeFrame.dispose(); // 글 작성 프레임 닫기
-					mainFrame.setVisible(true); // 메인 프레임 보이기
+				if (sTitle.isEmpty() || sTitle.equals(textInit)) {
+					JOptionPane.showMessageDialog(null, textInit, "알림", JOptionPane.INFORMATION_MESSAGE);
+					return;
 				}
+
+				if (sContent.isEmpty() || sContent.equals(detailInit)) {
+					JOptionPane.showMessageDialog(null, detailInit, "알림", JOptionPane.INFORMATION_MESSAGE);
+					return;
+				}
+
+				BoardDTO dto = new BoardDTO();
+				dto.setBoardTitle(sTitle);
+				dto.setBoardContent(sContent);
+
+				dto.setBoardWordYyyy(sYyyy);
+				dto.setBoardWordMm(sMm);
+				dto.setBoardWordDd(sDd);
+
+				dto.setBoardWordApm(sApm);
+				dto.setBoardWordHh(sHh);
+				dto.setBoardWordMi(sMi);
+
+				dto.setBoardFilePath(filePath);
+				
+				dto.setUserId("test");
+
+				int cnt = bs.insertBoard(dto);
+				if (cnt > 0) {
+					JOptionPane.showMessageDialog(null, "작성이 완료되었습니다.", "알림", JOptionPane.INFORMATION_MESSAGE);
+
+					List<BoardDTO> updatedBoardList = bs.selectBoardList(new BoardDTO());
+					BoardListFrame.updateBoardList(updatedBoardList); // 게시물 목록 갱신
+
+					dispose(); // 현재 프레임 닫기
+					BoardListFrame.showBoardList(); // 게시물 목록 창 열기
+				} else {
+					JOptionPane.showMessageDialog(null, "오류가 발생하였습니다.", "오류", JOptionPane.ERROR_MESSAGE);
+				}
+
 			}
 		});
 
-		// 종료 이벤트
-		writeFrame.addWindowListener(new WindowAdapter() {
+		// 작성 취소 버튼
+		JButton cancelBtn = new JButton("작성 취소");
+		cancelBtn.setAlignmentX(Component.RIGHT_ALIGNMENT);
+		buttonPane.add(cancelBtn);
+
+		cancelBtn.addMouseListener(new MouseAdapter() {
 			@Override
-			public void windowClosing(WindowEvent e) {
-				writeFrame.dispose(); // 프레임 닫기
+			public void mouseClicked(MouseEvent e) {
+				dispose();
 			}
 		});
 
-		writeFrame.setVisible(true);
+		setContentPane(contentPane);
 	}
-}*/
+
+	/**
+	 * Create the frame.
+	 * 
+	 * @return
+	 */
+	public void BoardSearchFrame() {
+
+		if (searchFrame != null) {
+			searchFrame.dispose();
+		}
+		searchFrame = new JFrame();
+		// 프레임 타이틀바
+		searchFrame.setTitle("BoardSearchFrame");
+		// 프레임 위치, 크기(픽셀)
+		searchFrame.setBounds(600, 100, 500, 850);
+
+		JPanel contentPane = new JPanel();
+		contentPane.setLayout(new BorderLayout());
+		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+
+		JPanel pagePane = new JPanel();
+		pagePane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		pagePane.setLayout(new FlowLayout(FlowLayout.CENTER));
+		contentPane.add(pagePane, BorderLayout.NORTH);
+
+		JButton prevButton = new JButton("<");
+		pagePane.add(prevButton);
+
+		prevButton.addMouseListener(new MouseAdapter() {
+
+			@Override
+			@SuppressWarnings("unchecked")
+			public void mouseClicked(MouseEvent e) {
+				if (currentPage == 1) {
+					return;
+				} else {
+					currentPage -= 1;
+				}
+
+				if ((result = rna.getAddress(serarch, currentPage)) != null) {
+					String errorCode = (String) result.get("errorCode");
+					String errorMessage = (String) result.get("errorMessage");
+
+					if (errorCode.equals("0")) {
+						totalPage = (int) result.get("totalPage");
+						if (totalPage > 0) {
+							addrs = (List<String>) result.get("list");
+						} else {
+							JOptionPane.showMessageDialog(null, "조회 결과가 없습니다.", "알림", JOptionPane.INFORMATION_MESSAGE);
+							return;
+						}
+					} else {
+						JOptionPane.showMessageDialog(null, errorMessage, "알림", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+				}
+
+				/* 조회 목록 갱신 */
+				SearchListUpdate();
+			}
+		});
+
+		pageLbl = new JLabel();
+		pageLbl.setBorder(new EmptyBorder(5, 5, 5, 5));
+		pagePane.add(pageLbl);
+
+		JButton nextButton = new JButton(">");
+		pagePane.add(nextButton);
+
+		nextButton.addMouseListener(new MouseAdapter() {
+
+			@Override
+			@SuppressWarnings("unchecked")
+			public void mouseClicked(MouseEvent e) {
+				if (currentPage == totalPage) {
+					return;
+				} else {
+					currentPage += 1;
+				}
+
+				if ((result = rna.getAddress(serarch, currentPage)) != null) {
+					String errorCode = (String) result.get("errorCode");
+					String errorMessage = (String) result.get("errorMessage");
+
+					if (errorCode.equals("0")) {
+						totalPage = (int) result.get("totalPage");
+						if (totalPage > 0) {
+							addrs = (List<String>) result.get("list");
+						} else {
+							JOptionPane.showMessageDialog(null, "조회 결과가 없습니다.", "알림", JOptionPane.INFORMATION_MESSAGE);
+							return;
+						}
+					} else {
+						JOptionPane.showMessageDialog(null, errorMessage, "알림", JOptionPane.ERROR_MESSAGE);
+						return;
+					}
+				}
+
+				/* 조회 목록 갱신 */
+				SearchListUpdate();
+			}
+		});
+
+		listPane = new JPanel();
+		listPane.setLayout(new GridLayout(10, 1));
+		JScrollPane scrollPane = new JScrollPane(listPane);
+		scrollPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		contentPane.add(scrollPane, BorderLayout.CENTER);
+
+		JPanel buttonPane = new JPanel();
+		contentPane.add(buttonPane, BorderLayout.SOUTH);
+
+		// 닫기 버튼
+		JButton cancelBtn = new JButton("닫기");
+		buttonPane.add(cancelBtn);
+
+		cancelBtn.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				searchFrame.dispose();
+			}
+		});
+
+		/* 조회 목록 갱신 */
+		SearchListUpdate();
+
+		searchFrame.setVisible(true);
+		searchFrame.setContentPane(contentPane);
+	}
+
+	/* 조회 목록 갱신 */
+	public void SearchListUpdate() {
+		if (addrs != null && addrs.size() > 0) {
+			// 목록 전체 삭제
+			listPane.removeAll();
+			for (String addr : addrs) {
+
+				// 목록 추가
+				JPanel optionPane = new JPanel();
+				optionPane.setLayout(new BorderLayout());
+				listPane.add(optionPane);
+
+				JLabel optionLbl = new JLabel(addr);
+				optionPane.add(optionLbl, BorderLayout.WEST);
+
+				JPanel buttonPane = new JPanel();
+				buttonPane.setBorder(new EmptyBorder(15, 5, 15, 5));
+				optionPane.add(buttonPane, BorderLayout.EAST);
+
+				JButton addrBtn = new JButton("선택");
+				buttonPane.add(addrBtn);
+
+				addrBtn.addMouseListener(new MouseAdapter() {
+					@Override
+					public void mouseClicked(MouseEvent e) {
+						List<AddressDTO> list = nas.getGeocode(addr);
+						if (list != null && list.size() > 0) {
+							File file = nas.getStatic(list.get(0));
+							if (file != null && file.length() > 0) {
+								filePath = file.getPath();
+								ImageIcon img = new ImageIcon(filePath);
+								imageLbl.setIcon(img);
+							}
+						}
+					}
+				});
+			}
+			listPane.revalidate(); // UI 업데이트
+			listPane.repaint(); // UI 갱신
+
+			pageLbl.setText(Integer.toString(currentPage) + " / " + Integer.toString(totalPage));
+			pageLbl.revalidate(); // UI 업데이트
+			pageLbl.repaint(); // UI 갱신
+		}
+	}
+}
