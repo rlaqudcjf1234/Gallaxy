@@ -87,7 +87,7 @@ public class MainBoard extends JFrame {
 		// 버튼 이벤트 -> 커뮤니티
 		btnMyP.addActionListener(e -> {
 			System.out.println("마이 페이지 버튼 클릭됨!"); // 디버그용 메시지
-			new BoardListFrame().setVisible(true); // 이후에 BoardListFrame을 마이 페이지 파일로 변경
+			new myPageBegin(); // 이후에 BoardListFrame을 마이 페이지 파일로 변경
 			
 			dispose(); // 현재 창 닫기
 		});
