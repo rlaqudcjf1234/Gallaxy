@@ -73,21 +73,21 @@ public class MainBoard extends JFrame {
 		// 버튼 이벤트 -> 커뮤니티
 		btnComm.addActionListener(e -> { //BoardListFrame 및 다른 파일에 생성자 있어야됨
 			System.out.println("커뮤니티 버튼 클릭됨!"); // 디버그용 메시지
-			 new BoardListFrame().setVisible(true); // 새로운 창 열기
+			 new BoardListFrame(); // 새로운 창 열기
 			 
 			dispose(); // 현재 창 닫기
 		});
 		// 버튼 이벤트 -> 헬스 케어
 		btnHC.addActionListener(e -> {
 			System.out.println("헬스 케어 버튼 클릭됨!"); // 디버그용 메시지
-			new BoardListFrame().setVisible(true); // 이후에 BoardListFrame을 헬스케어 파일로 변경
+			new BoardListFrame(); // 이후에 BoardListFrame을 헬스케어 파일로 변경
 			
 			dispose(); // 현재 창 닫기
 		});
-		// 버튼 이벤트 -> 커뮤니티
+		// 버튼 이벤트 -> 마이페이지
 		btnMyP.addActionListener(e -> {
 			System.out.println("마이 페이지 버튼 클릭됨!"); // 디버그용 메시지
-			new BoardListFrame().setVisible(true); // 이후에 BoardListFrame을 마이 페이지 파일로 변경
+			new myPageBegin(); //
 			
 			dispose(); // 현재 창 닫기
 		});
