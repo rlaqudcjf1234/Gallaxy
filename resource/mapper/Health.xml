@@ -3,6 +3,17 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="health">
 
+	<select id="selectHealth" parameterType="dto.HealthDTO" resultType="dto.HealthDTO">
+		SELECT
+			USER_ID, HEALTH_YYYY, HEALTH_MM, HEALTH_DD, 
+			HEALTH_DISTANCE, HEALTH_TIME, HEALTH_SPEED, HEALTH_CALORIES
+		FROM HEALTH
+		WHERE USER_ID = #{userId}
+		AND HEALTH_YYYY = #{healthYyyy}
+		AND HEALTH_MM = #{healthMm}
+		AND HEALTH_DD = #{healthDd}
+	</select>
+
 	<insert id="insertHealth" parameterType="dto.HealthDTO">
 		INSERT INTO HEALTH (
 			USER_ID, HEALTH_YYYY, HEALTH_MM, HEALTH_DD, 
@@ -12,6 +23,28 @@
 			#{healthDistance}, #{healthTime}, #{healthSpeed}, #{healthCalories}
 		)
 	</insert>
+	
+	<update id="updateHealth" parameterType="dto.HealthDTO">
+		UPDATE HEALTH SET
+			HEALTH_DISTANCE = #{healthDistance},
+			HEALTH_TIME = #{healthTime},
+			HEALTH_SPEED = #{healthSpeed},
+			HEALTH_CALORIES = #{healthCalories}
+		WHERE USER_ID = #{userId}
+		AND HEALTH_YYYY = #{healthYyyy}
+		AND HEALTH_MM = #{healthMm}
+		AND HEALTH_DD = #{healthDd}
+	</update>
+
+	<select id="selectHealthSt" parameterType="dto.HealthDTO" resultType="dto.HealthDTO">
+		SELECT
+			SUM(HEALTH_DISTANCE) AS HEALTH_DISTANCE, SUM(HEALTH_TIME) AS HEALTH_TIME, SUM(HEALTH_CALORIES) AS HEALTH_CALORIES
+		FROM HEALTH
+		WHERE USER_ID = #{userId}
+		AND HEALTH_YYYY = #{healthYyyy}
+		AND HEALTH_MM = #{healthMm}
+		GROUP BY USER_ID, HEALTH_YYYY, HEALTH_MM
+	</select>
 	
 	
 	

@@ -22,7 +22,11 @@ public class HealthServiceImpl implements HealthService {
 		SqlSession session = MySqlSessionFactory.getSqlSession();
 		int cnt = 0;
 		try {
-			cnt = healthDAO.insertHealth(session, dto);
+			if(healthDAO.selectHealth(session, dto) == null) {
+				cnt = healthDAO.insertHealth(session, dto);
+			} else {
+				cnt = healthDAO.updateHealth(session, dto);
+			}
 		} catch (Exception e) {
 			// TODO: handle exception\
 			e.printStackTrace();
@@ -33,6 +37,40 @@ public class HealthServiceImpl implements HealthService {
 		}
 
 		return cnt;
+	}
+
+	@Override
+	public HealthDTO selectHealthSt(HealthDTO dto) {
+		// TODO Auto-generated method stub
+		SqlSession session = MySqlSessionFactory.getSqlSession();
+		HealthDTO result = null;
+		try {
+			result = healthDAO.selectHealthSt(session, dto);
+		} catch (Exception e) {
+			// TODO: handle exception\
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+
+		return result;
+	}
+
+	@Override
+	public HealthDTO selectHealth(HealthDTO dto) {
+		// TODO Auto-generated method stub
+		SqlSession session = MySqlSessionFactory.getSqlSession();
+		HealthDTO result = null;
+		try {
+			result = healthDAO.selectHealth(session, dto);
+		} catch (Exception e) {
+			// TODO: handle exception\
+			e.printStackTrace();
+		} finally {
+			session.close();
+		}
+
+		return result;
 	}
 	
 }

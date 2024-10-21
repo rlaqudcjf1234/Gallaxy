@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- mapper DTD 선언 -->
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="comment">
+
+	<insert id="insertComment" parameterType="dto.CommentDTO">
+		<selectKey resultType="String" keyProperty="commentId" order="BEFORE">
+			SELECT NVL(MAX(COMMENT_ID), 0)+1 FROM BOARD_COMMENT
+		</selectKey>
+		INSERT INTO BOARD_COMMENT (
+			BOARD_ID, COMMENT_ID, COMMENT_CONTENT, USER_ID
+		) VALUES (
+			#{boardId}, #{commentId}, #{commentContent}, #{userId}
+		)
+	</insert>
+	
+	<select id="selectCommentList" parameterType="dto.CommentDTO" resultType="dto.CommentDTO">
+		SELECT BOARD_ID, COMMENT_ID, COMMENT_CONTENT, COMMENT_REG_DT, COMMENT_LUP_DT, USER_ID
+		FROM BOARD_COMMENT
+		<where>
+			<if test="boardId != null">
+				AND BOARD_ID = #{boardId}
+			</if>
+			<if test="userId != null">
+				AND USER_ID = #{userId}
+			</if>
+		</where>
+		ORDER BY COMMENT_ID DESC
+	</select>
+	
+</mapper>
