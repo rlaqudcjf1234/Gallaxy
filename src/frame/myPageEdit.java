@@ -18,7 +18,7 @@ public class myPageEdit extends JPanel {
     private JPanel panel; // 패널
 
 
-	public  myPageEdit() {
+	public  myPageEdit () {
 		
 		 frame = new JFrame("회원정보 수정");
 	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -34,18 +34,21 @@ public class myPageEdit extends JPanel {
 	        JPasswordField passwordField = new JPasswordField();
 	        JButton confirmButton = new JButton("확인");
 	        JButton backToMyPageBegin = new JButton("뒤로가기");
+	        JButton logoutButton = new JButton("로그아웃");
 
 	        // 위치 및 크기 설정
 	        passwordLabel.setBounds(110, 120, 200, 30); // (x, y, width, height)
 	        passwordField.setBounds(170, 120, 200, 30);
 	        confirmButton.setBounds(90, 170, 300, 30);
 	        backToMyPageBegin.setBounds(90, 210, 300, 30);
+	        logoutButton.setBounds(90, 250, 300, 30); // 로그아웃 버튼 위치
 
 	        // 패널에 컴포넌트 추가
 	        panel.add(passwordLabel);
 	        panel.add(passwordField);
 	        panel.add(confirmButton);
 	        panel.add(backToMyPageBegin);
+	        panel.add(logoutButton); 
 	        
 	        //프레임에 패널 추가
 	        frame.add(panel);
@@ -70,16 +73,28 @@ public class myPageEdit extends JPanel {
 		});
 
 		backToMyPageBegin.addActionListener(new ActionListener() {
-
 			@Override
 			public void actionPerformed(ActionEvent panel) {
 				frame.dispose();
 			}
 		});
+		
+		 logoutButton.addActionListener(new ActionListener() {
+	            @Override
+	            public void actionPerformed(ActionEvent e) {
+	                logoutUser();
+	                new UserInForm(); 
+	                frame.dispose(); 
+	            }
+	        });
 
 		frame.setVisible(true);
 	}
 
+	private void logoutUser() {
+        System.out.println("사용자가 로그아웃했습니다.");
+    }
+	
 	private boolean checkPassword(String password) {
 		String correctPassword = "1234"; // 예시 비밀번호
 		return password.equals(correctPassword);
