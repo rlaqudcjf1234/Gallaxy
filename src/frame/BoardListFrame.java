@@ -1,241 +1,131 @@
 package frame;
 
-import java.awt.Color;
-import java.awt.Cursor;
-import java.awt.Font;
-import java.awt.Frame;
-import java.awt.TextField;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.awt.*;
+import java.awt.event.*;
 import java.util.List;
-
-import javax.swing.BoxLayout;
-import javax.swing.ImageIcon;
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JOptionPane;
-import javax.swing.JPanel;
-import javax.swing.JScrollPane;
-import javax.swing.SwingConstants;
-
+import javax.swing.*;
 import dto.BoardDTO;
 import service.BoardService;
 import service.impl.BoardServiceImpl;
 
 public class BoardListFrame extends JFrame {
 
+    private JPanel postListPanel; // 게시물 목록 패널
+    private BoardService boardService; // 서비스 객체
 
-	private static JPanel postListPanel = new JPanel(); // 게시물 목록 패널
-	private static Frame mainFrame;
-	
-	// 게시물 목록을 갱신하는 메서드
-	public static void updateBoardList(List<BoardDTO> boardList) {
-	    postListPanel.removeAll(); // 기존 게시물 목록 초기화
-	    for (BoardDTO board : boardList) {
-	        JButton postButton = new JButton(board.getBoardTitle()); // 게시물 제목으로 버튼 생성
-	        postButton.setHorizontalAlignment(SwingConstants.LEFT); // 버튼 내 글자 정렬
-	        postButton.setBorderPainted(false); // 테두리 제거
-	        postButton.setFocusPainted(false); // 포커스 제거
-	        postButton.setBackground(Color.WHITE); // 배경 색
+    public BoardListFrame() {
+        boardService = new BoardServiceImpl(); // 서비스 초기화
+        initializeUI(); // UI 초기화
+        loadBoardList(); // 게시물 목록 로드
+    }
 
-	        postButton.addMouseListener(new MouseAdapter() {
-	            @Override
-	            public void mouseClicked(MouseEvent e) {
-	                // 내용 상세
-	            	new BoardDetailFrame(board);
-	            }
-	        });
+    // UI 초기화 메서드
+    private void initializeUI() {
+        setTitle("러닝 메이트 게시판");
+        setBounds(700, 100, 500, 850);
+        setBackground(new Color(247, 244, 242));
+        setLayout(null);
+        setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-	        postListPanel.add(postButton); // 패널에 게시물 추가
-	    }
-	    postListPanel.revalidate(); // UI 업데이트
-	    postListPanel.repaint();    // UI 갱신
-	}
-	
-	
+        // 로고 버튼 생성
+        JButton btnLogo = createImageButton("Running Mate.png", 30, 50, 110, 95, 
+            e -> JOptionPane.showMessageDialog(this, "메인화면!"));
+        add(btnLogo);
 
-	public static void showBoardList() {
+        // 글 작성 버튼 생성
+        JButton btnWrite = new JButton("글 작성");
+        btnWrite.setBounds(360, 170, 80, 30);
+        btnWrite.setFont(new Font("맑은 고딕", Font.PLAIN, 13));
+        btnWrite.setBackground(Color.LIGHT_GRAY);
+        btnWrite.addActionListener(e -> openWriteFrame());
+        add(btnWrite);
 
-		BoardService bs = new BoardServiceImpl();
+        // 검색 입력창 생성
+        TextField contentSearch = new TextField("검색할 글 제목을 입력하세요");
+        contentSearch.setBounds(50, 640, 300, 30);
+        contentSearch.addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                contentSearch.setText(""); // 클릭 시 텍스트 초기화
+            }
+        });
+        add(contentSearch);
 
-		BoardDTO boardDTO = new BoardDTO();
-		
-		 // 프로그램 시작 시 게시물 목록 불러오기
-        List<BoardDTO> boardList = bs.selectBoardList(new BoardDTO()); // 게시물 리스트 가져오기
-        updateBoardList(boardList); // 게시물 목록 UI 업데이트
+        // 게시물 목록 스크롤 패널 생성
+        postListPanel = new JPanel();
+        postListPanel.setLayout(new BoxLayout(postListPanel, BoxLayout.Y_AXIS));
+        JScrollPane scrollPane = new JScrollPane(postListPanel);
+        scrollPane.setBounds(50, 220, 400, 400);
+        add(scrollPane);
 
-		Frame mainFrame = new Frame("러닝 메이트 게시판");
-		mainFrame.setBounds(700, 100, 500, 850); // 위치와 크기
-		mainFrame.setBackground(new Color(247, 244, 242)); // 배경 색
-		mainFrame.setLayout(null); // 절대 레이아웃 사용
+        // 로그아웃, 마이페이지, 메인화면 라벨 추가
+        /*add(createClickableLabel("로그아웃", 260, 50, e -> showMessage("로그아웃 합니다!")));
+        add(createClickableLabel("마이페이지", 330, 50, e -> showMessage("마이페이지로 이동!")));
+        add(createClickableLabel("메인화면", 415, 50, e -> showMessage("메인화면으로 이동!")));
+*/
+        setVisible(true); // 화면 표시
+    }
 
-		// 로고 버튼 생성
-		JButton btnLogo = new JButton();
+    // 게시물 목록을 로드하는 메서드
+    private void loadBoardList() {
+        List<BoardDTO> boardList = boardService.selectBoardList(new BoardDTO());
+        updateBoardList(boardList);
+    }
 
-		ImageIcon logoIcon = new ImageIcon("Running Mate.png");
-		btnLogo.setIcon(logoIcon);
-		btnLogo.setBorderPainted(false); // 버튼 테두리 제거
-		btnLogo.setContentAreaFilled(false); // 버튼 배경 제거
-		btnLogo.setFocusPainted(false); // 포커스 효과 제거
-		btnLogo.setBounds(30, 50, 110, 95); // 버튼 위치 및 크기 설정
-		// 클릭 이벤트 추가
-		btnLogo.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				JOptionPane.showMessageDialog(mainFrame, "메인화면!");
-			}
-		});
-		// 글 작성 버튼 생성
-		JButton btnWrite = new JButton("글 작성");
+    // 게시물 목록을 갱신하는 메서드
+    private void updateBoardList(List<BoardDTO> boardList) {
+        postListPanel.removeAll();
+        for (BoardDTO board : boardList) {
+            JButton postButton = new JButton(board.getBoardTitle());
+            postButton.setHorizontalAlignment(SwingConstants.LEFT);
+            postButton.setBorderPainted(false);
+            postButton.setFocusPainted(false);
+            postButton.setBackground(Color.WHITE);
+            postButton.addActionListener(e -> new BoardDetailFrame(board));
+            postListPanel.add(postButton);
+        }
+        postListPanel.revalidate();
+        postListPanel.repaint();
+    }
 
-		// 초기 버튼 위치 및 크기 설정 (기준값)
-		btnWrite.setBounds(360, 170, 80, 30);
-		btnWrite.setFont(new Font("맑은 고딕", Font.PLAIN, 13));
-		btnWrite.setBackground(Color.LIGHT_GRAY);
+    // 글 작성 화면을 여는 메서드
+    private void openWriteFrame() {
+        new BoardWriteFrame().setVisible(true);
+        dispose(); // 현재 프레임 닫기
+    }
 
-		// 프레임에 버튼 추가
-		mainFrame.add(btnWrite);
-		mainFrame.add(btnLogo);
+    // 이미지 버튼을 생성하는 헬퍼 메서드
+    private JButton createImageButton(String path, int x, int y, int width, int height, ActionListener action) {
+        JButton button = new JButton();
+        try {
+            button.setIcon(new ImageIcon(path));
+        } catch (Exception e) {
+            System.err.println("이미지 로드 실패: " + path);
+        }
+        button.setBorderPainted(false);
+        button.setContentAreaFilled(false);
+        button.setFocusPainted(false);
+        button.setBounds(x, y, width, height);
+        button.addActionListener(action);
+        return button;
+    }
 
-		// 이미지 추가
-		JLabel labelLogo = new JLabel(); // 이미지 표시를 위한 Label
-		ImageIcon icon = new ImageIcon("gaesipan11.png");
-		labelLogo.setIcon(icon); // JLabel에 이미지 설정
-		labelLogo.setBounds(120, 130, 230, 80); // 이미지 위치 및 크기 설정
+    // 클릭 가능한 라벨을 생성하는 헬퍼 메서드
+    private JLabel createClickableLabel(String text, int x, int y, MouseListener listener) {
+        JLabel label = new JLabel(text);
+        label.setForeground(Color.BLUE);
+        label.setBounds(x, y, 100, 40);
+        label.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR));
+        label.addMouseListener(listener);
+        return label;
+    }
 
-		// 프레임에 Label 추가
-		mainFrame.add(labelLogo);
+    // 메시지를 표시하는 메서드
+    private void showMessage(String message) {
+        JOptionPane.showMessageDialog(this, message);
+    }
 
-		// 글 작성 버튼 클릭 이벤트 추가
-		btnWrite.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-
-				// BoardWriteFrame 열기
-				BoardWriteFrame writeFrame = new BoardWriteFrame();
-				writeFrame.setVisible(true);
-				mainFrame.dispose();
-			}
-		});
-
-		TextField contentSearch = new TextField("검색할 글 제목을 입력하세요"); // 제목 입력
-		contentSearch.setBounds(50, 640, 300, 30);
-
-		contentSearch.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				if (contentSearch.getText().equals("검색할 글 제목을 입력하세요")) {
-					contentSearch.setText(""); // 클릭 시 텍스트 초기화
-				}
-			}
-		});
-
-		mainFrame.add(contentSearch);
-
-		//		// TextField와 TextArea 추가
-		//		TextField textFieldTitle = new TextField("제목을 입력하세요"); // 제목 입력
-		//		TextArea textAreaContent = new TextArea("내용을 입력하세요"); // 내용
-		//
-		//		// 입력 칸 위치 및 크기 설정
-		//		textFieldTitle.setBounds(50, 220, 400, 30); // 제목 입력칸 위치와 크기
-		//		textAreaContent.setBounds(50, 270, 400, 200); // 내용 입력칸 위치와 크기
-		//
-		//		// 마우스 클릭 시 기본 텍스트 지우기
-		//		textFieldTitle.addMouseListener(new MouseAdapter() {
-		//			@Override
-		//			public void mouseClicked(MouseEvent e) {
-		//				if (textFieldTitle.getText().equals("제목을 입력하세요")) {
-		//					textFieldTitle.setText(""); // 클릭 시 텍스트 초기화
-		//				}
-		//			}
-		//		});
-		//
-		//		textAreaContent.addMouseListener(new MouseAdapter() {
-		//			@Override
-		//			public void mouseClicked(MouseEvent e) {
-		//				if (textAreaContent.getText().equals("내용을 입력하세요")) {
-		//					textAreaContent.setText(""); // 클릭 시 텍스트 초기화
-		//				}
-		//			}
-		//		});
-		//
-		//        // 프레임에 TextField와 TextArea 추가
-		//        mainFrame.add(textFieldTitle);
-		//        mainFrame.add(textAreaContent);
-
-		// 게시물 목록 패널 설정
-		postListPanel.setLayout(new BoxLayout(postListPanel, BoxLayout.Y_AXIS)); // 세로로 버튼 나열
-		JScrollPane scrollPane = new JScrollPane(postListPanel); // 스크롤 가능하게
-		scrollPane.setBounds(50, 220, 400, 400);
-		mainFrame.add(scrollPane);
-
-		// 로그아웃 텍스트 추가
-		JLabel logoutLabel = new JLabel("로그아웃");
-		logoutLabel.setForeground(Color.BLUE); // 텍스트 색상 변경
-		logoutLabel.setBounds(260, 50, 100, 40); // 위치와 크기 조정
-		logoutLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // 손 모양 커서
-
-		// 로그아웃 클릭 이벤트 추가
-		logoutLabel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				JOptionPane.showMessageDialog(mainFrame, "로그아웃 합니다!");
-			}
-		});
-
-		mainFrame.add(logoutLabel); // 프레임에 마이페이지 텍스트 추가
-
-		// 로그아웃 텍스트 추가
-		JLabel myPageLabel = new JLabel("마이페이지");
-		myPageLabel.setForeground(Color.BLUE); // 텍스트 색상 변경
-		myPageLabel.setBounds(330, 50, 100, 40); // 위치와 크기 조정
-		myPageLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // 손 모양 커서
-
-		// 로그아웃 클릭 이벤트 추가
-		myPageLabel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				JOptionPane.showMessageDialog(mainFrame, "마이페이지로 이동!");
-			}
-		});
-
-		mainFrame.add(myPageLabel); // 프레임에 마이페이지 텍스트 추가
-
-		// 메인화면 텍스트 추가
-		JLabel mainPageLabel = new JLabel("메인화면");
-		mainPageLabel.setForeground(Color.BLUE); // 텍스트 색상 변경
-		mainPageLabel.setBounds(415, 50, 100, 40); // 위치와 크기 조정
-		mainPageLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // 손 모양 커서
-
-		// 로그아웃 클릭 이벤트 추가
-		mainPageLabel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				JOptionPane.showMessageDialog(mainFrame, "메인화면으로 이동!");
-			}
-		});
-
-		mainFrame.add(mainPageLabel); // 프레임에 메인화면 텍스트 추가
-
-		// 화면이 보임
-		mainFrame.setVisible(true);
-
-		// 종료 -----------------------------------------
-		mainFrame.addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				System.exit(0);
-			
-			}
-		});
-		
-	}
-	
-	public static void main(String[] args) {
-		showBoardList();
-	}
-	
+    /*public static void main(String[] args) {
+        new BoardListFrame();
+    }*/
 }
