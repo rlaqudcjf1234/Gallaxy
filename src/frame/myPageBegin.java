@@ -64,8 +64,11 @@ public class myPageBegin extends JFrame {
 		String userNickName = Main.USER.getUserNickName();
 		String userEmail = Main.USER.getUserEmail();
 		
-		infoLabel = new JLabel(userId); // 초기화 추가
-		infoLabel.setFont(new Font("굴림", Font.PLAIN, 14));
+		infoLabel = new JLabel("<html>"
+				+ "&emsp;&emsp;&emsp;&emsp; "+ userNickName + " (" + userId + ")<br>"
+				+ "&emsp;&emsp;&emsp;&emsp; 이름 : "+ userName +"<br>" 
+				+ "&emsp;&emsp;&emsp;&emsp; E-Mail : "+ " (" + userEmail + ")<br>"+ "</html>");
+		infoLabel.setFont(new Font("돋움", Font.BOLD, 18));
 		infoLabel.setOpaque(true); // 배경색을 보이게 설정
 		infoLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2)); // 테두리 추가
 
@@ -73,7 +76,6 @@ public class myPageBegin extends JFrame {
 		infoLabel.setBounds(25, 50, 450, 150); // 중앙 정렬 및 크기 설정
 		panel.add(infoLabel); // JLabel 추가
 
-		// ===========================게시글 전시 =============================
 
 		// 게시글 목록 초기화
         posts = new ArrayList<>();
@@ -96,10 +98,9 @@ public class myPageBegin extends JFrame {
         // JTable 생성
         JTable postTable = new JTable(model);
         postTable.setBounds(25, 220, 450, 400); // 테이블 위치 및 크기 설정
-        postTable.setRowHeight(30); // 행의 높이 설정
-        postTable.getColumnModel().getColumn(0).setPreferredWidth(300); // 제목 칼럼 크기 설정
-        //postTable.getColumnModel().getColumn(1).setPreferredWidth(60); // 작성자 칼럼 크기 설정
-        postTable.getColumnModel().getColumn(1).setPreferredWidth(60); // 댓글 수 칼럼 크기 설정
+        postTable.setRowHeight(45); // 행의 높이 설정
+        postTable.getColumnModel().getColumn(0).setPreferredWidth(330); // 제목 칼럼 크기 설정
+        postTable.getColumnModel().getColumn(1).setPreferredWidth(30); // 댓글 수 칼럼 크기 설정
 
         // 테이블 클릭 이벤트 추가
         postTable.addMouseListener(new MouseAdapter() {
@@ -160,12 +161,10 @@ public class myPageBegin extends JFrame {
 	            JLabel postLabel = new JLabel((i+1) + ". " + list.get(i).getBoardTitle());
             postLabel.setBounds(10, i * 30, 430, 30);  // 각 게시글 위치 및 크기 설정
 	            postPanel.add(postLabel);  // 게시글을 패널에 추가
-			}
-		
-
+			}	
 		} else {
-		
-	        
+			posts.add(new Post("                             ---- 작성된 게시글이 없습니다 -----" ,""));
+	         
 			
 		}
 		 
