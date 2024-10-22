@@ -2,13 +2,21 @@ package frame;
 
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -34,7 +42,8 @@ public class UserInForm extends JFrame {
 	private JLabel lblId, lblPw;
 	private JTextField tfId;
 	private JPasswordField tfPw;
-	private JButton btnLogin, btnRegister;
+	private JButton btnLogin, btnRegister, btnAd;
+	private ImageIcon imgLogoA;
 
 	/**
 	 * Launch the application.
@@ -61,37 +70,53 @@ public class UserInForm extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 종료 시 프로그램 종료
 		setLayout(new BorderLayout()); // 레이아웃 설정
 
-		// 메인 패널 생성 및 설정
-		JPanel mainPanel = new JPanel();
-		mainPanel.setBackground(new Color(247, 244, 242)); // 배경색 설정
-		mainPanel.setLayout(new FlowLayout()); // 플로우 레이아웃 설정
-
-		// 환영 메시지 레이블
-		JLabel welcomeLabel = new JLabel("환영합니다!"); // 폰트 설정 없이 기본 사용
-		mainPanel.add(welcomeLabel); // 패널에 레이블 추가
-
-		add(mainPanel, BorderLayout.CENTER); // 프레임에 메인 패널 추가
-
 		// 로그인 패널 생성 및 설정
 		JPanel loginPanel = new JPanel();
 		loginPanel.setLayout(null); // 절대 레이아웃 사용
 		loginPanel.setBackground(new Color(247, 244, 242)); // 배경색 설정
 
 		// 컴포넌트 초기화
+		imgLogoA = resizeImage(new ImageIcon("image/Galaxy_Logo.png"), 200, 200);		
 		lblId = new JLabel("ID:");
 		lblPw = new JLabel("Password:");
 		tfId = new JTextField();
 		tfPw = new JPasswordField();
 		btnLogin = new JButton("로그인");
 		btnRegister = new JButton("회원가입");
+		JLabel lblLogo = new JLabel(imgLogoA);
+		btnAd = new JButton();
+		
+		ImageIcon logoIcon2 = resizeImage(new ImageIcon("SolDesk_Ad.png"), 500, 300); // 버튼 크기에 맞게 조정
+		btnAd.setIcon(logoIcon2);
+		btnAd.setBorderPainted(false); // 버튼 테두리 제거
+		btnAd.setContentAreaFilled(false); // 버튼 배경 제거
+		btnAd.setFocusPainted(false); // 포커스 효과 제거
+		btnAd.setMargin(null);  // 마진 제거
+		btnAd.setBounds(0, 585, 490, 130); // 버튼 위치 및 크기 설정
+		// 클릭 이벤트 추가
+		btnAd.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String url = "https://soldesk.com/";
+
+				try {
+					// URI로 변환하고 기본 웹 브라우저에서 열기
+					Desktop.getDesktop().browse(new URI(url));
+				} catch (IOException | URISyntaxException ex) {
+					ex.printStackTrace(); // 예외 처리
+				}
+			}
+		});
+		loginPanel.add(btnAd);
 
 		// 컴포넌트 위치 및 크기 설정
-		lblId.setBounds(130, 250, 140, 30);
-		tfId.setBounds(130, 280, 200, 30);
-		lblPw.setBounds(130, 310, 140, 30);
-		tfPw.setBounds(130, 340, 200, 30);
-		btnLogin.setBounds(130, 400, 90, 30);
-		btnRegister.setBounds(240, 400, 90, 30);
+		lblId.setBounds(145, 280, 140, 30);
+		tfId.setBounds(145, 310, 200, 30);
+		lblPw.setBounds(145, 340, 140, 30);
+		tfPw.setBounds(145, 370, 200, 30);
+		btnLogin.setBounds(145, 430, 90, 30);
+		btnRegister.setBounds(255, 430, 90, 30);
+		lblLogo.setBounds(150, 50, 200, 200); // 중앙 상단에 위치
 
 		// 패널에 컴포넌트 추가
 		loginPanel.add(lblId);
@@ -100,6 +125,7 @@ public class UserInForm extends JFrame {
 		loginPanel.add(tfPw);
 		loginPanel.add(btnLogin);
 		loginPanel.add(btnRegister);
+		loginPanel.add(lblLogo);
 
 		// 프레임에 패널 추가
 		add(loginPanel);
@@ -116,7 +142,7 @@ public class UserInForm extends JFrame {
 				logRegisterForm.addWindowListener(new WindowAdapter() {
 					@Override
 					public void windowClosed(WindowEvent e) {
-						// TODO Auto-generated method stub
+
 						setVisible(true);
 					}
 				});
@@ -162,5 +188,10 @@ public class UserInForm extends JFrame {
 				dispose();
 			}
 		});
+		
+	}
+	private ImageIcon resizeImage(ImageIcon icon, int width, int height) {
+		Image img = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+		return new ImageIcon(img);
 	}
 }
