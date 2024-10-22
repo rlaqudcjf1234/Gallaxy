@@ -31,6 +31,7 @@ import javax.swing.border.EmptyBorder;
 
 import dto.AddressDTO;
 import dto.BoardDTO;
+import main.Main;
 import service.BoardService;
 import service.NaverApiService;
 import service.RetrieveNewAdress;
@@ -336,7 +337,9 @@ public class BoardModifyFrame extends JFrame {
 
 				dto.setBoardFilePath(filePath);
 
-				dto.setUserId("test");
+				if (Main.USER != null) {
+					dto.setUserId(Main.USER.getUserId());
+				}
 
 				int cnt = bs.updateBoard(dto);
 				if (cnt > 0) {
