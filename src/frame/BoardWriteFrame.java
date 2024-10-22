@@ -373,6 +373,7 @@ public class BoardWriteFrame extends JFrame {
 		cancelBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
+				new BoardListFrame();
 				dispose();
 			}
 		});
