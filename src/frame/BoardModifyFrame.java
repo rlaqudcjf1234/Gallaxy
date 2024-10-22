@@ -1,7 +1,7 @@
 package frame;
 
 import java.awt.BorderLayout;
-import java.awt.Component;
+import java.awt.Color;
 import java.awt.EventQueue;
 import java.awt.FlowLayout;
 import java.awt.Font;
@@ -31,6 +31,7 @@ import javax.swing.border.EmptyBorder;
 
 import dto.AddressDTO;
 import dto.BoardDTO;
+import main.Main;
 import service.BoardService;
 import service.NaverApiService;
 import service.RetrieveNewAdress;
@@ -94,7 +95,8 @@ public class BoardModifyFrame extends JFrame {
 			public void run() {
 				try {
 					BoardModifyFrame frame = new BoardModifyFrame(31);
-					frame.setVisible(true);
+					// X버튼 종료
+					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -117,18 +119,24 @@ public class BoardModifyFrame extends JFrame {
 
 		// 프레임 타이틀바
 		setTitle("BoardWriteFrame");
-		// X버튼 종료
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// 프레임 위치, 크기(픽셀)
-		setBounds(100, 100, 500, 850);
+		setBounds(700, 100, 500, 850);
+		// 배경 흰색
+		setBackground(Color.white);
+		// 절대 레이아웃 사용
+		getContentPane().setLayout(null);
 
 		JPanel contentPane = new JPanel();
+		contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));
 		contentPane.setLayout(new BoxLayout(contentPane, BoxLayout.Y_AXIS));
-		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		// 배경 흰색
+		contentPane.setBackground(Color.white);
 
 		JPanel searchPane = new JPanel();
 		searchPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		searchPane.setLayout(new FlowLayout(FlowLayout.CENTER));
+		// 배경 흰색
+		searchPane.setBackground(Color.white);
 		contentPane.add(searchPane);
 
 		JLabel addressLbl = new JLabel("주소");
@@ -178,6 +186,8 @@ public class BoardModifyFrame extends JFrame {
 		JPanel imagePane = new JPanel();
 		imagePane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		imagePane.setLayout(new BoxLayout(imagePane, BoxLayout.X_AXIS));
+		// 배경 흰색
+		imagePane.setBackground(Color.white);
 		contentPane.add(imagePane);
 
 		imageLbl = new JLabel(new ImageIcon(dto.getBoardFilePath()));
@@ -186,6 +196,8 @@ public class BoardModifyFrame extends JFrame {
 		JPanel titlePane = new JPanel();
 		titlePane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		titlePane.setLayout(new BoxLayout(titlePane, BoxLayout.X_AXIS));
+		// 배경 흰색
+		titlePane.setBackground(Color.white);
 		contentPane.add(titlePane);
 
 		JLabel textLbl = new JLabel("제목");
@@ -199,6 +211,8 @@ public class BoardModifyFrame extends JFrame {
 		JPanel datePane = new JPanel();
 		datePane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		datePane.setLayout(new BoxLayout(datePane, BoxLayout.X_AXIS));
+		// 배경 흰색
+		datePane.setBackground(Color.white);
 		contentPane.add(datePane);
 
 		JLabel dateLbl = new JLabel("일자");
@@ -207,19 +221,27 @@ public class BoardModifyFrame extends JFrame {
 
 		yyyyCbx = new JComboBox<String>(new DefaultComboBoxModel<String>(yyyy));
 		yyyyCbx.setSelectedIndex(Arrays.asList(yyyy).indexOf(dto.getBoardWordYyyy()));
+		// 배경 흰색
+		yyyyCbx.setBackground(Color.white);
 		datePane.add(yyyyCbx);
 
 		mmCbx = new JComboBox<String>(new DefaultComboBoxModel<String>(mm));
 		mmCbx.setSelectedIndex(Arrays.asList(mm).indexOf(dto.getBoardWordMm()));
+		// 배경 흰색
+		mmCbx.setBackground(Color.white);
 		datePane.add(mmCbx);
 
 		ddCbx = new JComboBox<String>(new DefaultComboBoxModel<String>(dd));
 		ddCbx.setSelectedIndex(Arrays.asList(dd).indexOf(dto.getBoardWordDd()));
+		// 배경 흰색
+		ddCbx.setBackground(Color.white);
 		datePane.add(ddCbx);
 
 		JPanel timePane = new JPanel();
 		timePane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		timePane.setLayout(new BoxLayout(timePane, BoxLayout.X_AXIS));
+		// 배경 흰색
+		timePane.setBackground(Color.white);
 		contentPane.add(timePane);
 
 		JLabel timeLbl = new JLabel("시간");
@@ -228,19 +250,27 @@ public class BoardModifyFrame extends JFrame {
 
 		apmCbx = new JComboBox<String>(new DefaultComboBoxModel<String>(apm));
 		apmCbx.setSelectedIndex(Arrays.asList(apm).indexOf(dto.getBoardWordApm()));
+		// 배경 흰색
+		apmCbx.setBackground(Color.white);
 		timePane.add(apmCbx);
 
 		hhCbx = new JComboBox<String>(new DefaultComboBoxModel<String>(hh));
 		hhCbx.setSelectedIndex(Arrays.asList(hh).indexOf(dto.getBoardWordHh()));
+		// 배경 흰색
+		hhCbx.setBackground(Color.white);
 		timePane.add(hhCbx);
 
 		miCbx = new JComboBox<String>(new DefaultComboBoxModel<String>(mi));
 		miCbx.setSelectedIndex(Arrays.asList(mi).indexOf(dto.getBoardWordMi()));
+		// 배경 흰색
+		miCbx.setBackground(Color.white);
 		timePane.add(miCbx);
 
 		JPanel detailPane = new JPanel();
 		detailPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		detailPane.setLayout(new BoxLayout(detailPane, BoxLayout.X_AXIS));
+		// 배경 흰색
+		detailPane.setBackground(Color.white);
 		contentPane.add(detailPane);
 
 		JLabel detailLbl = new JLabel("내용");
@@ -248,17 +278,27 @@ public class BoardModifyFrame extends JFrame {
 		detailPane.add(detailLbl);
 
 		detailFld = new JTextArea(dto.getBoardContent());
-		detailFld.setColumns(35);
-		detailFld.setRows(10);
-		detailPane.add(detailFld);
+		detailFld.setRows(17);
+		detailFld.setLineWrap(true);
+		JScrollPane detailScrolPane = new JScrollPane(detailFld);
+		detailPane.add(detailScrolPane);
 
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.X_AXIS));
+		// 배경 흰색
+		buttonPane.setBackground(Color.white);
 		contentPane.add(buttonPane);
 
 		// 작성 완료 버튼
 		JButton writeBtn = new JButton("작성 완료");
 		buttonPane.add(writeBtn);
+		
+		JLabel buttonLbl = new JLabel("      ");
+		buttonPane.add(buttonLbl);
+
+		// 작성 취소 버튼
+		JButton cancelBtn = new JButton("작성 취소");
+		buttonPane.add(cancelBtn);
 
 		// 버튼(writeBtn) 클릭 이벤트
 		writeBtn.addMouseListener(new MouseAdapter() {
@@ -297,7 +337,9 @@ public class BoardModifyFrame extends JFrame {
 
 				dto.setBoardFilePath(filePath);
 
-				dto.setUserId("test");
+				if (Main.USER != null) {
+					dto.setUserId(Main.USER.getUserId());
+				}
 
 				int cnt = bs.updateBoard(dto);
 				if (cnt > 0) {
@@ -315,11 +357,7 @@ public class BoardModifyFrame extends JFrame {
 			}
 		});
 
-		// 작성 취소 버튼
-		JButton cancelBtn = new JButton("작성 취소");
-		cancelBtn.setAlignmentX(Component.RIGHT_ALIGNMENT);
-		buttonPane.add(cancelBtn);
-
+		// 버튼(cancelBtn) 클릭 이벤트
 		cancelBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -328,6 +366,7 @@ public class BoardModifyFrame extends JFrame {
 		});
 
 		setContentPane(contentPane);
+		setVisible(true);
 	}
 
 	/**
@@ -344,15 +383,21 @@ public class BoardModifyFrame extends JFrame {
 		// 프레임 타이틀바
 		searchFrame.setTitle("BoardSearchFrame");
 		// 프레임 위치, 크기(픽셀)
-		searchFrame.setBounds(600, 100, 500, 850);
+		searchFrame.setBounds(1200, 100, 500, 850);
+		// 배경 흰색
+		searchFrame.setBackground(Color.white);
 
 		JPanel contentPane = new JPanel();
 		contentPane.setLayout(new BorderLayout());
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
+		// 배경 흰색
+		contentPane.setBackground(Color.white);
 
 		JPanel pagePane = new JPanel();
 		pagePane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		pagePane.setLayout(new FlowLayout(FlowLayout.CENTER));
+		// 배경 흰색
+		pagePane.setBackground(Color.white);
 		contentPane.add(pagePane, BorderLayout.NORTH);
 
 		JButton prevButton = new JButton("<");
@@ -435,11 +480,14 @@ public class BoardModifyFrame extends JFrame {
 
 		listPane = new JPanel();
 		listPane.setLayout(new GridLayout(10, 1));
+		// 배경 흰색
+		listPane.setBackground(Color.white);
 		JScrollPane scrollPane = new JScrollPane(listPane);
-		scrollPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		contentPane.add(scrollPane, BorderLayout.CENTER);
 
 		JPanel buttonPane = new JPanel();
+		// 배경 흰색
+		buttonPane.setBackground(Color.white);
 		contentPane.add(buttonPane, BorderLayout.SOUTH);
 
 		// 닫기 버튼
@@ -470,6 +518,8 @@ public class BoardModifyFrame extends JFrame {
 				// 목록 추가
 				JPanel optionPane = new JPanel();
 				optionPane.setLayout(new BorderLayout());
+				// 배경 흰색
+				optionPane.setBackground(Color.white);
 				listPane.add(optionPane);
 
 				JLabel optionLbl = new JLabel(addr);
@@ -477,6 +527,8 @@ public class BoardModifyFrame extends JFrame {
 
 				JPanel buttonPane = new JPanel();
 				buttonPane.setBorder(new EmptyBorder(15, 5, 15, 5));
+				// 배경 흰색
+				buttonPane.setBackground(Color.white);
 				optionPane.add(buttonPane, BorderLayout.EAST);
 
 				JButton addrBtn = new JButton("선택");

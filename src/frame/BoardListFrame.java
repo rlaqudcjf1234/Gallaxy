@@ -102,7 +102,8 @@ public class BoardListFrame extends JFrame {
 		BoardDTO boardDTO = new BoardDTO();
 
 		// 프로그램 시작 시 게시물 목록 불러오기
-		List<BoardDTO> boardList = bs.selectBoardList(new BoardDTO()); // 게시물 리스트 가져오기
+		boardDTO.setPageSize(40);
+		List<BoardDTO> boardList = bs.selectBoardList(boardDTO); // 게시물 리스트 가져오기
 		updateBoardList(boardList); // 게시물 목록 UI 업데이트
 
 		Frame mainFrame = new Frame("러닝 메이트 게시판");
