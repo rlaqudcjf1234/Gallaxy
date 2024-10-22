@@ -2,10 +2,12 @@ package frame;
 
 import java.awt.Color;
 import java.awt.EventQueue;
+import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
@@ -32,6 +34,7 @@ public class UserRegForm extends JFrame {
 	private JTextField tfId, tfEmail, tfName, tfNickName;
 	private JPasswordField tfPw, tfRe;
 	private JButton btnSignup, btnCancel;
+	private ImageIcon imgLogoA;
 
 	/**
 	 * Launch the application.
@@ -61,6 +64,8 @@ public class UserRegForm extends JFrame {
 		signupPanel.setBounds(0, 0, 500, 750); // 위치 및 크기 설정
 		signupPanel.setBackground(new Color(247, 244, 242)); // 배경색 설정
 
+		imgLogoA = resizeImage(new ImageIcon("image/Galaxy_Logo.png"), 200, 200);
+		
 		// 레이블 및 텍스트 필드
 
 		lblId = new JLabel("ID:");
@@ -69,13 +74,15 @@ public class UserRegForm extends JFrame {
 		lblName = new JLabel("Name:");
 		lblEmail = new JLabel("Email:");
 		lblNickName = new JLabel("NickName:");
-
-		lblId.setBounds(130, 260, 80, 25); // 위치 및 크기 설정
-		lblPw.setBounds(130, 300, 80, 25); // 위치 및 크기 설정
-		lblRe.setBounds(130, 340, 80, 25);
-		lblName.setBounds(130, 380, 80, 25); // 위치 및 크기 설정
-		lblEmail.setBounds(130, 420, 80, 25); // 위치 및 크기 설정
-		lblNickName.setBounds(130, 460, 80, 25);
+		JLabel lblLogo = new JLabel(imgLogoA);
+		
+		lblLogo.setBounds(150, 50, 200, 200); // 중앙 상단에 위치
+		lblId.setBounds(130, 280, 80, 25); // 위치 및 크기 설정
+		lblPw.setBounds(130, 320, 80, 25); // 위치 및 크기 설정
+		lblRe.setBounds(130, 360, 80, 25);
+		lblName.setBounds(130, 400, 80, 25); // 위치 및 크기 설정
+		lblEmail.setBounds(130, 440, 80, 25); // 위치 및 크기 설정
+		lblNickName.setBounds(130, 470, 80, 25);
 
 		tfId = new JTextField();
 		tfPw = new JPasswordField();
@@ -84,12 +91,12 @@ public class UserRegForm extends JFrame {
 		tfEmail = new JTextField();
 		tfNickName = new JTextField();
 
-		tfId.setBounds(220, 260, 140, 25); // 위치 및 크기 설정
-		tfPw.setBounds(220, 300, 140, 25); // 위치 및 크기 설정
-		tfRe.setBounds(220, 340, 140, 25);
-		tfName.setBounds(220, 380, 140, 25); // 위치 및 크기 설정
-		tfEmail.setBounds(220, 420, 140, 25); // 위치 및 크기 설정
-		tfNickName.setBounds(220, 460, 140, 25);
+		tfId.setBounds(220, 280, 140, 25); // 위치 및 크기 설정
+		tfPw.setBounds(220, 320, 140, 25); // 위치 및 크기 설정
+		tfRe.setBounds(220, 360, 140, 25);
+		tfName.setBounds(220, 400, 140, 25); // 위치 및 크기 설정
+		tfEmail.setBounds(220, 440, 140, 25); // 위치 및 크기 설정
+		tfNickName.setBounds(220, 480, 140, 25);
 
 		rbtnMale = new JRadioButton("Male", true); // 남성 선택 기본값
 		rbtnFemale = new JRadioButton("Female");
@@ -98,9 +105,10 @@ public class UserRegForm extends JFrame {
 		group.add(rbtnMale);
 		group.add(rbtnFemale);
 
-		rbtnMale.setBounds(130, 500, 100, 25); // 남성 버튼
-		rbtnFemale.setBounds(260, 500, 100, 25); // 여성 버튼
+		rbtnMale.setBounds(130, 520, 100, 25); // 남성 버튼
+		rbtnFemale.setBounds(260, 520, 100, 25); // 여성 버튼
 
+		signupPanel.add(lblLogo);
 		signupPanel.add(lblId);
 		signupPanel.add(lblPw);
 		signupPanel.add(tfId);
@@ -120,12 +128,15 @@ public class UserRegForm extends JFrame {
 		btnSignup = new JButton("회원가입");
 		btnCancel = new JButton("취소");
 
-		btnSignup.setBounds(130, 550, 99, 30); // 위치 및 크기 설정
-		btnCancel.setBounds(260, 550, 99, 30); // 위치 및 크기 설정
+		btnSignup.setBounds(130, 570, 99, 30); // 위치 및 크기 설정
+		btnCancel.setBounds(260, 570, 99, 30); // 위치 및 크기 설정
 
+		rbtnMale.setOpaque(false);  // 배경 투명 설정
+		rbtnFemale.setOpaque(false);
+		
 		signupPanel.add(btnSignup);
 		signupPanel.add(btnCancel);
-
+		
 		// 메인 프레임에 패널 추가
 		add(signupPanel);
 
@@ -181,14 +192,6 @@ public class UserRegForm extends JFrame {
 					} else {
 						JOptionPane.showMessageDialog(null, "회원가입을 실패하였습니다.");
 					}
-					
-					/*
-						users.addUsers(new User(tfId.getText(), String.valueOf(tfPw.getPassword()), tfName.getText(),
-								tfNickName.getText(), getGender(), tfEmail.getText()));
-						JOptionPane.showMessageDialog(UserRegForm.this, "회원가입을 완료했습니다!");
-						new UserInForm();
-						dispose();
-					*/
 				}
 			}
 		});
@@ -227,5 +230,9 @@ public class UserRegForm extends JFrame {
 			return rbtnMale.getText();
 		}
 		return rbtnFemale.getText();
+	}
+	private ImageIcon resizeImage(ImageIcon icon, int width, int height) {
+		Image img = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+		return new ImageIcon(img);
 	}
 }
