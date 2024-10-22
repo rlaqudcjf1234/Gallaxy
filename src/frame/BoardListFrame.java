@@ -161,6 +161,13 @@ public class BoardListFrame extends JFrame {
 			}
 		});
 
+//		JPanel searchResultPanel = new JPanel(); // 검색 결과 목록 패널
+//		searchResultPanel.setLayout(new BoxLayout(searchResultPanel, BoxLayout.Y_AXIS)); 
+//	    JScrollPane searchScrollPane = new JScrollPane(searchResultPanel);
+//	    searchScrollPane.setBounds(50, 670, 400, 100); 
+	    
+
+		
 		// 글 검색 필드
 		TextField contentSearch = new TextField("검색할 글 제목을 입력하세요"); // 제목 입력
 		contentSearch.setBounds(50, 630, 300, 30);
@@ -190,25 +197,19 @@ public class BoardListFrame extends JFrame {
 			public void actionPerformed(ActionEvent e) {
 
 				String content = contentSearch.getText();
-				if (content.equals("") || content.equals("검색할 글 제목을 입력하세요")) {
-					// 검색어 없음 경고
-					JOptionPane.showMessageDialog(mainFrame, "검색어를 입력하지 않았습니다.");
-
-					return;
-				}
 
 				boardDTO.setBoardTitle(content);
 
 				List<BoardDTO> list = bs.selectBoardList(boardDTO);
+				
 				if (list.equals(null) || list.isEmpty()) {
 					// 검색 결과 없음
 					JOptionPane.showMessageDialog(mainFrame, "검색결과가 존재하지 않습니다.");
 
 				} else {
 					// 검색 목록 변경
-					JOptionPane.showMessageDialog(mainFrame, "테스트");
-
-				}
+					updateBoardList(list);
+		        }
 
 			}
 		});
