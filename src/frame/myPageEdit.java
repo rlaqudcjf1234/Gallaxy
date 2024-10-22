@@ -202,14 +202,7 @@ public class myPageEdit extends JPanel {
 			}
 		});
 
-//		// 정보 수정 창에서 비밀번호 확인 창으로 돌아가기
-//		backToCheck.addActionListener(new ActionListener() {
-//			@Override
-//			public void actionPerformed(ActionEvent panel) {
-//				new myPageEdit();
-//				updateFrame.dispose(); // 현재 창 닫기
-//			}
-//		});
+
 
 		updateFrame.setVisible(true);
 	}
