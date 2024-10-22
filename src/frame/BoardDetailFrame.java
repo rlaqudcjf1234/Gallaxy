@@ -73,7 +73,7 @@ public class BoardDetailFrame extends JFrame {
 
 		// 제목을 표시할 텍스트 필드
 		JTextField titleField = new JTextField(board.getBoardTitle());
-		titleField.setFont(new Font("맑은 고딕", Font.BOLD, 23));
+		titleField.setFont(new Font("맑은 고딕", Font.BOLD, 20));
 		titleField.setBounds(100, 310, 350, 40); // 제목 위치 설정
 		titleField.setEditable(false); // 제목 수정 불가
 		titleField.setBorder(null);
