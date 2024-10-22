@@ -18,19 +18,19 @@ public class MainBoard extends JFrame {
 	private JButton btnComm, btnMyP, btnHC;
 
 	public MainBoard() {
-		// ¸ŞÀÎ È­¸é »ı¼º
+		// ë©”ì¸ í™”ë©´ ìƒì„±
 		mainView();
-		addImage(); // ÀÌ¹ÌÁö ¹× ¹öÆ° Ãß°¡
+		addImage(); // ì´ë¯¸ì§€ ë° ë²„íŠ¼ ì¶”ê°€
 	}
 
 	public void mainView() {
-		setTitle("¸ŞÀÎÈ­¸é");
-		setBounds(700, 100, 500, 750); // À§Ä¡¿Í Å©±â (ÀÌÈÄ 850)
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Á¾·á½Ã ÇÁ·Î±×·¥ Á¾·á
-		getContentPane().setBackground(new Color(247, 244, 242)); // ¹è°æ »ö
-		setLayout(null); // Àı´ë ·¹ÀÌ¾Æ¿ô »ç¿ë
+		setTitle("ë©”ì¸í™”ë©´");
+		setBounds(700, 100, 500, 750); // ìœ„ì¹˜ì™€ í¬ê¸° (ì´í›„ 850)
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // ì¢…ë£Œì‹œ í”„ë¡œê·¸ë¨ ì¢…ë£Œ
+		getContentPane().setBackground(new Color(247, 244, 242)); // ë°°ê²½ ìƒ‰
+		setLayout(null); // ì ˆëŒ€ ë ˆì´ì•„ì›ƒ ì‚¬ìš©
 
-		// Á¾·á ÀÌº¥Æ® Ãß°¡
+		// ì¢…ë£Œ ì´ë²¤íŠ¸ ì¶”ê°€
 		addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {
@@ -38,35 +38,35 @@ public class MainBoard extends JFrame {
 			}
 		});
 		setVisible(true);
-		// JFrame º¸ÀÌ°Ô ¼³Á¤
+		// JFrame ë³´ì´ê²Œ ì„¤ì •
 	}
 
 	private void addImage() {
 		JPanel mainBoard = new JPanel(null);
-		mainBoard.setBounds(0, 0, 500, 750); // ÀÌÈÄ 850·Î º¯°æ °¡´É
-		mainBoard.setBackground(new Color(247, 244, 242)); // ÆĞ³Î ¹è°æ
+		mainBoard.setBounds(0, 0, 500, 750); // ì´í›„ 850ë¡œ ë³€ê²½ ê°€ëŠ¥
+		mainBoard.setBackground(new Color(247, 244, 242)); // íŒ¨ë„ ë°°ê²½
 
-		// ÀÌ¹ÌÁö Å©±â Á¶Á¤ ¹× ¹öÆ°¿¡ ¼³Á¤
+		// ì´ë¯¸ì§€ í¬ê¸° ì¡°ì • ë° ë²„íŠ¼ì— ì„¤ì •
 		imgComm = resizeImage(new ImageIcon("image/Community.png"), 80, 80);
 		imgHC = resizeImage(new ImageIcon("image/HealthCare.png"), 80, 80);
 		imgMyP = resizeImage(new ImageIcon("image/MyPage.png"), 80, 80);
 		imgLogoA = resizeImage(new ImageIcon("image/Galaxy_Logo.png"), 200, 200);
 
-		// ·Î°í¸¦ JLabel¿¡ Ãß°¡
+		// ë¡œê³ ë¥¼ JLabelì— ì¶”ê°€
 		JLabel lblLogo = new JLabel(imgLogoA);
-		lblLogo.setBounds(150, 50, 200, 200); // Áß¾Ó »ó´Ü¿¡ À§Ä¡
+		lblLogo.setBounds(150, 50, 200, 200); // ì¤‘ì•™ ìƒë‹¨ì— ìœ„ì¹˜
 
-		// ¹öÆ° »ı¼º ¹× ¼³Á¤
-		btnComm = new JButton("Ä¿¹Â´ÏÆ¼", imgComm);
-		btnHC = new JButton("Çï½º ÄÉ¾î", imgHC);
-		btnMyP = new JButton("¸¶ÀÌ ÆäÀÌÁö", imgMyP);
+		// ë²„íŠ¼ ìƒì„± ë° ì„¤ì •
+		btnComm = new JButton("ì»¤ë®¤ë‹ˆí‹°", imgComm);
+		btnHC = new JButton("í—¬ìŠ¤ ì¼€ì–´", imgHC);
+		btnMyP = new JButton("ë§ˆì´ í˜ì´ì§€", imgMyP);
 
-		// ¹öÆ° À§Ä¡ ¼³Á¤
+		// ë²„íŠ¼ ìœ„ì¹˜ ì„¤ì •
 		btnComm.setBounds(29, 300, 127, 127);
 		btnHC.setBounds(185, 300, 127, 127);
 		btnMyP.setBounds(341, 300, 127, 127);
 
-		// ¹öÆ° ¹è°æ»ö ¹× Å×µÎ¸® ¼³Á¤
+		// ë²„íŠ¼ ë°°ê²½ìƒ‰ ë° í…Œë‘ë¦¬ ì„¤ì •
 		btnComm.setBackground(new Color(247, 244, 242));
 		btnHC.setBackground(new Color(247, 244, 242));
 		btnMyP.setBackground(new Color(247, 244, 242));
@@ -75,7 +75,7 @@ public class MainBoard extends JFrame {
 		btnHC.setBorderPainted(false);
 		btnMyP.setBorderPainted(false);
 
-		// ÅØ½ºÆ®¿Í ÀÌ¹ÌÁö Á¤·Ä ¼³Á¤
+		// í…ìŠ¤íŠ¸ì™€ ì´ë¯¸ì§€ ì •ë ¬ ì„¤ì •
 		btnComm.setHorizontalTextPosition(JButton.CENTER);
 		btnComm.setVerticalTextPosition(JButton.BOTTOM);
 
@@ -85,13 +85,13 @@ public class MainBoard extends JFrame {
 		btnMyP.setHorizontalTextPosition(JButton.CENTER);
 		btnMyP.setVerticalTextPosition(JButton.BOTTOM);
 		
-		// ÆĞ³Î¿¡ ¹öÆ° Ãß°¡
+		// íŒ¨ë„ì— ë²„íŠ¼ ì¶”ê°€
 		mainBoard.add(btnComm);
 		mainBoard.add(btnHC);
 		mainBoard.add(btnMyP);
 		mainBoard.add(lblLogo);
 
-		// ¿©¹é ¼³Á¤
+		// ì—¬ë°± ì„¤ì •
 		btnComm.setMargin(new java.awt.Insets(5, 5, 5, 5));
 		btnHC.setMargin(new java.awt.Insets(5, 5, 5, 5));
 		btnMyP.setMargin(new java.awt.Insets(5, 5, 5, 5));
@@ -100,28 +100,28 @@ public class MainBoard extends JFrame {
 		btnHC.setForeground(Color.BLACK);
 		btnMyP.setForeground(Color.BLACK);
 
-		// ÀÌº¥Æ® ¸®½º³Ê Ãß°¡ (±âÁ¸°ú µ¿ÀÏ)
+		// ì´ë²¤íŠ¸ ë¦¬ìŠ¤ë„ˆ ì¶”ê°€ (ê¸°ì¡´ê³¼ ë™ì¼)
 		btnComm.addActionListener(e -> {
-			System.out.println("Ä¿¹Â´ÏÆ¼ ¹öÆ° Å¬¸¯µÊ!");
+			System.out.println("ì»¤ë®¤ë‹ˆí‹° ë²„íŠ¼ í´ë¦­ë¨!");
 			new BoardListFrame();
 			dispose();
 		});
 		btnHC.addActionListener(e -> {
-			System.out.println("Çï½º ÄÉ¾î ¹öÆ° Å¬¸¯µÊ!");
+			System.out.println("í—¬ìŠ¤ ì¼€ì–´ ë²„íŠ¼ í´ë¦­ë¨!");
 			new Calendarpp();
 			dispose();
 		});
 		btnMyP.addActionListener(e -> {
-			System.out.println("¸¶ÀÌ ÆäÀÌÁö ¹öÆ° Å¬¸¯µÊ!");
+			System.out.println("ë§ˆì´ í˜ì´ì§€ ë²„íŠ¼ í´ë¦­ë¨!");
 			new myPageBegin();
 			dispose();
 		});
 
-		// ÆĞ³ÎÀ» JFrame¿¡ Ãß°¡
+		// íŒ¨ë„ì„ JFrameì— ì¶”ê°€
 		add(mainBoard);
 	}
 
-	// ÀÌ¹ÌÁö Å©±â Á¶Àı ¸Ş¼­µå
+	// ì´ë¯¸ì§€ í¬ê¸° ì¡°ì ˆ ë©”ì„œë“œ
 	private ImageIcon resizeImage(ImageIcon icon, int width, int height) {
 		Image img = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
 		return new ImageIcon(img);
