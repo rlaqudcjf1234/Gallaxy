@@ -10,8 +10,10 @@ import java.util.Map;
 import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
+import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JComponent;
+import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -25,18 +27,12 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
 import dto.HealthDTO;
-import main.Main;
-import service.HealthService;
-import service.impl.HealthServiceImpl;
 
 import java.util.Calendar;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Calendarpp {
-
-	HealthService hs = new HealthServiceImpl();
-
 	private CalendarMonthly calendarmonthly;
 	private JFrame frame;
 	private JPanel calendarPanel;
@@ -54,7 +50,9 @@ public class Calendarpp {
 	private int realYear, realMonth, currentYear, currentMonth;
 	private Map<String, String> memoData = new HashMap<>();
 	private JComponent inputPanel;
-
+	private JLabel dateInfoLabel;
+	private JLabel imageLabel;
+	
 	public Calendarpp() {
 
 		calendarmonthly = new CalendarMonthly();
@@ -68,6 +66,9 @@ public class Calendarpp {
 		nextButton = new JButton(">");
 		saveMemoButton = new JButton("기록하기");
 		monthLabel = new JLabel("", JLabel.CENTER);
+		dateInfoLabel = new JLabel("선택한 날짜");
+		ImageIcon icon=new ImageIcon("src/img/솔데스크.png");
+		imageLabel=new JLabel(icon);
 		// 캘린더 일주일
 
 		calendarTableModel = new DefaultTableModel(new Object[6][7],
@@ -80,9 +81,10 @@ public class Calendarpp {
 
 		calendarTable = new JTable(calendarTableModel);
 		calendarScrollpane = new JScrollPane(calendarTable);
-
 		calendarPanel = new JPanel(null);
+		calendarPanel.setLayout(null);
 		calendarTable.setFillsViewportHeight(true);
+		
 
 		// 메모칸 만들기
 		healthMemorun = new JTextField(10); // 거리 입력란 초기화
@@ -120,6 +122,8 @@ public class Calendarpp {
 		calendarPanel.add(monthhealthMemo);
 		calendarPanel.add(inputPanel);
 		calendarPanel.add(saveMemoButton);
+		calendarPanel.add(dateInfoLabel);
+		calendarPanel.add(imageLabel);
 		// 버튼 비활성화 초기화
 
 		saveMemoButton.setEnabled(false);
@@ -147,20 +151,21 @@ public class Calendarpp {
 		healthMemotime.getDocument().addDocumentListener(inputListener);
 
 		// 버튼 판넬 크기 넣기
-
-		inputPanel.setBounds(25, 570, 220, 120);
-		saveMemoButton.setBounds(27, 690, 216, 27);// 기록하기 버튼
-		calendarScrollpane.setBounds(25, 70, 440, 400);// 달력전체
+		inputPanel.setBounds(25, 470, 220, 120);//입력정보 박스
+		imageLabel.setBounds(20, 630 ,435 ,100);//솔데스크 이미지
+		dateInfoLabel.setBounds(30, 440, 350, 30);//날짜선택하면 보여주기
+		saveMemoButton.setBounds(27, 590, 216, 27);// 기록하기 버튼
+		calendarScrollpane.setBounds(25, 70, 440, 253);// 달력전체
 		prevButton.setBounds(25, 30, 50, 30);// 월 이전버튼
 		nextButton.setBounds(415, 30, 50, 30);// 월 다음버튼
 		monthLabel.setBounds(150, 30, 200, 30);// 년월 보여주는 판넬
 		backButton.setBounds(90, 750, 300, 45);// 뒤로가기
-		memoLabel.setBounds(25, 480, 440, 80);// 달력에 입력된거 보여주는메모
-		monthhealthMemo.setBounds(250, 570, 200, 150);// 월간통계메모
+		memoLabel.setBounds(25, 330, 440, 80);// 달력에 입력된거 보여주는메모
+		monthhealthMemo.setBounds(250, 470, 200, 150);// 월간통계메모
 		monthhealthMemo.setLayout(new BoxLayout(monthhealthMemo, BoxLayout.Y_AXIS));
 		monthhealthMemo.setBorder(BorderFactory.createTitledBorder("월간 통계"));
 		calendarPanel.setBounds(0, 0, 500, 850);// 전체 크기
-
+		
 		backButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -209,26 +214,28 @@ public class Calendarpp {
 					memoLabel.setText("유효한 날짜를 선택하세요");
 				} else {
 					showMemo(date);
+					updateDateInfo(row, col);
 				}
 			}
 
-			public void showMemo(String dd) {
-				int yyyy = currentYear;
-				int mm = currentMonth;
+			private void updateDateInfo(int row, int col) {
+				int day = Integer.parseInt((String) calendarTableModel.getValueAt(row, col));
+				LocalDate selectedDate = LocalDate.of(currentYear, currentMonth + 1, day);
 
-				HealthDTO dto = new HealthDTO();
-				dto.setUserId("test");
-				dto.setHealthYyyy(yyyy);
-				dto.setHealthMm(mm);
-				dto.setHealthDd(Integer.parseInt(dd));
+				dateInfoLabel.setText(String.format("선택한 날짜: %d년, %d월, %d일", selectedDate.getYear(),
+						selectedDate.getMonthValue(), selectedDate.getDayOfMonth()));
+				System.out.println(dateInfoLabel.getText());
+				dateInfoLabel.revalidate();
+				dateInfoLabel.repaint();
+				dateInfoLabel.setVisible(true);
+			}
 
-				HealthDTO result = hs.selectHealth(dto);
-				if (result == null) {
-					memoLabel.setText("기록이 없습니다");
+			public void showMemo(String date) {
+				String memo = memoData.get(date);
+				if (memo != null && !memo.isEmpty()) {
+					memoLabel.setText(memo);
 				} else {
-					memoLabel.setText(String.format("거리: %d km, 시간: %d 분, 평균 속도: %.2f km/h, 칼로리: %.2f kcal",
-							result.getHealthDistance(), result.getHealthTime(), result.getHealthSpeed(),
-							result.getHealthCalories()));
+					memoLabel.setText("기록이 없습니다");
 				}
 
 			}
@@ -263,8 +270,6 @@ public class Calendarpp {
 					double calories = time * 7.33;
 
 					HealthDTO dto = new HealthDTO();
-					//dto.setUserId(Main.USER.getUserId());
-					dto.setUserId("test");
 					dto.setHealthYyyy(yyyy);
 					dto.setHealthMm(mm);
 					dto.setHealthDd(dd);
@@ -273,17 +278,39 @@ public class Calendarpp {
 					dto.setHealthSpeed(speed);
 					dto.setHealthCalories(calories);
 
-					if (hs.insertHealth(dto) > 0) {
-						JOptionPane.showMessageDialog(frame, "기록을 완료했습니다.", "기록완료", JOptionPane.ERROR_MESSAGE);
-					} else {
-						JOptionPane.showMessageDialog(frame, "기록을 실패했습니다.", "기록오류", JOptionPane.ERROR_MESSAGE);
-					}
-
-					// 월간통계 구하기
 					updateMonthHealthMemo();
+
 				} catch (NumberFormatException e) {
 					JOptionPane.showMessageDialog(frame, e.getMessage(), "입력오류", JOptionPane.ERROR_MESSAGE);
 				}
+
+			}
+
+			private void updateMonthHealthMemo() {
+				/*
+				 * // 월간 통계 업데이트 calendarmonthly.removeEntry(selectedDate);
+				 * calendarmonthly.addEntry(selectedDate, distance, time); String result =
+				 * String.format("거리: %.2f km, 시간: %.2f 분, 평균 속도: %.2f km/h, 칼로리: %.2f kcal",
+				 * distance, time, averageSpeed, calories); JOptionPane.showMessageDialog(frame,
+				 * "저장되었습니다."); memoData.put(selectedDate, result);
+				 */
+				monthhealthMemo.removeAll();
+				monthhealthMemo.setLayout(new BoxLayout(monthhealthMemo, BoxLayout.Y_AXIS));
+				// 거리
+				JLabel distanceLabel = new JLabel(String.format("총거리: %.2f km", calendarmonthly.getTotalDistance()));
+				distanceLabel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
+				monthhealthMemo.add(distanceLabel);
+				// 시간
+				JLabel timeLabel = new JLabel(String.format("총시간: %.2f 분", calendarmonthly.getTotalTime()));
+				timeLabel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
+				monthhealthMemo.add(timeLabel);
+				// 칼로리
+				JLabel caloriesLabel = new JLabel(String.format("총칼로리: %.2f Kcal", calendarmonthly.getTotalCalories()));
+				caloriesLabel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
+				monthhealthMemo.add(caloriesLabel);
+
+				monthhealthMemo.revalidate();
+				monthhealthMemo.repaint();
 
 			}
 
@@ -301,61 +328,7 @@ public class Calendarpp {
 		frame.setLocationRelativeTo(null);
 		frame.setAlwaysOnTop(true);
 
-		// 월간통계 구하기
-		updateMonthHealthMemo();
 	}// class calendar
-
-	private void updateMonthHealthMemo() {
-
-		int yyyy = currentYear;
-		int mm = currentMonth;
-
-		HealthDTO dto = new HealthDTO();
-		dto.setUserId("test");
-		dto.setHealthYyyy(yyyy);
-		dto.setHealthMm(mm);
-
-		HealthDTO result = hs.selectHealthSt(dto);
-
-		if (result != null) {
-			monthhealthMemo.removeAll();
-			monthhealthMemo.setLayout(new BoxLayout(monthhealthMemo, BoxLayout.Y_AXIS));
-			// 거리
-			JLabel distanceLabel = new JLabel(String.format("총거리: %d km", result.getHealthDistance()));
-			distanceLabel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
-			monthhealthMemo.add(distanceLabel);
-			// 시간
-			JLabel timeLabel = new JLabel(String.format("총시간: %d 분", result.getHealthTime()));
-			timeLabel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
-			monthhealthMemo.add(timeLabel);
-			// 칼로리
-			JLabel caloriesLabel = new JLabel(String.format("총칼로리: %.2f Kcal", result.getHealthCalories()));
-			caloriesLabel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
-			monthhealthMemo.add(caloriesLabel);
-
-			monthhealthMemo.revalidate();
-			monthhealthMemo.repaint();
-		} else {
-			monthhealthMemo.removeAll();
-			monthhealthMemo.setLayout(new BoxLayout(monthhealthMemo, BoxLayout.Y_AXIS));
-			// 거리
-			JLabel distanceLabel = new JLabel(String.format("총거리: %d km", 0));
-			distanceLabel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
-			monthhealthMemo.add(distanceLabel);
-			// 시간
-			JLabel timeLabel = new JLabel(String.format("총시간: %d 분", 0));
-			timeLabel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
-			monthhealthMemo.add(timeLabel);
-			// 칼로리
-			JLabel caloriesLabel = new JLabel(String.format("총칼로리: %.2f Kcal", 0.0));
-			caloriesLabel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
-			monthhealthMemo.add(caloriesLabel);
-
-			monthhealthMemo.revalidate();
-			monthhealthMemo.repaint();
-		}
-
-	}
 
 	public void updateCalendar(int month, int year) {
 		calendarTableModel.setRowCount(0); // 기존 데이터 초기화
@@ -387,8 +360,6 @@ public class Calendarpp {
 		calendarTable.revalidate();
 		calendarTable.repaint();
 
-		// 월간통계 구하기
-		updateMonthHealthMemo();
 	}// updateCalendar
 
 	public static void main(String[] args) {
