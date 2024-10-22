@@ -180,7 +180,6 @@ public class Calendarpp {
 		mainPageLabel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				JOptionPane.showMessageDialog(frame, "메인화면으로 이동!");
 				new MainBoard();
 				frame.dispose();
 			}
@@ -201,14 +200,13 @@ public class Calendarpp {
 		btnLogo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				JOptionPane.showMessageDialog(calendarPanel, "메인화면!");
 				new MainBoard();
 				frame.dispose();
 			}
 		});
 		JLabel logoutLabel = new JLabel("로그아웃");
 		logoutLabel.setForeground(Color.BLUE); // 텍스트 색상 변경
-		logoutLabel.setBounds(255, 25, 100, 40); // 위치와 크기 조정
+		logoutLabel.setBounds(250, 25, 80, 40); // 위치와 크기 조정
 		logoutLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // 손 모양 커서
 
 		// 로그아웃 클릭 이벤트 추가
@@ -233,7 +231,6 @@ public class Calendarpp {
 		myPageLabel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				JOptionPane.showMessageDialog(frame, "마이페이지로 이동!");
 				new myPageBegin();
 				frame.dispose();
 			}
@@ -442,9 +439,11 @@ public class Calendarpp {
 			calendarTableModel.setValueAt(Integer.toString(day), row, col); // +1을 통해 아래로 내리기
 		}
 
+		
 		// UI 업데이트
 		calendarTable.revalidate();
 		calendarTable.repaint();
+		
 
 	}// updateCalendar
 
