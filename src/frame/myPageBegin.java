@@ -52,6 +52,7 @@ public class myPageBegin extends JFrame {
 		JButton btnBack = new JButton("뒤로가기");
 		JButton btnEdit = new JButton("회원정보 변경");
 		JButton btnLogout = new JButton("로그아웃");
+		JButton btnMyPageTitle = new JButton("마이페이지");
 		
 		JButton btnLogo = new JButton();
 
@@ -60,7 +61,7 @@ public class myPageBegin extends JFrame {
 		btnLogo.setBorderPainted(false); // 버튼 테두리 제거
 		btnLogo.setContentAreaFilled(false); // 버튼 배경 제거
 		btnLogo.setFocusPainted(false); // 포커스 효과 제거
-		btnLogo.setBounds(15, 15, 130, 130);// 버튼 위치 및 크기 설정
+		btnLogo.setBounds(15, 15, 190, 190);// 버튼 위치 및 크기 설정
 
 		btnBack.setSize(90, 25);
 		btnBack.setLocation(390, 10); // 하단 위치
@@ -82,6 +83,13 @@ public class myPageBegin extends JFrame {
 		btnLogout.setContentAreaFilled(false); // 배경 제거
 		btnLogout.setBorderPainted(false); // 테두리 제거
 		btnLogout.setForeground(Color.BLUE);
+		
+		btnMyPageTitle.setSize(320, 50);
+		btnMyPageTitle.setLocation(175, 100); // btnBack 위에 위치
+		btnMyPageTitle.setFont(new Font("맑은 고딕", Font.BOLD, 45));
+		btnMyPageTitle.setContentAreaFilled(false); // 배경 제거
+		btnMyPageTitle.setBorderPainted(false); // 테두리 제거
+		btnMyPageTitle.setForeground(Color.BLACK);
 		
 		
 
@@ -169,6 +177,7 @@ public class myPageBegin extends JFrame {
 			}
 		});
 		
+		panel.add(btnMyPageTitle);
 		panel.add(btnLogo);
 		panel.add(btnBack);
 		panel.add(btnEdit);
