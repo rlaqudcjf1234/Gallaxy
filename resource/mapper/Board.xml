@@ -51,11 +51,17 @@
 	</select>
 
 	<select id="selectBoardList" parameterType="dto.BoardDTO" resultType="dto.BoardDTO">
-		SELECT * FROM (
+		SELECT A.*, (SELECT COUNT(*) FROM BOARD_COMMENT B WHERE B.BOARD_ID = A.BOARD_ID) COMMENT_CNT
+		FROM (
 		<include refid="selectBoard" />
-		)
+		)A
 		<where>
-			BOARD_TITLE LIKE '%'||#{boardTitle}||'%'
+			<if test="boardTitle != null">
+				AND BOARD_TITLE LIKE '%'||#{boardTitle}||'%'
+			</if>
+			<if test="userId != null">
+				AND USER_ID = #{userId}
+			</if>
 		</where>
 		ORDER BY BOARD_ID DESC
 		OFFSET (#{pageNo} -1) * #{pageSize} ROWS FETCH

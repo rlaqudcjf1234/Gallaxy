@@ -38,6 +38,9 @@ public class BoardDTO extends PageDTO {
 
 	// 게시판 작성자
 	private String userId;
+	
+	// 게시판 작성 코멘트 수
+	private int commentCnt;
 
 	public String getBoardId() {
 		return boardId;
@@ -141,6 +144,14 @@ public class BoardDTO extends PageDTO {
 
 	public void setUserId(String userId) {
 		this.userId = userId;
+	}
+
+	public int getCommentCnt() {
+		return commentCnt;
+	}
+
+	public void setCommentCnt(int commentCnt) {
+		this.commentCnt = commentCnt;
 	}
 
 }
