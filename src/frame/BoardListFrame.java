@@ -201,6 +201,7 @@ public class BoardListFrame extends JFrame {
 				} else {
 					// 검색 목록 변경
 					updateBoardList(list);
+					
 		        }
 
 			}
