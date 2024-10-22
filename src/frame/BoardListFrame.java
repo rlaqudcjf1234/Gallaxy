@@ -160,14 +160,6 @@ public class BoardListFrame extends JFrame {
 				mainFrame.dispose();
 			}
 		});
-
-//		JPanel searchResultPanel = new JPanel(); // 검색 결과 목록 패널
-//		searchResultPanel.setLayout(new BoxLayout(searchResultPanel, BoxLayout.Y_AXIS)); 
-//	    JScrollPane searchScrollPane = new JScrollPane(searchResultPanel);
-//	    searchScrollPane.setBounds(50, 670, 400, 100); 
-	    
-
-		
 		// 글 검색 필드
 		TextField contentSearch = new TextField("검색할 글 제목을 입력하세요"); // 제목 입력
 		contentSearch.setBounds(50, 630, 300, 30);
