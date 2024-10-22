@@ -55,17 +55,17 @@ public class BoardWriteFrame extends JFrame {
 	private int totalPage;
 	private List<String> addrs;
 
-	private String textInit = "Á¦¸ñÀ» ÀÔ·ÂÇÏ¼¼¿ä";
-	private String detailInit = "³»¿ëÀ» ÀÔ·ÂÇÏ¼¼¿ä";
+	private String textInit = "ì œëª©ì„ ì…ë ¥í•˜ì„¸ìš”";
+	private String detailInit = "ë‚´ìš©ì„ ì…ë ¥í•˜ì„¸ìš”";
 
-	private String yyyy[] = { "2024³â", "2025³â" };
-	private String mm[] = { "1¿ù", "2¿ù", "3¿ù", "4¿ù", "5¿ù", "6¿ù", "7¿ù", "8¿ù", "9¿ù", "10¿ù", "11¿ù", "12¿ù" };
-	private String dd[] = { "1ÀÏ", "2ÀÏ", "3ÀÏ", "4ÀÏ", "5ÀÏ", "6ÀÏ", "7ÀÏ", "8ÀÏ", "9ÀÏ", "10ÀÏ", "11ÀÏ", "12ÀÏ", "13ÀÏ", "14ÀÏ",
-			"15ÀÏ", "16ÀÏ", "17ÀÏ", "18ÀÏ", "19ÀÏ", "20ÀÏ", "21ÀÏ", "22ÀÏ", "23ÀÏ", "24ÀÏ", "25ÀÏ", "26ÀÏ", "27ÀÏ", "28ÀÏ", "29ÀÏ",
-			"30ÀÏ", "31ÀÏ" };
-	private String apm[] = { "¿ÀÀü", "¿ÀÈÄ" };
-	private String hh[] = { "1½Ã", "2½Ã", "3½Ã", "4½Ã", "5½Ã", "6½Ã", "7½Ã", "8½Ã", "9½Ã", "10½Ã", "11½Ã", "12½Ã" };
-	private String mi[] = { "00ºĞ", "30ºĞ" };
+	private String yyyy[] = { "2024ë…„", "2025ë…„" };
+	private String mm[] = { "1ì›”", "2ì›”", "3ì›”", "4ì›”", "5ì›”", "6ì›”", "7ì›”", "8ì›”", "9ì›”", "10ì›”", "11ì›”", "12ì›”" };
+	private String dd[] = { "1ì¼", "2ì¼", "3ì¼", "4ì¼", "5ì¼", "6ì¼", "7ì¼", "8ì¼", "9ì¼", "10ì¼", "11ì¼", "12ì¼", "13ì¼", "14ì¼",
+			"15ì¼", "16ì¼", "17ì¼", "18ì¼", "19ì¼", "20ì¼", "21ì¼", "22ì¼", "23ì¼", "24ì¼", "25ì¼", "26ì¼", "27ì¼", "28ì¼", "29ì¼",
+			"30ì¼", "31ì¼" };
+	private String apm[] = { "ì˜¤ì „", "ì˜¤í›„" };
+	private String hh[] = { "1ì‹œ", "2ì‹œ", "3ì‹œ", "4ì‹œ", "5ì‹œ", "6ì‹œ", "7ì‹œ", "8ì‹œ", "9ì‹œ", "10ì‹œ", "11ì‹œ", "12ì‹œ" };
+	private String mi[] = { "00ë¶„", "30ë¶„" };
 
 	/* BoardWriteFrame */
 	private JTextField addressFld;
@@ -78,7 +78,7 @@ public class BoardWriteFrame extends JFrame {
 	private JComboBox<String> apmCbx;
 	private JComboBox<String> hhCbx;
 	private JComboBox<String> miCbx;
-	private String filePath = "temp/¼­¿ïÆ¯º°½Ã Á¾·Î±¸ Á¾·Î 13-3 ±¸µÎ¼ö¼±´ë.jpg";
+	private String filePath = "temp/ì„œìš¸íŠ¹ë³„ì‹œ ì¢…ë¡œêµ¬ ì¢…ë¡œ 13-3 êµ¬ë‘ìˆ˜ì„ ëŒ€.jpg";
 
 	/* BoardSFrame */
 	private JFrame searchFrame;
@@ -105,11 +105,11 @@ public class BoardWriteFrame extends JFrame {
 	 * Create the frame.
 	 */
 	public BoardWriteFrame() {
-		// ÇÁ·¹ÀÓ Å¸ÀÌÆ²¹Ù
+		// í”„ë ˆì„ íƒ€ì´í‹€ë°”
 		setTitle("BoardWriteFrame");
-		// X¹öÆ° Á¾·á
+		// Xë²„íŠ¼ ì¢…ë£Œ
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		// ÇÁ·¹ÀÓ À§Ä¡, Å©±â(ÇÈ¼¿)
+		// í”„ë ˆì„ ìœ„ì¹˜, í¬ê¸°(í”½ì…€)
 		setBounds(100, 100, 500, 850);
 
 		JPanel contentPane = new JPanel();
@@ -121,16 +121,16 @@ public class BoardWriteFrame extends JFrame {
 		searchPane.setLayout(new FlowLayout(FlowLayout.CENTER));
 		contentPane.add(searchPane);
 
-		JLabel addressLbl = new JLabel("ÁÖ¼Ò");
+		JLabel addressLbl = new JLabel("ì£¼ì†Œ");
 		searchPane.add(addressLbl);
 
 		addressFld = new JTextField(30);
 		searchPane.add(addressFld);
 
-		JButton searchBtn = new JButton("Á¶È¸");
+		JButton searchBtn = new JButton("ì¡°íšŒ");
 		searchPane.add(searchBtn);
 
-		// ¹öÆ°(searchBtn) Å¬¸¯ ÀÌº¥Æ®
+		// ë²„íŠ¼(searchBtn) í´ë¦­ ì´ë²¤íŠ¸
 		searchBtn.addActionListener(new ActionListener() {
 
 			@Override
@@ -139,7 +139,7 @@ public class BoardWriteFrame extends JFrame {
 				// TODO Auto-generated method stub
 				serarch = addressFld.getText();
 				if (serarch.length() < 2) {
-					JOptionPane.showMessageDialog(null, "°Ë»ö¾î´Â µÎ±ÛÀÚ ÀÌ»ó ÀÔ·ÂµÇ¾î¾ß ÇÕ´Ï´Ù.", "¾Ë¸²",
+					JOptionPane.showMessageDialog(null, "ê²€ìƒ‰ì–´ëŠ” ë‘ê¸€ì ì´ìƒ ì…ë ¥ë˜ì–´ì•¼ í•©ë‹ˆë‹¤.", "ì•Œë¦¼",
 							JOptionPane.INFORMATION_MESSAGE);
 					return;
 				}
@@ -152,11 +152,11 @@ public class BoardWriteFrame extends JFrame {
 						if (totalPage > 0) {
 							addrs = (List<String>) result.get("list");
 						} else {
-							JOptionPane.showMessageDialog(null, "Á¶È¸ °á°ú°¡ ¾ø½À´Ï´Ù.", "¾Ë¸²", JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane.showMessageDialog(null, "ì¡°íšŒ ê²°ê³¼ê°€ ì—†ìŠµë‹ˆë‹¤.", "ì•Œë¦¼", JOptionPane.INFORMATION_MESSAGE);
 							return;
 						}
 					} else {
-						JOptionPane.showMessageDialog(null, errorMessage, "¾Ë¸²", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, errorMessage, "ì•Œë¦¼", JOptionPane.ERROR_MESSAGE);
 						return;
 					}
 				}
@@ -178,20 +178,20 @@ public class BoardWriteFrame extends JFrame {
 		titlePane.setLayout(new BoxLayout(titlePane, BoxLayout.X_AXIS));
 		contentPane.add(titlePane);
 
-		JLabel textLbl = new JLabel("Á¦¸ñ");
+		JLabel textLbl = new JLabel("ì œëª©");
 		textLbl.setBorder(new EmptyBorder(5, 5, 5, 5));
 		titlePane.add(textLbl);
 
 		textFld = new JTextField(textInit);
-		textFld.setFont(new Font("¸¼Àº °íµñ", Font.PLAIN, 13));
+		textFld.setFont(new Font("ë§‘ì€ ê³ ë”•", Font.PLAIN, 13));
 		titlePane.add(textFld);
 
-		// Å¬¸¯ ÀÌº¥Æ® ±âº» ÅØ½ºÆ®(textFld) »èÁ¦
+		// í´ë¦­ ì´ë²¤íŠ¸ ê¸°ë³¸ í…ìŠ¤íŠ¸(textFld) ì‚­ì œ
 		textFld.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (textFld.getText().equals(textInit)) {
-					textFld.setText(""); // Å¬¸¯ ½Ã ÅØ½ºÆ® ÃÊ±âÈ­
+					textFld.setText(""); // í´ë¦­ ì‹œ í…ìŠ¤íŠ¸ ì´ˆê¸°í™”
 				}
 			}
 		});
@@ -201,7 +201,7 @@ public class BoardWriteFrame extends JFrame {
 		datePane.setLayout(new BoxLayout(datePane, BoxLayout.X_AXIS));
 		contentPane.add(datePane);
 
-		JLabel dateLbl = new JLabel("ÀÏÀÚ");
+		JLabel dateLbl = new JLabel("ì¼ì");
 		dateLbl.setBorder(new EmptyBorder(5, 5, 5, 5));
 		datePane.add(dateLbl);
 
@@ -223,7 +223,7 @@ public class BoardWriteFrame extends JFrame {
 		timePane.setLayout(new BoxLayout(timePane, BoxLayout.X_AXIS));
 		contentPane.add(timePane);
 
-		JLabel timeLbl = new JLabel("½Ã°£");
+		JLabel timeLbl = new JLabel("ì‹œê°„");
 		timeLbl.setBorder(new EmptyBorder(5, 5, 5, 5));
 		timePane.add(timeLbl);
 
@@ -243,7 +243,7 @@ public class BoardWriteFrame extends JFrame {
 		detailPane.setLayout(new BoxLayout(detailPane, BoxLayout.X_AXIS));
 		contentPane.add(detailPane);
 
-		JLabel detailLbl = new JLabel("³»¿ë");
+		JLabel detailLbl = new JLabel("ë‚´ìš©");
 		detailLbl.setBorder(new EmptyBorder(5, 5, 5, 5));
 		detailPane.add(detailLbl);
 
@@ -252,12 +252,12 @@ public class BoardWriteFrame extends JFrame {
 		detailFld.setRows(10);
 		detailPane.add(detailFld);
 
-		// Å¬¸¯ ÀÌº¥Æ® ±âº» ÅØ½ºÆ®(contentFld) »èÁ¦
+		// í´ë¦­ ì´ë²¤íŠ¸ ê¸°ë³¸ í…ìŠ¤íŠ¸(contentFld) ì‚­ì œ
 		detailFld.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				if (detailFld.getText().equals(detailInit)) {
-					detailFld.setText(""); // Å¬¸¯ ½Ã ÅØ½ºÆ® ÃÊ±âÈ­
+					detailFld.setText(""); // í´ë¦­ ì‹œ í…ìŠ¤íŠ¸ ì´ˆê¸°í™”
 				}
 			}
 		});
@@ -266,15 +266,15 @@ public class BoardWriteFrame extends JFrame {
 		buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.X_AXIS));
 		contentPane.add(buttonPane);
 
-		// ÀÛ¼º ¿Ï·á ¹öÆ°
-		JButton writeBtn = new JButton("ÀÛ¼º ¿Ï·á");
+		// ì‘ì„± ì™„ë£Œ ë²„íŠ¼
+		JButton writeBtn = new JButton("ì‘ì„± ì™„ë£Œ");
 		buttonPane.add(writeBtn);
 
-		// ¹öÆ°(writeBtn) Å¬¸¯ ÀÌº¥Æ®
+		// ë²„íŠ¼(writeBtn) í´ë¦­ ì´ë²¤íŠ¸
 		writeBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				// ÀÛ¼ºµÈ ³»¿ë Ã³¸®
+				// ì‘ì„±ëœ ë‚´ìš© ì²˜ë¦¬
 				String sTitle = textFld.getText();
 				String sContent = detailFld.getText();
 				String sYyyy = yyyy[yyyyCbx.getSelectedIndex()];
@@ -285,12 +285,12 @@ public class BoardWriteFrame extends JFrame {
 				String sMi = mi[miCbx.getSelectedIndex()];
 
 				if (sTitle.isEmpty() || sTitle.equals(textInit)) {
-					JOptionPane.showMessageDialog(null, textInit, "¾Ë¸²", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, textInit, "ì•Œë¦¼", JOptionPane.INFORMATION_MESSAGE);
 					return;
 				}
 
 				if (sContent.isEmpty() || sContent.equals(detailInit)) {
-					JOptionPane.showMessageDialog(null, detailInit, "¾Ë¸²", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, detailInit, "ì•Œë¦¼", JOptionPane.INFORMATION_MESSAGE);
 					return;
 				}
 
@@ -312,22 +312,22 @@ public class BoardWriteFrame extends JFrame {
 
 				int cnt = bs.insertBoard(dto);
 				if (cnt > 0) {
-					JOptionPane.showMessageDialog(null, "ÀÛ¼ºÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.", "¾Ë¸²", JOptionPane.INFORMATION_MESSAGE);
+					JOptionPane.showMessageDialog(null, "ì‘ì„±ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.", "ì•Œë¦¼", JOptionPane.INFORMATION_MESSAGE);
 
 					List<BoardDTO> updatedBoardList = bs.selectBoardList(new BoardDTO());
-					BoardListFrame.updateBoardList(updatedBoardList); // °Ô½Ã¹° ¸ñ·Ï °»½Å
+					BoardListFrame.updateBoardList(updatedBoardList); // ê²Œì‹œë¬¼ ëª©ë¡ ê°±ì‹ 
 
-					dispose(); // ÇöÀç ÇÁ·¹ÀÓ ´İ±â
-					BoardListFrame.showBoardList(); // °Ô½Ã¹° ¸ñ·Ï Ã¢ ¿­±â
+					dispose(); // í˜„ì¬ í”„ë ˆì„ ë‹«ê¸°
+					BoardListFrame.showBoardList(); // ê²Œì‹œë¬¼ ëª©ë¡ ì°½ ì—´ê¸°
 				} else {
-					JOptionPane.showMessageDialog(null, "¿À·ù°¡ ¹ß»ıÇÏ¿´½À´Ï´Ù.", "¿À·ù", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, "ì˜¤ë¥˜ê°€ ë°œìƒí•˜ì˜€ìŠµë‹ˆë‹¤.", "ì˜¤ë¥˜", JOptionPane.ERROR_MESSAGE);
 				}
 
 			}
 		});
 
-		// ÀÛ¼º Ãë¼Ò ¹öÆ°
-		JButton cancelBtn = new JButton("ÀÛ¼º Ãë¼Ò");
+		// ì‘ì„± ì·¨ì†Œ ë²„íŠ¼
+		JButton cancelBtn = new JButton("ì‘ì„± ì·¨ì†Œ");
 		cancelBtn.setAlignmentX(Component.RIGHT_ALIGNMENT);
 		buttonPane.add(cancelBtn);
 
@@ -352,9 +352,9 @@ public class BoardWriteFrame extends JFrame {
 			searchFrame.dispose();
 		}
 		searchFrame = new JFrame();
-		// ÇÁ·¹ÀÓ Å¸ÀÌÆ²¹Ù
+		// í”„ë ˆì„ íƒ€ì´í‹€ë°”
 		searchFrame.setTitle("BoardSearchFrame");
-		// ÇÁ·¹ÀÓ À§Ä¡, Å©±â(ÇÈ¼¿)
+		// í”„ë ˆì„ ìœ„ì¹˜, í¬ê¸°(í”½ì…€)
 		searchFrame.setBounds(600, 100, 500, 850);
 
 		JPanel contentPane = new JPanel();
@@ -389,16 +389,16 @@ public class BoardWriteFrame extends JFrame {
 						if (totalPage > 0) {
 							addrs = (List<String>) result.get("list");
 						} else {
-							JOptionPane.showMessageDialog(null, "Á¶È¸ °á°ú°¡ ¾ø½À´Ï´Ù.", "¾Ë¸²", JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane.showMessageDialog(null, "ì¡°íšŒ ê²°ê³¼ê°€ ì—†ìŠµë‹ˆë‹¤.", "ì•Œë¦¼", JOptionPane.INFORMATION_MESSAGE);
 							return;
 						}
 					} else {
-						JOptionPane.showMessageDialog(null, errorMessage, "¾Ë¸²", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, errorMessage, "ì•Œë¦¼", JOptionPane.ERROR_MESSAGE);
 						return;
 					}
 				}
 
-				/* Á¶È¸ ¸ñ·Ï °»½Å */
+				/* ì¡°íšŒ ëª©ë¡ ê°±ì‹  */
 				SearchListUpdate();
 			}
 		});
@@ -430,16 +430,16 @@ public class BoardWriteFrame extends JFrame {
 						if (totalPage > 0) {
 							addrs = (List<String>) result.get("list");
 						} else {
-							JOptionPane.showMessageDialog(null, "Á¶È¸ °á°ú°¡ ¾ø½À´Ï´Ù.", "¾Ë¸²", JOptionPane.INFORMATION_MESSAGE);
+							JOptionPane.showMessageDialog(null, "ì¡°íšŒ ê²°ê³¼ê°€ ì—†ìŠµë‹ˆë‹¤.", "ì•Œë¦¼", JOptionPane.INFORMATION_MESSAGE);
 							return;
 						}
 					} else {
-						JOptionPane.showMessageDialog(null, errorMessage, "¾Ë¸²", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, errorMessage, "ì•Œë¦¼", JOptionPane.ERROR_MESSAGE);
 						return;
 					}
 				}
 
-				/* Á¶È¸ ¸ñ·Ï °»½Å */
+				/* ì¡°íšŒ ëª©ë¡ ê°±ì‹  */
 				SearchListUpdate();
 			}
 		});
@@ -453,8 +453,8 @@ public class BoardWriteFrame extends JFrame {
 		JPanel buttonPane = new JPanel();
 		contentPane.add(buttonPane, BorderLayout.SOUTH);
 
-		// ´İ±â ¹öÆ°
-		JButton cancelBtn = new JButton("´İ±â");
+		// ë‹«ê¸° ë²„íŠ¼
+		JButton cancelBtn = new JButton("ë‹«ê¸°");
 		buttonPane.add(cancelBtn);
 
 		cancelBtn.addMouseListener(new MouseAdapter() {
@@ -464,21 +464,21 @@ public class BoardWriteFrame extends JFrame {
 			}
 		});
 
-		/* Á¶È¸ ¸ñ·Ï °»½Å */
+		/* ì¡°íšŒ ëª©ë¡ ê°±ì‹  */
 		SearchListUpdate();
 
 		searchFrame.setVisible(true);
 		searchFrame.setContentPane(contentPane);
 	}
 
-	/* Á¶È¸ ¸ñ·Ï °»½Å */
+	/* ì¡°íšŒ ëª©ë¡ ê°±ì‹  */
 	public void SearchListUpdate() {
 		if (addrs != null && addrs.size() > 0) {
-			// ¸ñ·Ï ÀüÃ¼ »èÁ¦
+			// ëª©ë¡ ì „ì²´ ì‚­ì œ
 			listPane.removeAll();
 			for (String addr : addrs) {
 
-				// ¸ñ·Ï Ãß°¡
+				// ëª©ë¡ ì¶”ê°€
 				JPanel optionPane = new JPanel();
 				optionPane.setLayout(new BorderLayout());
 				listPane.add(optionPane);
@@ -490,7 +490,7 @@ public class BoardWriteFrame extends JFrame {
 				buttonPane.setBorder(new EmptyBorder(15, 5, 15, 5));
 				optionPane.add(buttonPane, BorderLayout.EAST);
 
-				JButton addrBtn = new JButton("¼±ÅÃ");
+				JButton addrBtn = new JButton("ì„ íƒ");
 				buttonPane.add(addrBtn);
 
 				addrBtn.addMouseListener(new MouseAdapter() {
@@ -508,12 +508,12 @@ public class BoardWriteFrame extends JFrame {
 					}
 				});
 			}
-			listPane.revalidate(); // UI ¾÷µ¥ÀÌÆ®
-			listPane.repaint(); // UI °»½Å
+			listPane.revalidate(); // UI ì—…ë°ì´íŠ¸
+			listPane.repaint(); // UI ê°±ì‹ 
 
 			pageLbl.setText(Integer.toString(currentPage) + " / " + Integer.toString(totalPage));
-			pageLbl.revalidate(); // UI ¾÷µ¥ÀÌÆ®
-			pageLbl.repaint(); // UI °»½Å
+			pageLbl.revalidate(); // UI ì—…ë°ì´íŠ¸
+			pageLbl.repaint(); // UI ê°±ì‹ 
 		}
 	}
 }

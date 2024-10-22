@@ -5,9 +5,9 @@ import java.util.Map;
 
 public class CalendarMonthly {
 	
-	private double totalDistance; //ÇÑ ´Şµ¿¾ÈÀÇ ÃÑ°Å¸®
-	private double totalTime;//ÇÑ ´Şµ¿¾ÈÀÇ ÃÑ ½Ã°£
-	private double totalCalories;//ÇÑ ´Şµ¿¾ÈÀÇ ÃÑ Ä®·Î¸®
+	private double totalDistance; //í•œ ë‹¬ë™ì•ˆì˜ ì´ê±°ë¦¬
+	private double totalTime;//í•œ ë‹¬ë™ì•ˆì˜ ì´ ì‹œê°„
+	private double totalCalories;//í•œ ë‹¬ë™ì•ˆì˜ ì´ ì¹¼ë¡œë¦¬
 	private Map<String,Entry> entries;
 	
 	private class Entry{
@@ -40,9 +40,9 @@ public class CalendarMonthly {
 	public void addEntry(String date,double distance, double time) {
 		if (entries.containsKey(date)) {
 	        Entry entry = entries.get(date);
-	        totalDistance -= entry.getDistance(); // ±âÁ¸ °Å¸® Â÷°¨
-	        totalTime -= entry.getTime(); // ±âÁ¸ ½Ã°£ Â÷°¨
-	        totalCalories -= entry.getTime() * 7.33; // ±âÁ¸ Ä®·Î¸® Â÷°¨
+	        totalDistance -= entry.getDistance(); // ê¸°ì¡´ ê±°ë¦¬ ì°¨ê°
+	        totalTime -= entry.getTime(); // ê¸°ì¡´ ì‹œê°„ ì°¨ê°
+	        totalCalories -= entry.getTime() * 7.33; // ê¸°ì¡´ ì¹¼ë¡œë¦¬ ì°¨ê°
 	    }
 		
 		entries.put(date, new Entry(distance,time));
@@ -64,7 +64,7 @@ public class CalendarMonthly {
 	}
 
 	public String getstats() {
-		return String.format("ÃÑ °Å¸®: %.2f km \nÃÑ ½Ã°£: %2f ºĞ \nÃÑ Ä®·Î¸®: %.2f kcal",
+		return String.format("ì´ ê±°ë¦¬: %.2f km \nì´ ì‹œê°„: %2f ë¶„ \nì´ ì¹¼ë¡œë¦¬: %.2f kcal",
 				totalDistance,totalTime,totalCalories);
 	}
 

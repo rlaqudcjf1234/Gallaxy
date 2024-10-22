@@ -28,37 +28,37 @@ public class myPageBegin extends JFrame {
 	
 	BoardService bs = new BoardServiceImpl();
 	
-	private JLabel infoLabel; // Á¤º¸¸¦ Ç¥½ÃÇÒ JLabel Ãß°¡
-	private List<Post> posts; // °Ô½Ã±Û ¸ñ·Ï
-	private JPanel postPanel; // °Ô½Ã±ÛÀ» Ç¥½ÃÇÒ ÆĞ³Î
+	private JLabel infoLabel; // ì •ë³´ë¥¼ í‘œì‹œí•  JLabel ì¶”ê°€
+	private List<Post> posts; // ê²Œì‹œê¸€ ëª©ë¡
+	private JPanel postPanel; // ê²Œì‹œê¸€ì„ í‘œì‹œí•  íŒ¨ë„
 
 	public myPageBegin() {
 		MP();
 	}
 
 	public void MP() {
-		setTitle("¸¶ÀÌÆäÀÌÁö");
+		setTitle("ë§ˆì´í˜ì´ì§€");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setSize(500, 850); // ÇÁ·¹ÀÓ »çÀÌÁî
-		setLayout(null); // null ·¹ÀÌ¾Æ¿ô »ç¿ë
+		setSize(500, 850); // í”„ë ˆì„ ì‚¬ì´ì¦ˆ
+		setLayout(null); // null ë ˆì´ì•„ì›ƒ ì‚¬ìš©
 
 		JPanel panel = new JPanel();
-		panel.setLayout(null); // ÆĞ³Îµµ null ·¹ÀÌ¾Æ¿ô »ç¿ë
-		panel.setBounds(0, 0, 500, 850); // ÆĞ³Î Å©±â ¼³Á¤
+		panel.setLayout(null); // íŒ¨ë„ë„ null ë ˆì´ì•„ì›ƒ ì‚¬ìš©
+		panel.setBounds(0, 0, 500, 850); // íŒ¨ë„ í¬ê¸° ì„¤ì •
 
-		JButton btnBack = new JButton("µÚ·Î°¡±â");
-		JButton btnEdit = new JButton("È¸¿øÁ¤º¸ º¯°æ/ ·Î±×¾Æ¿ô");
+		JButton btnBack = new JButton("ë’¤ë¡œê°€ê¸°");
+		JButton btnEdit = new JButton("íšŒì›ì •ë³´ ë³€ê²½/ ë¡œê·¸ì•„ì›ƒ");
 
 		btnBack.setSize(450, 35);
-		btnBack.setLocation(25, 700); // ÇÏ´Ü À§Ä¡
+		btnBack.setLocation(25, 700); // í•˜ë‹¨ ìœ„ì¹˜
 
-		btnBack.setFont(new Font("±¼¸²", Font.BOLD, 14));
+		btnBack.setFont(new Font("êµ´ë¦¼", Font.BOLD, 14));
 		btnEdit.setSize(450, 35);
-		btnEdit.setLocation(25, 650); // btnBack À§¿¡ À§Ä¡
+		btnEdit.setLocation(25, 650); // btnBack ìœ„ì— ìœ„ì¹˜
 
-		btnEdit.setFont(new Font("±¼¸²", Font.BOLD, 14));
+		btnEdit.setFont(new Font("êµ´ë¦¼", Font.BOLD, 14));
 
-		// Á¤º¸ Ç¥½Ã¿ë JLabel ¼³Á¤
+		// ì •ë³´ í‘œì‹œìš© JLabel ì„¤ì •
 		String userId = Main.USER.getUserId();
 		String userName = Main.USER.getUserName();
 		String userNickName = Main.USER.getUserNickName();
@@ -66,48 +66,48 @@ public class myPageBegin extends JFrame {
 		
 		infoLabel = new JLabel("<html>"
 				+ "&emsp;&emsp;&emsp;&emsp; "+ userNickName + " (" + userId + ")<br>"
-				+ "&emsp;&emsp;&emsp;&emsp; ÀÌ¸§ : "+ userName +"<br>" 
+				+ "&emsp;&emsp;&emsp;&emsp; ì´ë¦„ : "+ userName +"<br>" 
 				+ "&emsp;&emsp;&emsp;&emsp; E-Mail : "+ " (" + userEmail + ")<br>"+ "</html>");
-		infoLabel.setFont(new Font("µ¸¿ò", Font.BOLD, 18));
-		infoLabel.setOpaque(true); // ¹è°æ»öÀ» º¸ÀÌ°Ô ¼³Á¤
-		infoLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2)); // Å×µÎ¸® Ãß°¡
+		infoLabel.setFont(new Font("ë‹ì›€", Font.BOLD, 18));
+		infoLabel.setOpaque(true); // ë°°ê²½ìƒ‰ì„ ë³´ì´ê²Œ ì„¤ì •
+		infoLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2)); // í…Œë‘ë¦¬ ì¶”ê°€
 
-		// Å©±â ¹× À§Ä¡ ¼³Á¤
-		infoLabel.setBounds(25, 50, 450, 150); // Áß¾Ó Á¤·Ä ¹× Å©±â ¼³Á¤
-		panel.add(infoLabel); // JLabel Ãß°¡
+		// í¬ê¸° ë° ìœ„ì¹˜ ì„¤ì •
+		infoLabel.setBounds(25, 50, 450, 150); // ì¤‘ì•™ ì •ë ¬ ë° í¬ê¸° ì„¤ì •
+		panel.add(infoLabel); // JLabel ì¶”ê°€
 
 
-		// °Ô½Ã±Û ¸ñ·Ï ÃÊ±âÈ­
+		// ê²Œì‹œê¸€ ëª©ë¡ ì´ˆê¸°í™”
         posts = new ArrayList<>();
-        loadPosts(); // °Ô½Ã±Û ·Îµå
+        loadPosts(); // ê²Œì‹œê¸€ ë¡œë“œ
 
-        // Å×ÀÌºíÀÇ Ä®·³¸í ¼³Á¤
-        String[] columnNames = { "Á¦¸ñ","´ñ±Û ¼ö" };
+        // í…Œì´ë¸”ì˜ ì¹¼ëŸ¼ëª… ì„¤ì •
+        String[] columnNames = { "ì œëª©","ëŒ“ê¸€ ìˆ˜" };
 
-        // µ¥ÀÌÅÍ¸¦ 2D ¹è¿­·Î º¯È¯
+        // ë°ì´í„°ë¥¼ 2D ë°°ì—´ë¡œ ë³€í™˜
         Object[][] data = new Object[posts.size()][2];
         for (int i = 0; i < posts.size(); i++) {
             Post post = posts.get(i);
-            data[i][0] = post.getTitle();        // Á¦¸ñ
-            data[i][1] = post.getCommentCount(); // ´ñ±Û ¼ö
+            data[i][0] = post.getTitle();        // ì œëª©
+            data[i][1] = post.getCommentCount(); // ëŒ“ê¸€ ìˆ˜
         }
 
-        // Å×ÀÌºí ¸ğµ¨ »ı¼º
+        // í…Œì´ë¸” ëª¨ë¸ ìƒì„±
         DefaultTableModel model = new DefaultTableModel(data, columnNames);
 
-        // JTable »ı¼º
+        // JTable ìƒì„±
         JTable postTable = new JTable(model);
-        postTable.setBounds(25, 220, 450, 400); // Å×ÀÌºí À§Ä¡ ¹× Å©±â ¼³Á¤
-        postTable.setRowHeight(45); // ÇàÀÇ ³ôÀÌ ¼³Á¤
-        postTable.getColumnModel().getColumn(0).setPreferredWidth(330); // Á¦¸ñ Ä®·³ Å©±â ¼³Á¤
-        postTable.getColumnModel().getColumn(1).setPreferredWidth(30); // ´ñ±Û ¼ö Ä®·³ Å©±â ¼³Á¤
+        postTable.setBounds(25, 220, 450, 400); // í…Œì´ë¸” ìœ„ì¹˜ ë° í¬ê¸° ì„¤ì •
+        postTable.setRowHeight(45); // í–‰ì˜ ë†’ì´ ì„¤ì •
+        postTable.getColumnModel().getColumn(0).setPreferredWidth(330); // ì œëª© ì¹¼ëŸ¼ í¬ê¸° ì„¤ì •
+        postTable.getColumnModel().getColumn(1).setPreferredWidth(30); // ëŒ“ê¸€ ìˆ˜ ì¹¼ëŸ¼ í¬ê¸° ì„¤ì •
 
-        // Å×ÀÌºí Å¬¸¯ ÀÌº¥Æ® Ãß°¡
+        // í…Œì´ë¸” í´ë¦­ ì´ë²¤íŠ¸ ì¶”ê°€
         postTable.addMouseListener(new MouseAdapter() {
             public void mouseClicked(MouseEvent e) {
-                int row = postTable.getSelectedRow(); // Å¬¸¯µÈ ÇàÀÇ ÀÎµ¦½º
-                Post selectedPost = posts.get(row); // ÇØ´ç °Ô½Ã±Û °¡Á®¿À±â
-                openPostDetail(selectedPost); // »ó¼¼ ÆäÀÌÁö ¿­±â
+                int row = postTable.getSelectedRow(); // í´ë¦­ëœ í–‰ì˜ ì¸ë±ìŠ¤
+                Post selectedPost = posts.get(row); // í•´ë‹¹ ê²Œì‹œê¸€ ê°€ì ¸ì˜¤ê¸°
+                openPostDetail(selectedPost); // ìƒì„¸ í˜ì´ì§€ ì—´ê¸°
             }
 
 			private void openPostDetail(Post selectedPost) {
@@ -116,17 +116,17 @@ public class myPageBegin extends JFrame {
 			}
         });
 
-        // ½ºÅ©·Ñ ÆĞ³ÎÀ» Ãß°¡ÇÏ¿© Å×ÀÌºí ½ºÅ©·Ñ °¡´ÉÇÏ°Ô ¼³Á¤
+        // ìŠ¤í¬ë¡¤ íŒ¨ë„ì„ ì¶”ê°€í•˜ì—¬ í…Œì´ë¸” ìŠ¤í¬ë¡¤ ê°€ëŠ¥í•˜ê²Œ ì„¤ì •
         JScrollPane scrollPane = new JScrollPane(postTable);
-        scrollPane.setBounds(25, 220, 450, 400); // ½ºÅ©·Ñ ÆĞ³Î À§Ä¡ ¹× Å©±â ¼³Á¤
-        panel.add(scrollPane); // ÆĞ³Î¿¡ ½ºÅ©·Ñ ÆĞ³Î Ãß°¡
+        scrollPane.setBounds(25, 220, 450, 400); // ìŠ¤í¬ë¡¤ íŒ¨ë„ ìœ„ì¹˜ ë° í¬ê¸° ì„¤ì •
+        panel.add(scrollPane); // íŒ¨ë„ì— ìŠ¤í¬ë¡¤ íŒ¨ë„ ì¶”ê°€
 
-		// ¹öÆ° ÀÌº¥Æ® ¼³Á¤
+		// ë²„íŠ¼ ì´ë²¤íŠ¸ ì„¤ì •
 		btnBack.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new MainBoard(); // MainBoard ÀÎ½ºÅÏ½º »ı¼º
-				dispose(); // ÇöÀç Ã¢ ´İ±â
+				new MainBoard(); // MainBoard ì¸ìŠ¤í„´ìŠ¤ ìƒì„±
+				dispose(); // í˜„ì¬ ì°½ ë‹«ê¸°
 			}
 		});
 
@@ -140,8 +140,8 @@ public class myPageBegin extends JFrame {
 
 		panel.add(btnBack);
 		panel.add(btnEdit);
-		add(panel); // ÆĞ³ÎÀ» ÇÁ·¹ÀÓ¿¡ Ãß°¡
-		setVisible(true); // ÇÁ·¹ÀÓÀ» º¸ÀÌµµ·Ï ¼³Á¤
+		add(panel); // íŒ¨ë„ì„ í”„ë ˆì„ì— ì¶”ê°€
+		setVisible(true); // í”„ë ˆì„ì„ ë³´ì´ë„ë¡ ì„¤ì •
 	}
 
 	private void loadPosts() {
@@ -154,16 +154,16 @@ public class myPageBegin extends JFrame {
 		
 		if(list != null && list.size() > 0) {
 			for(int i = 0; i < list.size(); i++) {
-				// °Ô½Ã±Û µ¥ÀÌÅÍ Ãß°¡
+				// ê²Œì‹œê¸€ ë°ì´í„° ì¶”ê°€
 				posts.add(new Post(i+1+"", list.get(i).getBoardTitle()));
 				
-				 // °Ô½Ã±ÛÀ» JLabel·Î Ãß°¡
+				 // ê²Œì‹œê¸€ì„ JLabelë¡œ ì¶”ê°€
 	            JLabel postLabel = new JLabel((i+1) + ". " + list.get(i).getBoardTitle());
-            postLabel.setBounds(10, i * 30, 430, 30);  // °¢ °Ô½Ã±Û À§Ä¡ ¹× Å©±â ¼³Á¤
-	            postPanel.add(postLabel);  // °Ô½Ã±ÛÀ» ÆĞ³Î¿¡ Ãß°¡
+            postLabel.setBounds(10, i * 30, 430, 30);  // ê° ê²Œì‹œê¸€ ìœ„ì¹˜ ë° í¬ê¸° ì„¤ì •
+	            postPanel.add(postLabel);  // ê²Œì‹œê¸€ì„ íŒ¨ë„ì— ì¶”ê°€
 			}	
 		} else {
-			posts.add(new Post("                             ---- ÀÛ¼ºµÈ °Ô½Ã±ÛÀÌ ¾ø½À´Ï´Ù -----" ,""));
+			posts.add(new Post("                             ---- ì‘ì„±ëœ ê²Œì‹œê¸€ì´ ì—†ìŠµë‹ˆë‹¤ -----" ,""));
 	         
 			
 		}
@@ -171,11 +171,11 @@ public class myPageBegin extends JFrame {
 	}
 
 	public static void main(String[] args) {
-		new myPageBegin(); // myPageBegin Å¬·¡½ºÀÇ ÀÎ½ºÅÏ½º¸¦ »ı¼ºÇÏ¿© Ç¥½Ã
+		new myPageBegin(); // myPageBegin í´ë˜ìŠ¤ì˜ ì¸ìŠ¤í„´ìŠ¤ë¥¼ ìƒì„±í•˜ì—¬ í‘œì‹œ
 	}
 }
 
-// Post Å¬·¡½º
+// Post í´ë˜ìŠ¤
 class Post {
 	private String title;
 	private String content;

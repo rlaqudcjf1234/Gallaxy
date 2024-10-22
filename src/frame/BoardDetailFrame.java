@@ -35,27 +35,27 @@ public class BoardDetailFrame extends JFrame {
 	
 	CommentService cs = new CommentServiceImpl();
 
-	// °Ô½Ã¹° Á¤º¸¸¦ Ç¥½ÃÇÒ ¶óº§°ú ÅØ½ºÆ® ¿µ¿ª
+	// ê²Œì‹œë¬¼ ì •ë³´ë¥¼ í‘œì‹œí•  ë¼ë²¨ê³¼ í…ìŠ¤íŠ¸ ì˜ì—­
 	private JLabel titleLabel;
 	private JTextArea contentArea;
 	private JLabel imageLabel;
 
-	// °Ô½Ã¹° Á¤º¸ Å¬·¡½º º¯¼ö
+	// ê²Œì‹œë¬¼ ì •ë³´ í´ë˜ìŠ¤ ë³€ìˆ˜
 	private BoardDTO board;
 
 	private JTextField commentField;
 	private JPanel commentPanel;
-	private ArrayList<String> comments; // ´ñ±Û ¸ñ·Ï
+	private ArrayList<String> comments; // ëŒ“ê¸€ ëª©ë¡
 
 	public BoardDetailFrame(BoardDTO board) {
-		this.board = board; // Àü´Ş¹ŞÀº °Ô½Ã¹° Á¤º¸¸¦ ÀúÀå
+		this.board = board; // ì „ë‹¬ë°›ì€ ê²Œì‹œë¬¼ ì •ë³´ë¥¼ ì €ì¥
 		this.comments = new ArrayList<>();
 		DetailFrame();
 	}
 
 	private void DetailFrame() {
 
-		setTitle("°Ô½Ã¹° ¼¼ºÎ Á¤º¸");
+		setTitle("ê²Œì‹œë¬¼ ì„¸ë¶€ ì •ë³´");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 500, 850);
 
@@ -63,55 +63,55 @@ public class BoardDetailFrame extends JFrame {
 		contentPane.setLayout(null);
 		//contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 
-		// °Ô½Ã¹° ÀÌ¹ÌÁö°¡ ÀÖ´Â °æ¿ì Ç¥½Ã
+		// ê²Œì‹œë¬¼ ì´ë¯¸ì§€ê°€ ìˆëŠ” ê²½ìš° í‘œì‹œ
 		if (board.getBoardFilePath() != null && !board.getBoardFilePath().isEmpty()) {
 			ImageIcon img = new ImageIcon(board.getBoardFilePath());
 			imageLabel = new JLabel(img);
-			imageLabel.setBounds(10, 50, 460, 250); // ÀÌ¹ÌÁö À§Ä¡ ¼³Á¤
+			imageLabel.setBounds(10, 50, 460, 250); // ì´ë¯¸ì§€ ìœ„ì¹˜ ì„¤ì •
 			contentPane.add(imageLabel);
 		}
 
-		// Á¦¸ñÀ» Ç¥½ÃÇÒ ÅØ½ºÆ® ÇÊµå
+		// ì œëª©ì„ í‘œì‹œí•  í…ìŠ¤íŠ¸ í•„ë“œ
 		JTextField titleField = new JTextField(board.getBoardTitle());
-		titleField.setFont(new Font("¸¼Àº °íµñ", Font.BOLD, 23));
-		titleField.setBounds(100, 310, 350, 40); // Á¦¸ñ À§Ä¡ ¼³Á¤
-		titleField.setEditable(false); // Á¦¸ñ ¼öÁ¤ ºÒ°¡
+		titleField.setFont(new Font("ë§‘ì€ ê³ ë”•", Font.BOLD, 23));
+		titleField.setBounds(100, 310, 350, 40); // ì œëª© ìœ„ì¹˜ ì„¤ì •
+		titleField.setEditable(false); // ì œëª© ìˆ˜ì • ë¶ˆê°€
 		titleField.setBorder(null);
 		contentPane.add(titleField);
 
-		// Á¦¸ñ ¶óº§ Ãß°¡
-		JLabel titleLabel = new JLabel("Á¦¸ñ: "); // Á¦¸ñ ¾Õ¿¡ ¶óº§ Ãß°¡
-		titleLabel.setFont(new Font("¸¼Àº °íµñ", Font.PLAIN, 16));
-		titleLabel.setBounds(40, 320, 50, 20); // Á¦¸ñ ¶óº§ À§Ä¡ ¼³Á¤
+		// ì œëª© ë¼ë²¨ ì¶”ê°€
+		JLabel titleLabel = new JLabel("ì œëª©: "); // ì œëª© ì•ì— ë¼ë²¨ ì¶”ê°€
+		titleLabel.setFont(new Font("ë§‘ì€ ê³ ë”•", Font.PLAIN, 16));
+		titleLabel.setBounds(40, 320, 50, 20); // ì œëª© ë¼ë²¨ ìœ„ì¹˜ ì„¤ì •
 		contentPane.add(titleLabel);
 
-		// °Ô½Ã¹° ³»¿ëÀ» Ç¥½ÃÇÏ´Â ÅØ½ºÆ® ¿µ¿ª
+		// ê²Œì‹œë¬¼ ë‚´ìš©ì„ í‘œì‹œí•˜ëŠ” í…ìŠ¤íŠ¸ ì˜ì—­
 		contentArea = new JTextArea(board.getBoardContent());
 		contentArea.setWrapStyleWord(true);
 		contentArea.setLineWrap(true);
-		contentArea.setEditable(false); // ³»¿ë ¼öÁ¤ ºÒ°¡
+		contentArea.setEditable(false); // ë‚´ìš© ìˆ˜ì • ë¶ˆê°€
 		contentArea.setBorder(new EmptyBorder(5, 5, 5, 5));
-		contentArea.setFont(new Font("¸¼Àº °íµñ", Font.PLAIN, 16));
+		contentArea.setFont(new Font("ë§‘ì€ ê³ ë”•", Font.PLAIN, 16));
 
 		JScrollPane scrollPane = new JScrollPane(contentArea);
-		scrollPane.setFont(new Font("¸¼Àº °íµñ", Font.PLAIN, 16));
+		scrollPane.setFont(new Font("ë§‘ì€ ê³ ë”•", Font.PLAIN, 16));
 		scrollPane.setBounds(40, 430, 400, 200);
 		contentPane.add(scrollPane);
 
-		// ´ñ±Û ÆĞ³Î
+		// ëŒ“ê¸€ íŒ¨ë„
 		commentPanel = new JPanel();
 		commentPanel.setLayout(new BoxLayout(commentPanel, BoxLayout.Y_AXIS));
 		JScrollPane commentScrollPane = new JScrollPane(commentPanel);
 		commentScrollPane.setBounds(40, 650, 400, 100);
 		contentPane.add(commentScrollPane);
 
-		// ´ñ±Û ÀÔ·Â ÇÊµå
+		// ëŒ“ê¸€ ì…ë ¥ í•„ë“œ
 		commentField = new JTextField();
 		commentField.setBounds(40, 755, 305, 30);
 		contentPane.add(commentField);
 
-		// ´ñ±Û ¹öÆ°
-		JButton commentButton = new JButton("ÀÛ¼º");
+		// ëŒ“ê¸€ ë²„íŠ¼
+		JButton commentButton = new JButton("ì‘ì„±");
 		commentButton.setBounds(360, 755, 80, 30);
 		commentButton.addActionListener(new ActionListener() {
 			@Override
@@ -119,7 +119,7 @@ public class BoardDetailFrame extends JFrame {
 				String comment = commentField.getText();
 				if (!comment.trim().isEmpty()) {
 					/*
-					comments.add(comment); // ´ñ±Û ÀúÀå
+					comments.add(comment); // ëŒ“ê¸€ ì €ì¥
 					*/
 					CommentDTO dto = new CommentDTO();
 					dto.setBoardId(board.getBoardId());
@@ -128,51 +128,51 @@ public class BoardDetailFrame extends JFrame {
 
 					int cnt = cs.insertComment(dto);
 					if (cnt == 0) {
-						// µ«±Û µî·Ï ½ÇÆĞ ¾Ë¸² Ãß°¡
+						// ëƒê¸€ ë“±ë¡ ì‹¤íŒ¨ ì•Œë¦¼ ì¶”ê°€
 						return;
 					}
-					updateCommentPanel(); // ´ñ±Û ¸ñ·Ï °»½Å
-					commentField.setText(""); // ÀÔ·Â ÇÊµå ÃÊ±âÈ­
+					updateCommentPanel(); // ëŒ“ê¸€ ëª©ë¡ ê°±ì‹ 
+					commentField.setText(""); // ì…ë ¥ í•„ë“œ ì´ˆê¸°í™”
 				} else {
-					JOptionPane.showMessageDialog(null, "´ñ±ÛÀ» ÀÔ·ÂÇÏ¼¼¿ä!");
+					JOptionPane.showMessageDialog(null, "ëŒ“ê¸€ì„ ì…ë ¥í•˜ì„¸ìš”!");
 				}
 			}
 		});
 		contentPane.add(commentButton);
 
 		JLabel authorLabel = new JLabel(board.getUserId());
-		authorLabel.setFont(new Font("¸¼Àº °íµñ", Font.PLAIN, 14));
+		authorLabel.setFont(new Font("ë§‘ì€ ê³ ë”•", Font.PLAIN, 14));
 		authorLabel.setBounds(0, 350, 460, 30);
 		authorLabel.setComponentOrientation(ComponentOrientation.RIGHT_TO_LEFT);
 		contentPane.add(authorLabel);
 
-		JLabel dateLabel = new JLabel("³¯Â¥ : " + board.getBoardWordYyyy() + " " + board.getBoardWordMm() + " "
-				+ board.getBoardWordDd() + "  /  ½Ã°£ : " + board.getBoardWordApm() + " " + board.getBoardWordHh() + " "
+		JLabel dateLabel = new JLabel("ë‚ ì§œ : " + board.getBoardWordYyyy() + " " + board.getBoardWordMm() + " "
+				+ board.getBoardWordDd() + "  /  ì‹œê°„ : " + board.getBoardWordApm() + " " + board.getBoardWordHh() + " "
 				+ board.getBoardWordMi());
 
-		dateLabel.setFont(new Font("¸¼Àº °íµñ", Font.PLAIN, 16));
+		dateLabel.setFont(new Font("ë§‘ì€ ê³ ë”•", Font.PLAIN, 16));
 		dateLabel.setBounds(50, 385, 460, 30);
 		contentPane.add(dateLabel);
 
 		//		JLabel timeLabel = new JLabel(
-		//				"½Ã°£ : " + board.getBoardWordApm() + " " + board.getBoardWordHh() + " " + board.getBoardWordMi());
+		//				"ì‹œê°„ : " + board.getBoardWordApm() + " " + board.getBoardWordHh() + " " + board.getBoardWordMi());
 		//		timeLabel.setBounds(30, 430, 460, 30);
-		//		timeLabel.setFont(new Font("¸¼Àº °íµñ", Font.PLAIN, 20));
+		//		timeLabel.setFont(new Font("ë§‘ì€ ê³ ë”•", Font.PLAIN, 20));
 		//		contentPane.add(timeLabel);
 
-		// ¹öÆ° ÆĞ³Î Ãß°¡
+		// ë²„íŠ¼ íŒ¨ë„ ì¶”ê°€
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.X_AXIS));
 
-		// ´İ±â ¹öÆ°
-		JButton closeButton = new JButton("´İ±â");
-		closeButton.setFont(new Font("¸¼Àº °íµñ", Font.PLAIN, 13));
+		// ë‹«ê¸° ë²„íŠ¼
+		JButton closeButton = new JButton("ë‹«ê¸°");
+		closeButton.setFont(new Font("ë§‘ì€ ê³ ë”•", Font.PLAIN, 13));
 		closeButton.setBackground(Color.LIGHT_GRAY);
 		closeButton.setBounds(400, 15, 60, 30);
 		closeButton.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				dispose(); // Ã¢ ´İ±â
+				dispose(); // ì°½ ë‹«ê¸°
 			}
 		});
 		
@@ -191,18 +191,18 @@ public class BoardDetailFrame extends JFrame {
 		dto.setBoardId(board.getBoardId());
 		List<CommentDTO> list = cs.selectCommentList(dto);
 		if (list != null && list.size() > 0) {
-			commentPanel.removeAll(); // ±âÁ¸ ´ñ±Û ÃÊ±âÈ­
+			commentPanel.removeAll(); // ê¸°ì¡´ ëŒ“ê¸€ ì´ˆê¸°í™”
 			for (CommentDTO result : list) {
 				JLabel commentLabel = new JLabel(result.getCommentContent());
-				commentLabel.setFont(new Font("¸¼Àº °íµñ", Font.PLAIN, 14));
-				commentPanel.add(commentLabel); // ´ñ±Û Ãß°¡
+				commentLabel.setFont(new Font("ë§‘ì€ ê³ ë”•", Font.PLAIN, 14));
+				commentPanel.add(commentLabel); // ëŒ“ê¸€ ì¶”ê°€
 			}
-			commentPanel.revalidate(); // UI ¾÷µ¥ÀÌÆ®
-			commentPanel.repaint(); // UI °»½Å
+			commentPanel.revalidate(); // UI ì—…ë°ì´íŠ¸
+			commentPanel.repaint(); // UI ê°±ì‹ 
 		}
 	}
 
-	// °Ô½Ã¹° ¼¼ºÎ Á¤º¸¸¦ Ãâ·ÂÇÏ´Â ¸Ş¼­µå (¿¹: °Ô½Ã¹° ¼±ÅÃ ½Ã È£Ãâ)
+	// ê²Œì‹œë¬¼ ì„¸ë¶€ ì •ë³´ë¥¼ ì¶œë ¥í•˜ëŠ” ë©”ì„œë“œ (ì˜ˆ: ê²Œì‹œë¬¼ ì„ íƒ ì‹œ í˜¸ì¶œ)
 	public void showBoardDetail(BoardDTO board) {
 		new BoardDetailFrame(board);
 	}

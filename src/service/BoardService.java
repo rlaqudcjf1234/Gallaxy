@@ -6,18 +6,18 @@ import dto.BoardDTO;
 
 public interface BoardService {
 
-	// °Ô½ÃÆÇ µî·Ï
+	// ê²Œì‹œíŒ ë“±ë¡
 	public int insertBoard(BoardDTO dto);
 
-	// °Ô½ÃÆÇ ÀüÃ¼ °Ç¼ö Á¶È¸
+	// ê²Œì‹œíŒ ì „ì²´ ê±´ìˆ˜ ì¡°íšŒ
 	public int selectBoardCnt(BoardDTO dto);
 
-	// °Ô½ÃÆÇ ¸ñ·Ï Á¶È¸
+	// ê²Œì‹œíŒ ëª©ë¡ ì¡°íšŒ
 	public List<BoardDTO> selectBoardList(BoardDTO dto);
 	
-	// °Ô½ÃÆÇ ´ë»ó Á¶È¸
+	// ê²Œì‹œíŒ ëŒ€ìƒ ì¡°íšŒ
 	public BoardDTO selectBoard(int boardId);
 	
-	// °Ô½ÃÆÇ ´ë»ó ¼öÁ¤
+	// ê²Œì‹œíŒ ëŒ€ìƒ ìˆ˜ì •
 	public int updateBoard(BoardDTO dto);
 }

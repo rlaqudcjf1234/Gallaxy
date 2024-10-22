@@ -18,11 +18,11 @@ public class CalendarRender extends DefaultTableCellRenderer {
     public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
         Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
         
-        // ¼±ÅÃµÈ ¼¿ °­Á¶
+        // ì„ íƒëœ ì…€ ê°•ì¡°
         if (row == selectedRow && column == selectedCol) {
-            cell.setBackground(Color.YELLOW); // °­Á¶ÇÒ ¹è°æ»ö
+            cell.setBackground(Color.YELLOW); // ê°•ì¡°í•  ë°°ê²½ìƒ‰
         } else {
-            cell.setBackground(Color.WHITE); // ±âº» ¹è°æ»ö
+            cell.setBackground(Color.WHITE); // ê¸°ë³¸ ë°°ê²½ìƒ‰
         }
 
         return cell;

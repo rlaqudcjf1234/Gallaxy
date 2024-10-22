@@ -39,7 +39,7 @@ public class BoardListFrame extends JFrame {
 	 */
 	private static final long serialVersionUID = 5543592341811617934L;
 	
-	private static JPanel postListPanel = new JPanel(); // °Ô½Ã¹° ¸ñ·Ï ÆĞ³Î
+	private static JPanel postListPanel = new JPanel(); // ê²Œì‹œë¬¼ ëª©ë¡ íŒ¨ë„
 
 	/**
 	 * Launch the application.
@@ -61,38 +61,38 @@ public class BoardListFrame extends JFrame {
 		showBoardList();
 	}
 
-	// °Ô½Ã¹° ¸ñ·ÏÀ» °»½ÅÇÏ´Â ¸Ş¼­µå
+	// ê²Œì‹œë¬¼ ëª©ë¡ì„ ê°±ì‹ í•˜ëŠ” ë©”ì„œë“œ
 	public static void updateBoardList(List<BoardDTO> boardList) {
-		postListPanel.removeAll(); // ±âÁ¸ °Ô½Ã¹° ¸ñ·Ï ÃÊ±âÈ­
+		postListPanel.removeAll(); // ê¸°ì¡´ ê²Œì‹œë¬¼ ëª©ë¡ ì´ˆê¸°í™”
 		for (BoardDTO board : boardList) {
-			JLabel postLabel = new JLabel(board.getBoardTitle()); // °Ô½Ã¹° Á¦¸ñÀ¸·Î JLabel »ı¼º
-			postLabel.setHorizontalAlignment(SwingConstants.LEFT); // ÅØ½ºÆ® Á¤·Ä
-			postLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // ¼Õ ¸ğ¾ç Ä¿¼­
-			postLabel.setFont(new Font("¸¼Àº °íµñ", Font.PLAIN, 14)); // ±Û¾¾ Å©±â ¼³Á¤
+			JLabel postLabel = new JLabel(board.getBoardTitle()); // ê²Œì‹œë¬¼ ì œëª©ìœ¼ë¡œ JLabel ìƒì„±
+			postLabel.setHorizontalAlignment(SwingConstants.LEFT); // í…ìŠ¤íŠ¸ ì •ë ¬
+			postLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // ì† ëª¨ì–‘ ì»¤ì„œ
+			postLabel.setFont(new Font("ë§‘ì€ ê³ ë”•", Font.PLAIN, 14)); // ê¸€ì”¨ í¬ê¸° ì„¤ì •
 
 			postLabel.addMouseListener(new MouseAdapter() {
 
 				@Override
 				public void mouseEntered(MouseEvent e) {
-					postLabel.setText("<html><u>" + board.getBoardTitle() + "</u></html>"); // ¹ØÁÙ È¿°ú
+					postLabel.setText("<html><u>" + board.getBoardTitle() + "</u></html>"); // ë°‘ì¤„ íš¨ê³¼
 				}
 
 				@Override
 				public void mouseExited(MouseEvent e) {
-					postLabel.setText(board.getBoardTitle()); // ±âº» »óÅÂ·Î µÇµ¹¸²
+					postLabel.setText(board.getBoardTitle()); // ê¸°ë³¸ ìƒíƒœë¡œ ë˜ëŒë¦¼
 				}
 
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					// ³»¿ë »ó¼¼
+					// ë‚´ìš© ìƒì„¸
 					new BoardDetailFrame(board);
 				}
 			});
 
-			postListPanel.add(postLabel); // ÆĞ³Î¿¡ °Ô½Ã¹° Ãß°¡
+			postListPanel.add(postLabel); // íŒ¨ë„ì— ê²Œì‹œë¬¼ ì¶”ê°€
 		}
-		postListPanel.revalidate(); // UI ¾÷µ¥ÀÌÆ®
-		postListPanel.repaint(); // UI °»½Å
+		postListPanel.revalidate(); // UI ì—…ë°ì´íŠ¸
+		postListPanel.repaint(); // UI ê°±ì‹ 
 	}
 
 	public static void showBoardList() {
@@ -101,88 +101,88 @@ public class BoardListFrame extends JFrame {
 
 		BoardDTO boardDTO = new BoardDTO();
 
-		// ÇÁ·Î±×·¥ ½ÃÀÛ ½Ã °Ô½Ã¹° ¸ñ·Ï ºÒ·¯¿À±â
-		List<BoardDTO> boardList = bs.selectBoardList(new BoardDTO()); // °Ô½Ã¹° ¸®½ºÆ® °¡Á®¿À±â
-		updateBoardList(boardList); // °Ô½Ã¹° ¸ñ·Ï UI ¾÷µ¥ÀÌÆ®
+		// í”„ë¡œê·¸ë¨ ì‹œì‘ ì‹œ ê²Œì‹œë¬¼ ëª©ë¡ ë¶ˆëŸ¬ì˜¤ê¸°
+		List<BoardDTO> boardList = bs.selectBoardList(new BoardDTO()); // ê²Œì‹œë¬¼ ë¦¬ìŠ¤íŠ¸ ê°€ì ¸ì˜¤ê¸°
+		updateBoardList(boardList); // ê²Œì‹œë¬¼ ëª©ë¡ UI ì—…ë°ì´íŠ¸
 
-		Frame mainFrame = new Frame("·¯´× ¸ŞÀÌÆ® °Ô½ÃÆÇ");
-		mainFrame.setBounds(700, 100, 500, 850); // À§Ä¡¿Í Å©±â
+		Frame mainFrame = new Frame("ëŸ¬ë‹ ë©”ì´íŠ¸ ê²Œì‹œíŒ");
+		mainFrame.setBounds(700, 100, 500, 850); // ìœ„ì¹˜ì™€ í¬ê¸°
 		mainFrame.setBackground(Color.white);
-		mainFrame.setLayout(null); // Àı´ë ·¹ÀÌ¾Æ¿ô »ç¿ë
+		mainFrame.setLayout(null); // ì ˆëŒ€ ë ˆì´ì•„ì›ƒ ì‚¬ìš©
 
-		// ·Î°í ¹öÆ° »ı¼º
+		// ë¡œê³  ë²„íŠ¼ ìƒì„±
 		JButton btnLogo = new JButton();
 
 		ImageIcon logoIcon = new ImageIcon("LogoImage_130x130.png");
 		btnLogo.setIcon(logoIcon);
-		btnLogo.setBorderPainted(false); // ¹öÆ° Å×µÎ¸® Á¦°Å
-		btnLogo.setContentAreaFilled(false); // ¹öÆ° ¹è°æ Á¦°Å
-		btnLogo.setFocusPainted(false); // Æ÷Ä¿½º È¿°ú Á¦°Å
-		btnLogo.setBounds(20, 30, 130, 130); // ¹öÆ° À§Ä¡ ¹× Å©±â ¼³Á¤
-		// Å¬¸¯ ÀÌº¥Æ® Ãß°¡
+		btnLogo.setBorderPainted(false); // ë²„íŠ¼ í…Œë‘ë¦¬ ì œê±°
+		btnLogo.setContentAreaFilled(false); // ë²„íŠ¼ ë°°ê²½ ì œê±°
+		btnLogo.setFocusPainted(false); // í¬ì»¤ìŠ¤ íš¨ê³¼ ì œê±°
+		btnLogo.setBounds(20, 30, 130, 130); // ë²„íŠ¼ ìœ„ì¹˜ ë° í¬ê¸° ì„¤ì •
+		// í´ë¦­ ì´ë²¤íŠ¸ ì¶”ê°€
 		btnLogo.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				JOptionPane.showMessageDialog(mainFrame, "¸ŞÀÎÈ­¸é!");
+				JOptionPane.showMessageDialog(mainFrame, "ë©”ì¸í™”ë©´!");
 				new MainBoard();
 				mainFrame.dispose();
 			}
 		});
-		// ±Û ÀÛ¼º ¹öÆ° »ı¼º
-		JButton btnWrite = new JButton("±Û ÀÛ¼º");
+		// ê¸€ ì‘ì„± ë²„íŠ¼ ìƒì„±
+		JButton btnWrite = new JButton("ê¸€ ì‘ì„±");
 
-		// ÃÊ±â ¹öÆ° À§Ä¡ ¹× Å©±â ¼³Á¤ (±âÁØ°ª)
+		// ì´ˆê¸° ë²„íŠ¼ ìœ„ì¹˜ ë° í¬ê¸° ì„¤ì • (ê¸°ì¤€ê°’)
 		btnWrite.setBounds(360, 170, 80, 30);
-		btnWrite.setFont(new Font("¸¼Àº °íµñ", Font.PLAIN, 13));
+		btnWrite.setFont(new Font("ë§‘ì€ ê³ ë”•", Font.PLAIN, 13));
 		btnWrite.setBackground(Color.LIGHT_GRAY);
 
-		// ÇÁ·¹ÀÓ¿¡ ¹öÆ° Ãß°¡
+		// í”„ë ˆì„ì— ë²„íŠ¼ ì¶”ê°€
 		mainFrame.add(btnWrite);
 		mainFrame.add(btnLogo);
 
-		// ÀÌ¹ÌÁö Ãß°¡
-		JLabel labelLogo = new JLabel(); // ÀÌ¹ÌÁö Ç¥½Ã¸¦ À§ÇÑ Label
+		// ì´ë¯¸ì§€ ì¶”ê°€
+		JLabel labelLogo = new JLabel(); // ì´ë¯¸ì§€ í‘œì‹œë¥¼ ìœ„í•œ Label
 		ImageIcon icon = new ImageIcon("gaesipan22.png");
-		labelLogo.setIcon(icon); // JLabel¿¡ ÀÌ¹ÌÁö ¼³Á¤
-		labelLogo.setBounds(100, 160, 250, 40); // ÀÌ¹ÌÁö À§Ä¡ ¹× Å©±â ¼³Á¤
+		labelLogo.setIcon(icon); // JLabelì— ì´ë¯¸ì§€ ì„¤ì •
+		labelLogo.setBounds(100, 160, 250, 40); // ì´ë¯¸ì§€ ìœ„ì¹˜ ë° í¬ê¸° ì„¤ì •
 
-		// ÇÁ·¹ÀÓ¿¡ Label Ãß°¡
+		// í”„ë ˆì„ì— Label ì¶”ê°€
 		mainFrame.add(labelLogo);
 
-		// ±Û ÀÛ¼º ¹öÆ° Å¬¸¯ ÀÌº¥Æ® Ãß°¡
+		// ê¸€ ì‘ì„± ë²„íŠ¼ í´ë¦­ ì´ë²¤íŠ¸ ì¶”ê°€
 		btnWrite.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
-				// BoardWriteFrame ¿­±â
+				// BoardWriteFrame ì—´ê¸°
 				BoardWriteFrame writeFrame = new BoardWriteFrame();
 				writeFrame.setVisible(true);
 				mainFrame.dispose();
 			}
 		});
-		// ±Û °Ë»ö ÇÊµå
-		TextField contentSearch = new TextField("°Ë»öÇÒ ±Û Á¦¸ñÀ» ÀÔ·ÂÇÏ¼¼¿ä"); // Á¦¸ñ ÀÔ·Â
+		// ê¸€ ê²€ìƒ‰ í•„ë“œ
+		TextField contentSearch = new TextField("ê²€ìƒ‰í•  ê¸€ ì œëª©ì„ ì…ë ¥í•˜ì„¸ìš”"); // ì œëª© ì…ë ¥
 		contentSearch.setBounds(50, 630, 300, 30);
 
-		// °Ë»ö ¹öÆ° »ı¼º
-		JButton searchButton = new JButton("°Ë»ö");
-		searchButton.setFont(new Font("¸¼Àº °íµñ", Font.PLAIN, 13));
+		// ê²€ìƒ‰ ë²„íŠ¼ ìƒì„±
+		JButton searchButton = new JButton("ê²€ìƒ‰");
+		searchButton.setFont(new Font("ë§‘ì€ ê³ ë”•", Font.PLAIN, 13));
 		searchButton.setBackground(Color.LIGHT_GRAY);
 		searchButton.setBounds(360, 630, 80, 30);
 
-		// ÇÁ·¹ÀÓ¿¡ °Ë»ö ¹öÆ° Ãß°¡
+		// í”„ë ˆì„ì— ê²€ìƒ‰ ë²„íŠ¼ ì¶”ê°€
 		mainFrame.add(searchButton);
 
 		contentSearch.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				if (contentSearch.getText().equals("°Ë»öÇÒ ±Û Á¦¸ñÀ» ÀÔ·ÂÇÏ¼¼¿ä")) {
-					contentSearch.setText(""); // Å¬¸¯ ½Ã ÅØ½ºÆ® ÃÊ±âÈ­
+				if (contentSearch.getText().equals("ê²€ìƒ‰í•  ê¸€ ì œëª©ì„ ì…ë ¥í•˜ì„¸ìš”")) {
+					contentSearch.setText(""); // í´ë¦­ ì‹œ í…ìŠ¤íŠ¸ ì´ˆê¸°í™”
 				}
 			}
 		});
 
-		// ¹öÆ°(searchBtn) Å¬¸¯ ÀÌº¥Æ®
+		// ë²„íŠ¼(searchBtn) í´ë¦­ ì´ë²¤íŠ¸
 		searchButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -195,11 +195,11 @@ public class BoardListFrame extends JFrame {
 				List<BoardDTO> list = bs.selectBoardList(boardDTO);
 				
 				if (list.equals(null) || list.isEmpty()) {
-					// °Ë»ö °á°ú ¾øÀ½
-					JOptionPane.showMessageDialog(mainFrame, "°Ë»ö°á°ú°¡ Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.");
+					// ê²€ìƒ‰ ê²°ê³¼ ì—†ìŒ
+					JOptionPane.showMessageDialog(mainFrame, "ê²€ìƒ‰ê²°ê³¼ê°€ ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
 
 				} else {
-					// °Ë»ö ¸ñ·Ï º¯°æ
+					// ê²€ìƒ‰ ëª©ë¡ ë³€ê²½
 					updateBoardList(list);
 		        }
 
@@ -212,90 +212,90 @@ public class BoardListFrame extends JFrame {
 
 		ImageIcon logoIcon2 = new ImageIcon("SolDesk_Ad.png");
 		btnAd.setIcon(logoIcon2);
-		btnAd.setBorderPainted(false); // ¹öÆ° Å×µÎ¸® Á¦°Å
-		btnAd.setContentAreaFilled(false); // ¹öÆ° ¹è°æ Á¦°Å
-		btnAd.setFocusPainted(false); // Æ÷Ä¿½º È¿°ú Á¦°Å
-		btnAd.setBounds(20, 635, 450, 240); // ¹öÆ° À§Ä¡ ¹× Å©±â ¼³Á¤
-		// Å¬¸¯ ÀÌº¥Æ® Ãß°¡
+		btnAd.setBorderPainted(false); // ë²„íŠ¼ í…Œë‘ë¦¬ ì œê±°
+		btnAd.setContentAreaFilled(false); // ë²„íŠ¼ ë°°ê²½ ì œê±°
+		btnAd.setFocusPainted(false); // í¬ì»¤ìŠ¤ íš¨ê³¼ ì œê±°
+		btnAd.setBounds(20, 635, 450, 240); // ë²„íŠ¼ ìœ„ì¹˜ ë° í¬ê¸° ì„¤ì •
+		// í´ë¦­ ì´ë²¤íŠ¸ ì¶”ê°€
 		btnAd.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 				String url = "https://soldesk.com/";
 
 				try {
-					// URI·Î º¯È¯ÇÏ°í ±âº» À¥ ºê¶ó¿ìÀú¿¡¼­ ¿­±â
+					// URIë¡œ ë³€í™˜í•˜ê³  ê¸°ë³¸ ì›¹ ë¸Œë¼ìš°ì €ì—ì„œ ì—´ê¸°
 					Desktop.getDesktop().browse(new URI(url));
 				} catch (IOException | URISyntaxException ex) {
-					ex.printStackTrace(); // ¿¹¿Ü Ã³¸®
+					ex.printStackTrace(); // ì˜ˆì™¸ ì²˜ë¦¬
 				}
 			}
 		});
 		mainFrame.add(btnAd);
 
-		// °Ô½Ã¹° ¸ñ·Ï ÆĞ³Î ¼³Á¤
-		postListPanel.setLayout(new BoxLayout(postListPanel, BoxLayout.Y_AXIS)); // ¼¼·Î·Î ¹öÆ° ³ª¿­
-		JScrollPane scrollPane = new JScrollPane(postListPanel); // ½ºÅ©·Ñ °¡´ÉÇÏ°Ô
+		// ê²Œì‹œë¬¼ ëª©ë¡ íŒ¨ë„ ì„¤ì •
+		postListPanel.setLayout(new BoxLayout(postListPanel, BoxLayout.Y_AXIS)); // ì„¸ë¡œë¡œ ë²„íŠ¼ ë‚˜ì—´
+		JScrollPane scrollPane = new JScrollPane(postListPanel); // ìŠ¤í¬ë¡¤ ê°€ëŠ¥í•˜ê²Œ
 		scrollPane.setBounds(50, 210, 400, 400);
 		mainFrame.add(scrollPane);
 
-		// ·Î±×¾Æ¿ô ÅØ½ºÆ® Ãß°¡
-		JLabel logoutLabel = new JLabel("·Î±×¾Æ¿ô");
-		logoutLabel.setForeground(Color.BLUE); // ÅØ½ºÆ® »ö»ó º¯°æ
-		logoutLabel.setBounds(260, 50, 100, 40); // À§Ä¡¿Í Å©±â Á¶Á¤
-		logoutLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // ¼Õ ¸ğ¾ç Ä¿¼­
+		// ë¡œê·¸ì•„ì›ƒ í…ìŠ¤íŠ¸ ì¶”ê°€
+		JLabel logoutLabel = new JLabel("ë¡œê·¸ì•„ì›ƒ");
+		logoutLabel.setForeground(Color.BLUE); // í…ìŠ¤íŠ¸ ìƒ‰ìƒ ë³€ê²½
+		logoutLabel.setBounds(260, 50, 100, 40); // ìœ„ì¹˜ì™€ í¬ê¸° ì¡°ì •
+		logoutLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // ì† ëª¨ì–‘ ì»¤ì„œ
 
-		// ·Î±×¾Æ¿ô Å¬¸¯ ÀÌº¥Æ® Ãß°¡
+		// ë¡œê·¸ì•„ì›ƒ í´ë¦­ ì´ë²¤íŠ¸ ì¶”ê°€
 		logoutLabel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				JOptionPane.showMessageDialog(mainFrame, "·Î±×¾Æ¿ô ÇÕ´Ï´Ù!");
+				JOptionPane.showMessageDialog(mainFrame, "ë¡œê·¸ì•„ì›ƒ í•©ë‹ˆë‹¤!");
 				new UserInForm();
 				mainFrame.dispose();
 			}
 		});
 
-		mainFrame.add(logoutLabel); // ÇÁ·¹ÀÓ¿¡ ¸¶ÀÌÆäÀÌÁö ÅØ½ºÆ® Ãß°¡
+		mainFrame.add(logoutLabel); // í”„ë ˆì„ì— ë§ˆì´í˜ì´ì§€ í…ìŠ¤íŠ¸ ì¶”ê°€
 
-		// ·Î±×¾Æ¿ô ÅØ½ºÆ® Ãß°¡
-		JLabel myPageLabel = new JLabel("¸¶ÀÌÆäÀÌÁö");
-		myPageLabel.setForeground(Color.BLUE); // ÅØ½ºÆ® »ö»ó º¯°æ
-		myPageLabel.setBounds(330, 50, 100, 40); // À§Ä¡¿Í Å©±â Á¶Á¤
-		myPageLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // ¼Õ ¸ğ¾ç Ä¿¼­
+		// ë¡œê·¸ì•„ì›ƒ í…ìŠ¤íŠ¸ ì¶”ê°€
+		JLabel myPageLabel = new JLabel("ë§ˆì´í˜ì´ì§€");
+		myPageLabel.setForeground(Color.BLUE); // í…ìŠ¤íŠ¸ ìƒ‰ìƒ ë³€ê²½
+		myPageLabel.setBounds(330, 50, 100, 40); // ìœ„ì¹˜ì™€ í¬ê¸° ì¡°ì •
+		myPageLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // ì† ëª¨ì–‘ ì»¤ì„œ
 
-		// ·Î±×¾Æ¿ô Å¬¸¯ ÀÌº¥Æ® Ãß°¡
+		// ë¡œê·¸ì•„ì›ƒ í´ë¦­ ì´ë²¤íŠ¸ ì¶”ê°€
 		myPageLabel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				JOptionPane.showMessageDialog(mainFrame, "¸¶ÀÌÆäÀÌÁö·Î ÀÌµ¿!");
+				JOptionPane.showMessageDialog(mainFrame, "ë§ˆì´í˜ì´ì§€ë¡œ ì´ë™!");
 				new myPageBegin();
 				mainFrame.dispose();
 			}
 		});
 
-		mainFrame.add(myPageLabel); // ÇÁ·¹ÀÓ¿¡ ¸¶ÀÌÆäÀÌÁö ÅØ½ºÆ® Ãß°¡
+		mainFrame.add(myPageLabel); // í”„ë ˆì„ì— ë§ˆì´í˜ì´ì§€ í…ìŠ¤íŠ¸ ì¶”ê°€
 
-		// ¸ŞÀÎÈ­¸é ÅØ½ºÆ® Ãß°¡
-		JLabel mainPageLabel = new JLabel("¸ŞÀÎÈ­¸é");
-		mainPageLabel.setForeground(Color.BLUE); // ÅØ½ºÆ® »ö»ó º¯°æ
-		mainPageLabel.setBounds(415, 50, 100, 40); // À§Ä¡¿Í Å©±â Á¶Á¤
-		mainPageLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // ¼Õ ¸ğ¾ç Ä¿¼­
+		// ë©”ì¸í™”ë©´ í…ìŠ¤íŠ¸ ì¶”ê°€
+		JLabel mainPageLabel = new JLabel("ë©”ì¸í™”ë©´");
+		mainPageLabel.setForeground(Color.BLUE); // í…ìŠ¤íŠ¸ ìƒ‰ìƒ ë³€ê²½
+		mainPageLabel.setBounds(415, 50, 100, 40); // ìœ„ì¹˜ì™€ í¬ê¸° ì¡°ì •
+		mainPageLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // ì† ëª¨ì–‘ ì»¤ì„œ
 
-		// ·Î±×¾Æ¿ô Å¬¸¯ ÀÌº¥Æ® Ãß°¡
+		// ë¡œê·¸ì•„ì›ƒ í´ë¦­ ì´ë²¤íŠ¸ ì¶”ê°€
 		mainPageLabel.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				JOptionPane.showMessageDialog(mainFrame, "¸ŞÀÎÈ­¸éÀ¸·Î ÀÌµ¿!");
+				JOptionPane.showMessageDialog(mainFrame, "ë©”ì¸í™”ë©´ìœ¼ë¡œ ì´ë™!");
 				new MainBoard();
 				mainFrame.dispose();
 			}
 		});
 
-		mainFrame.add(mainPageLabel); // ÇÁ·¹ÀÓ¿¡ ¸ŞÀÎÈ­¸é ÅØ½ºÆ® Ãß°¡
+		mainFrame.add(mainPageLabel); // í”„ë ˆì„ì— ë©”ì¸í™”ë©´ í…ìŠ¤íŠ¸ ì¶”ê°€
 
-		// È­¸éÀÌ º¸ÀÓ
+		// í™”ë©´ì´ ë³´ì„
 		mainFrame.setVisible(true);
 
-		// Á¾·á -----------------------------------------
+		// ì¢…ë£Œ -----------------------------------------
 		mainFrame.addWindowListener(new WindowAdapter() {
 			@Override
 			public void windowClosing(WindowEvent e) {

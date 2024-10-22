@@ -10,20 +10,20 @@ import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 
 public class MySqlSessionFactory {
 	static SqlSessionFactory sqlSessionFactory = null;
-	static {// ÃÊ±âÈ­
-		// jdbc.propertiesÆÄÀÏ »ç¿ë
+	static {// ì´ˆê¸°í™”
+		// jdbc.propertiesíŒŒì¼ ì‚¬ìš©
 		String resource = "MybatisConfig.xml";
 		InputStream inputStream = null;
 		try {
 			inputStream = Resources.getResourceAsStream(resource);
-			System.out.println("ÃÊ±âÈ­ ¼º°ø");
+			System.out.println("ì´ˆê¸°í™” ì„±ê³µ");
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 		sqlSessionFactory = new SqlSessionFactoryBuilder().build(inputStream);
 	}// end static
 
-	// SqlSession ¹İÈ¯
+	// SqlSession ë°˜í™˜
 	public static SqlSession getSqlSession() {
 		SqlSession session = sqlSessionFactory.openSession();
 		return session;

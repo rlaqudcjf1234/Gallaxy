@@ -4,13 +4,13 @@ import dto.HealthDTO;
 
 public interface HealthService {
 
-	// Çï½ºÄÉ¾î µî·Ï
+	// í—¬ìŠ¤ì¼€ì–´ ë“±ë¡
 	public int insertHealth(HealthDTO dto);
 
-	// Çï½ºÄÉ¾î ¿ùÅë°è Á¶È¸
+	// í—¬ìŠ¤ì¼€ì–´ ì›”í†µê³„ ì¡°íšŒ
 	public HealthDTO selectHealthSt(HealthDTO dto);
 
-	// Çï½ºÄÉ¾î Á¶È¸
+	// í—¬ìŠ¤ì¼€ì–´ ì¡°íšŒ
 	public HealthDTO selectHealth(HealthDTO dto);
 	
 	

@@ -5,10 +5,10 @@ public class HealthDTO {
 	private int healthYyyy;
 	private int healthMm;
 	private int healthDd;
-	private int healthDistance; // °Å¸®
-	private int healthTime; // ½Ã°£
-	private double healthSpeed;//Æò±Õ¼Óµµ
-	private double healthCalories; //Ä®·Î¸®
+	private int healthDistance; // ê±°ë¦¬
+	private int healthTime; // ì‹œê°„
+	private double healthSpeed;//í‰ê· ì†ë„
+	private double healthCalories; //ì¹¼ë¡œë¦¬
 	private String userId;
 	
 	public int getHealthYyyy() {

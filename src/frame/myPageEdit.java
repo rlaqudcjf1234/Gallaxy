@@ -14,43 +14,43 @@ import javax.swing.JTextField;
 
 public class myPageEdit extends JPanel {
 	
-    private JFrame frame; // ¸ŞÀÎ ÇÁ·¹ÀÓ
-    private JPanel panel; // ÆĞ³Î
+    private JFrame frame; // ë©”ì¸ í”„ë ˆì„
+    private JPanel panel; // íŒ¨ë„
 
 
 	public  myPageEdit () {
 		
-		 frame = new JFrame("È¸¿øÁ¤º¸ ¼öÁ¤");
+		 frame = new JFrame("íšŒì›ì •ë³´ ìˆ˜ì •");
 	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	        frame.setBounds(100,100,500,400);
-	        frame.setLayout(null); // null ·¹ÀÌ¾Æ¿ô »ç¿ë
+	        frame.setLayout(null); // null ë ˆì´ì•„ì›ƒ ì‚¬ìš©
 
 	        panel = new JPanel();
-	        panel.setLayout(null); // ÆĞ³Îµµ null ·¹ÀÌ¾Æ¿ô »ç¿ë
-	        panel.setBounds(0, 0, 500, 400); // ÆĞ³Î Å©±â ¼³Á¤
+	        panel.setLayout(null); // íŒ¨ë„ë„ null ë ˆì´ì•„ì›ƒ ì‚¬ìš©
+	        panel.setBounds(0, 0, 500, 400); // íŒ¨ë„ í¬ê¸° ì„¤ì •
 
-	        // ÄÄÆ÷³ÍÆ® »ı¼º
-	        JLabel passwordLabel = new JLabel("ºñ¹Ğ¹øÈ£");
+	        // ì»´í¬ë„ŒíŠ¸ ìƒì„±
+	        JLabel passwordLabel = new JLabel("ë¹„ë°€ë²ˆí˜¸");
 	        JPasswordField passwordField = new JPasswordField();
-	        JButton confirmButton = new JButton("È®ÀÎ");
-	        JButton backToMyPageBegin = new JButton("µÚ·Î°¡±â");
-	        JButton logoutButton = new JButton("·Î±×¾Æ¿ô");
+	        JButton confirmButton = new JButton("í™•ì¸");
+	        JButton backToMyPageBegin = new JButton("ë’¤ë¡œê°€ê¸°");
+	        JButton logoutButton = new JButton("ë¡œê·¸ì•„ì›ƒ");
 
-	        // À§Ä¡ ¹× Å©±â ¼³Á¤
+	        // ìœ„ì¹˜ ë° í¬ê¸° ì„¤ì •
 	        passwordLabel.setBounds(110, 120, 200, 30); // (x, y, width, height)
 	        passwordField.setBounds(170, 120, 200, 30);
 	        confirmButton.setBounds(90, 170, 300, 30);
 	        backToMyPageBegin.setBounds(90, 210, 300, 30);
-	        logoutButton.setBounds(90, 250, 300, 30); // ·Î±×¾Æ¿ô ¹öÆ° À§Ä¡
+	        logoutButton.setBounds(90, 250, 300, 30); // ë¡œê·¸ì•„ì›ƒ ë²„íŠ¼ ìœ„ì¹˜
 
-	        // ÆĞ³Î¿¡ ÄÄÆ÷³ÍÆ® Ãß°¡
+	        // íŒ¨ë„ì— ì»´í¬ë„ŒíŠ¸ ì¶”ê°€
 	        panel.add(passwordLabel);
 	        panel.add(passwordField);
 	        panel.add(confirmButton);
 	        panel.add(backToMyPageBegin);
 	        panel.add(logoutButton); 
 	        
-	        //ÇÁ·¹ÀÓ¿¡ ÆĞ³Î Ãß°¡
+	        //í”„ë ˆì„ì— íŒ¨ë„ ì¶”ê°€
 	        frame.add(panel);
 	        
 	    	panel.setVisible(true);
@@ -65,9 +65,9 @@ public class myPageEdit extends JPanel {
 				String enteredPassword = new String(passwordField.getPassword());
 				if (checkPassword(enteredPassword)) {
 					openUpdateInfoWindow();
-					frame.dispose(); // ÇöÀç Ã¢ ´İ±â
+					frame.dispose(); // í˜„ì¬ ì°½ ë‹«ê¸°
 				} else {
-					JOptionPane.showMessageDialog(frame, "ºñ¹Ğ¹øÈ£°¡ Æ²·È½À´Ï´Ù.", "¿À·ù", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frame, "ë¹„ë°€ë²ˆí˜¸ê°€ í‹€ë ¸ìŠµë‹ˆë‹¤.", "ì˜¤ë¥˜", JOptionPane.ERROR_MESSAGE);
 				}
 			}
 		});
@@ -92,37 +92,37 @@ public class myPageEdit extends JPanel {
 	}
 
 	private void logoutUser() {
-        System.out.println("»ç¿ëÀÚ°¡ ·Î±×¾Æ¿ôÇß½À´Ï´Ù.");
+        System.out.println("ì‚¬ìš©ìê°€ ë¡œê·¸ì•„ì›ƒí–ˆìŠµë‹ˆë‹¤.");
     }
 	
 	private boolean checkPassword(String password) {
-		String correctPassword = "1234"; // ¿¹½Ã ºñ¹Ğ¹øÈ£
+		String correctPassword = "1234"; // ì˜ˆì‹œ ë¹„ë°€ë²ˆí˜¸
 		return password.equals(correctPassword);
 	}
 
 	private void openUpdateInfoWindow() {
-	    JFrame updateFrame = new JFrame("È¸¿øÁ¤º¸ ¼öÁ¤");
+	    JFrame updateFrame = new JFrame("íšŒì›ì •ë³´ ìˆ˜ì •");
 	    updateFrame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	    updateFrame.setSize(500, 800); // ÇÁ·¹ÀÓ »çÀÌÁî
-	    updateFrame.setLayout(null); // null ·¹ÀÌ¾Æ¿ô »ç¿ë
+	    updateFrame.setSize(500, 800); // í”„ë ˆì„ ì‚¬ì´ì¦ˆ
+	    updateFrame.setLayout(null); // null ë ˆì´ì•„ì›ƒ ì‚¬ìš©
 
 	    JPanel panel = new JPanel();
-	    panel.setLayout(null); // ÆĞ³Îµµ null ·¹ÀÌ¾Æ¿ô »ç¿ë
-	    panel.setBounds(0, 0, 500, 800); // ÆĞ³Î Å©±â ¼³Á¤
+	    panel.setLayout(null); // íŒ¨ë„ë„ null ë ˆì´ì•„ì›ƒ ì‚¬ìš©
+	    panel.setBounds(0, 0, 500, 800); // íŒ¨ë„ í¬ê¸° ì„¤ì •
 
-	    // ÄÄÆ÷³ÍÆ® »ı¼º
-	    JLabel nickNameLabel = new JLabel("´Ğ³×ÀÓ :");
+	    // ì»´í¬ë„ŒíŠ¸ ìƒì„±
+	    JLabel nickNameLabel = new JLabel("ë‹‰ë„¤ì„ :");
 	    JTextField nickNameField = new JTextField();
-	    JLabel passwordLabel = new JLabel("»õ ºñ¹Ğ¹øÈ£:");
+	    JLabel passwordLabel = new JLabel("ìƒˆ ë¹„ë°€ë²ˆí˜¸:");
 	    JPasswordField newPasswordField = new JPasswordField();
-	    JLabel confirmPasswordLabel = new JLabel("ºñ¹Ğ¹øÈ£ ÀçÈ®ÀÎ:");
+	    JLabel confirmPasswordLabel = new JLabel("ë¹„ë°€ë²ˆí˜¸ ì¬í™•ì¸:");
 	    JPasswordField confirmPasswordField = new JPasswordField();
-	    JLabel emailLabel = new JLabel("ÀÌ¸ŞÀÏ :");
+	    JLabel emailLabel = new JLabel("ì´ë©”ì¼ :");
 	    JTextField emailField = new JTextField();
-	    JButton saveButton = new JButton("ÀúÀå");
-	    JButton backToCheck = new JButton("µÚ·Î°¡±â");
+	    JButton saveButton = new JButton("ì €ì¥");
+	    JButton backToCheck = new JButton("ë’¤ë¡œê°€ê¸°");
 
-	    // À§Ä¡ ¹× Å©±â ¼³Á¤
+	    // ìœ„ì¹˜ ë° í¬ê¸° ì„¤ì •
 	    nickNameLabel.setBounds(80, 300, 100, 30);
 	    nickNameField.setBounds(175, 300, 200, 30);
 	    emailLabel.setBounds(80, 350, 100, 30);
@@ -134,7 +134,7 @@ public class myPageEdit extends JPanel {
 	    saveButton.setBounds(80, 500, 300, 30);
 	    backToCheck.setBounds(80, 540, 300, 30);
 
-	    // ÆĞ³Î¿¡ ÄÄÆ÷³ÍÆ® Ãß°¡
+	    // íŒ¨ë„ì— ì»´í¬ë„ŒíŠ¸ ì¶”ê°€
 	    panel.add(nickNameLabel);
 	    panel.add(nickNameField);
 	    panel.add(emailLabel);
@@ -146,10 +146,10 @@ public class myPageEdit extends JPanel {
 	    panel.add(saveButton);
 	    panel.add(backToCheck);
 
-	    // ÇÁ·¹ÀÓ¿¡ ÆĞ³Î Ãß°¡
+	    // í”„ë ˆì„ì— íŒ¨ë„ ì¶”ê°€
 	    updateFrame.add(panel);
 
-	    // ¹öÆ° ¾×¼Ç ¸®½º³Ê ¼³Á¤
+	    // ë²„íŠ¼ ì•¡ì…˜ ë¦¬ìŠ¤ë„ˆ ì„¤ì •
 	    saveButton.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
@@ -158,27 +158,27 @@ public class myPageEdit extends JPanel {
 	            String newPassword = new String(newPasswordField.getPassword());
 	            String confirmPassword = new String(confirmPasswordField.getPassword());
 
-	            // ºñ¹Ğ¹øÈ£ È®ÀÎ
+	            // ë¹„ë°€ë²ˆí˜¸ í™•ì¸
 	            if (!newPassword.equals(confirmPassword)) {
-	                JOptionPane.showMessageDialog(updateFrame, "ºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.", "¿À·ù", JOptionPane.ERROR_MESSAGE);
-	                return; // ºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾ÊÀ¸¸é ÀÌÈÄ ·ÎÁ÷ ½ÇÇà ÁßÁö
+	                JOptionPane.showMessageDialog(updateFrame, "ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.", "ì˜¤ë¥˜", JOptionPane.ERROR_MESSAGE);
+	                return; // ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•Šìœ¼ë©´ ì´í›„ ë¡œì§ ì‹¤í–‰ ì¤‘ì§€
 	            }
 
-	            // µ¥ÀÌÅÍº£ÀÌ½º¿¡ Á¤º¸ ÀúÀå ·ÎÁ÷ Ãß°¡
-	            JOptionPane.showMessageDialog(updateFrame, "È¸¿øÁ¤º¸°¡ ¼öÁ¤µÇ¾ú½À´Ï´Ù.");
+	            // ë°ì´í„°ë² ì´ìŠ¤ì— ì •ë³´ ì €ì¥ ë¡œì§ ì¶”ê°€
+	            JOptionPane.showMessageDialog(updateFrame, "íšŒì›ì •ë³´ê°€ ìˆ˜ì •ë˜ì—ˆìŠµë‹ˆë‹¤.");
 	        }
 	    });
 
-	    // Á¤º¸ ¼öÁ¤ Ã¢¿¡¼­ ºñ¹Ğ¹øÈ£ È®ÀÎ Ã¢À¸·Î µ¹¾Æ°¡±â
+	    // ì •ë³´ ìˆ˜ì • ì°½ì—ì„œ ë¹„ë°€ë²ˆí˜¸ í™•ì¸ ì°½ìœ¼ë¡œ ëŒì•„ê°€ê¸°
 	    backToCheck.addActionListener(new ActionListener() {
 	        @Override
 	        public void actionPerformed(ActionEvent e) {
-	            // ÀÌÀü ÆäÀÌÁö·Î µ¹¾Æ°¡´Â ·ÎÁ÷ Ãß°¡
-	            updateFrame.dispose(); // ÇöÀç Ã¢ ´İ±â
+	            // ì´ì „ í˜ì´ì§€ë¡œ ëŒì•„ê°€ëŠ” ë¡œì§ ì¶”ê°€
+	            updateFrame.dispose(); // í˜„ì¬ ì°½ ë‹«ê¸°
 	        }
 	    });
 
-	    updateFrame.setVisible(true); // ÇÁ·¹ÀÓÀ» º¸ÀÌµµ·Ï ¼³Á¤
+	    updateFrame.setVisible(true); // í”„ë ˆì„ì„ ë³´ì´ë„ë¡ ì„¤ì •
 
 		saveButton.addActionListener(new ActionListener() {
 			@Override
@@ -189,23 +189,23 @@ public class myPageEdit extends JPanel {
 				String newPassword = new String(newPasswordField.getPassword());
 				String confirmPassword = new String(confirmPasswordField.getPassword());
 
-				// ºñ¹Ğ¹øÈ£ È®ÀÎ
+				// ë¹„ë°€ë²ˆí˜¸ í™•ì¸
 				if (!newPassword.equals(confirmPassword)) {
-					JOptionPane.showMessageDialog(updateFrame, "ºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.", "¿À·ù", JOptionPane.ERROR_MESSAGE);
-					return; // ºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾ÊÀ¸¸é ÀÌÈÄ ·ÎÁ÷ ½ÇÇà ÁßÁö
+					JOptionPane.showMessageDialog(updateFrame, "ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.", "ì˜¤ë¥˜", JOptionPane.ERROR_MESSAGE);
+					return; // ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•Šìœ¼ë©´ ì´í›„ ë¡œì§ ì‹¤í–‰ ì¤‘ì§€
 				}
 
-				// µ¥ÀÌÅÍº£ÀÌ½º¿¡ Á¤º¸ ÀúÀå ·ÎÁ÷ Ãß°¡
-				JOptionPane.showMessageDialog(updateFrame, "È¸¿øÁ¤º¸°¡ ¼öÁ¤µÇ¾ú½À´Ï´Ù.");
+				// ë°ì´í„°ë² ì´ìŠ¤ì— ì •ë³´ ì €ì¥ ë¡œì§ ì¶”ê°€
+				JOptionPane.showMessageDialog(updateFrame, "íšŒì›ì •ë³´ê°€ ìˆ˜ì •ë˜ì—ˆìŠµë‹ˆë‹¤.");
 			}
 		});
 
-//		// Á¤º¸ ¼öÁ¤ Ã¢¿¡¼­ ºñ¹Ğ¹øÈ£ È®ÀÎ Ã¢À¸·Î µ¹¾Æ°¡±â
+//		// ì •ë³´ ìˆ˜ì • ì°½ì—ì„œ ë¹„ë°€ë²ˆí˜¸ í™•ì¸ ì°½ìœ¼ë¡œ ëŒì•„ê°€ê¸°
 //		backToCheck.addActionListener(new ActionListener() {
 //			@Override
 //			public void actionPerformed(ActionEvent panel) {
 //				new myPageEdit();
-//				updateFrame.dispose(); // ÇöÀç Ã¢ ´İ±â
+//				updateFrame.dispose(); // í˜„ì¬ ì°½ ë‹«ê¸°
 //			}
 //		});
 

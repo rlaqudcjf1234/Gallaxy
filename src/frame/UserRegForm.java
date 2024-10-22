@@ -41,7 +41,7 @@ public class UserRegForm extends JFrame {
 			public void run() {
 				try {
 					UserRegForm frame = new UserRegForm();
-					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Á¾·á ½Ã ÇÁ·Î±×·¥ Á¾·á
+					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // ì¢…ë£Œ ì‹œ í”„ë¡œê·¸ë¨ ì¢…ë£Œ
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -50,18 +50,18 @@ public class UserRegForm extends JFrame {
 	}
 
 	public UserRegForm() {
-		setTitle("È¸¿ø°¡ÀÔ ÆäÀÌÁö"); // Ã¢ Á¦¸ñ ¼³Á¤
-		setBounds(650, 0, 500, 750); // Ã¢ Å©±â ¼³Á¤
+		setTitle("íšŒì›ê°€ì… í˜ì´ì§€"); // ì°½ ì œëª© ì„¤ì •
+		setBounds(650, 0, 500, 750); // ì°½ í¬ê¸° ì„¤ì •
 		setBackground(new Color(247, 244, 242));
-		setLayout(null); // Àı´ë ·¹ÀÌ¾Æ¿ô »ç¿ë
+		setLayout(null); // ì ˆëŒ€ ë ˆì´ì•„ì›ƒ ì‚¬ìš©
 
-		// È¸¿ø°¡ÀÔ Æû ÆĞ³Î »ı¼º
+		// íšŒì›ê°€ì… í¼ íŒ¨ë„ ìƒì„±
 		JPanel signupPanel = new JPanel();
-		signupPanel.setLayout(null); // Àı´ë ·¹ÀÌ¾Æ¿ô »ç¿ë
-		signupPanel.setBounds(0, 0, 500, 750); // À§Ä¡ ¹× Å©±â ¼³Á¤
-		signupPanel.setBackground(new Color(247, 244, 242)); // ¹è°æ»ö ¼³Á¤
+		signupPanel.setLayout(null); // ì ˆëŒ€ ë ˆì´ì•„ì›ƒ ì‚¬ìš©
+		signupPanel.setBounds(0, 0, 500, 750); // ìœ„ì¹˜ ë° í¬ê¸° ì„¤ì •
+		signupPanel.setBackground(new Color(247, 244, 242)); // ë°°ê²½ìƒ‰ ì„¤ì •
 
-		// ·¹ÀÌºí ¹× ÅØ½ºÆ® ÇÊµå
+		// ë ˆì´ë¸” ë° í…ìŠ¤íŠ¸ í•„ë“œ
 
 		lblId = new JLabel("ID:");
 		lblPw = new JLabel("Password:");
@@ -70,11 +70,11 @@ public class UserRegForm extends JFrame {
 		lblEmail = new JLabel("Email:");
 		lblNickName = new JLabel("NickName:");
 
-		lblId.setBounds(130, 260, 80, 25); // À§Ä¡ ¹× Å©±â ¼³Á¤
-		lblPw.setBounds(130, 300, 80, 25); // À§Ä¡ ¹× Å©±â ¼³Á¤
+		lblId.setBounds(130, 260, 80, 25); // ìœ„ì¹˜ ë° í¬ê¸° ì„¤ì •
+		lblPw.setBounds(130, 300, 80, 25); // ìœ„ì¹˜ ë° í¬ê¸° ì„¤ì •
 		lblRe.setBounds(130, 340, 80, 25);
-		lblName.setBounds(130, 380, 80, 25); // À§Ä¡ ¹× Å©±â ¼³Á¤
-		lblEmail.setBounds(130, 420, 80, 25); // À§Ä¡ ¹× Å©±â ¼³Á¤
+		lblName.setBounds(130, 380, 80, 25); // ìœ„ì¹˜ ë° í¬ê¸° ì„¤ì •
+		lblEmail.setBounds(130, 420, 80, 25); // ìœ„ì¹˜ ë° í¬ê¸° ì„¤ì •
 		lblNickName.setBounds(130, 460, 80, 25);
 
 		tfId = new JTextField();
@@ -84,22 +84,22 @@ public class UserRegForm extends JFrame {
 		tfEmail = new JTextField();
 		tfNickName = new JTextField();
 
-		tfId.setBounds(220, 260, 140, 25); // À§Ä¡ ¹× Å©±â ¼³Á¤
-		tfPw.setBounds(220, 300, 140, 25); // À§Ä¡ ¹× Å©±â ¼³Á¤
+		tfId.setBounds(220, 260, 140, 25); // ìœ„ì¹˜ ë° í¬ê¸° ì„¤ì •
+		tfPw.setBounds(220, 300, 140, 25); // ìœ„ì¹˜ ë° í¬ê¸° ì„¤ì •
 		tfRe.setBounds(220, 340, 140, 25);
-		tfName.setBounds(220, 380, 140, 25); // À§Ä¡ ¹× Å©±â ¼³Á¤
-		tfEmail.setBounds(220, 420, 140, 25); // À§Ä¡ ¹× Å©±â ¼³Á¤
+		tfName.setBounds(220, 380, 140, 25); // ìœ„ì¹˜ ë° í¬ê¸° ì„¤ì •
+		tfEmail.setBounds(220, 420, 140, 25); // ìœ„ì¹˜ ë° í¬ê¸° ì„¤ì •
 		tfNickName.setBounds(220, 460, 140, 25);
 
-		rbtnMale = new JRadioButton("Male", true); // ³²¼º ¼±ÅÃ ±âº»°ª
+		rbtnMale = new JRadioButton("Male", true); // ë‚¨ì„± ì„ íƒ ê¸°ë³¸ê°’
 		rbtnFemale = new JRadioButton("Female");
 
 		ButtonGroup group = new ButtonGroup();
 		group.add(rbtnMale);
 		group.add(rbtnFemale);
 
-		rbtnMale.setBounds(130, 500, 100, 25); // ³²¼º ¹öÆ°
-		rbtnFemale.setBounds(260, 500, 100, 25); // ¿©¼º ¹öÆ°
+		rbtnMale.setBounds(130, 500, 100, 25); // ë‚¨ì„± ë²„íŠ¼
+		rbtnFemale.setBounds(260, 500, 100, 25); // ì—¬ì„± ë²„íŠ¼
 
 		signupPanel.add(lblId);
 		signupPanel.add(lblPw);
@@ -113,43 +113,43 @@ public class UserRegForm extends JFrame {
 		signupPanel.add(tfEmail);
 		signupPanel.add(lblNickName);
 		signupPanel.add(tfNickName);
-		signupPanel.add(rbtnMale); // ³²¼º ¹öÆ° Ãß°¡
-		signupPanel.add(rbtnFemale); // ¿©¼º ¹öÆ° Ãß°¡
+		signupPanel.add(rbtnMale); // ë‚¨ì„± ë²„íŠ¼ ì¶”ê°€
+		signupPanel.add(rbtnFemale); // ì—¬ì„± ë²„íŠ¼ ì¶”ê°€
 
-		// ¹öÆ° Ãß°¡
-		btnSignup = new JButton("È¸¿ø°¡ÀÔ");
-		btnCancel = new JButton("Ãë¼Ò");
+		// ë²„íŠ¼ ì¶”ê°€
+		btnSignup = new JButton("íšŒì›ê°€ì…");
+		btnCancel = new JButton("ì·¨ì†Œ");
 
-		btnSignup.setBounds(130, 550, 99, 30); // À§Ä¡ ¹× Å©±â ¼³Á¤
-		btnCancel.setBounds(260, 550, 99, 30); // À§Ä¡ ¹× Å©±â ¼³Á¤
+		btnSignup.setBounds(130, 550, 99, 30); // ìœ„ì¹˜ ë° í¬ê¸° ì„¤ì •
+		btnCancel.setBounds(260, 550, 99, 30); // ìœ„ì¹˜ ë° í¬ê¸° ì„¤ì •
 
 		signupPanel.add(btnSignup);
 		signupPanel.add(btnCancel);
 
-		// ¸ŞÀÎ ÇÁ·¹ÀÓ¿¡ ÆĞ³Î Ãß°¡
+		// ë©”ì¸ í”„ë ˆì„ì— íŒ¨ë„ ì¶”ê°€
 		add(signupPanel);
 
-		// Ã¢ÀÌ º¸ÀÌµµ·Ï ¼³Á¤
+		// ì°½ì´ ë³´ì´ë„ë¡ ì„¤ì •
 		setVisible(true);
 
-		// Ãë¼Ò ÀÌº¥Æ®
+		// ì·¨ì†Œ ì´ë²¤íŠ¸
 		btnCancel.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				dispose();// Ã¢ ´İ±â
+				dispose();// ì°½ ë‹«ê¸°
 			}
 		});
 
-		// È¸¿ø°¡ÀÔ ¹öÆ° Å¬¸¯ ÀÌº¥Æ® Ã³¸®
+		// íšŒì›ê°€ì… ë²„íŠ¼ í´ë¦­ ì´ë²¤íŠ¸ ì²˜ë¦¬
 		btnSignup.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				// ÀÔ·Â °ª °ËÁõ
+				// ì…ë ¥ ê°’ ê²€ì¦
 				if (Blank()) {
-					JOptionPane.showMessageDialog(UserRegForm.this, "¸ğµç Á¤º¸¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä.");
-					// ¸ğµÎ ÀÔ·ÂÇßÀ» ¶§
+					JOptionPane.showMessageDialog(UserRegForm.this, "ëª¨ë“  ì •ë³´ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”.");
+					// ëª¨ë‘ ì…ë ¥í–ˆì„ ë•Œ
 				} else {
-					// Id Áßº¹ÀÏ ¶§
+					// Id ì¤‘ë³µì¼ ë•Œ
 					UserDTO dto = new UserDTO();
 					String userId = tfId.getText();
 					
@@ -166,26 +166,26 @@ public class UserRegForm extends JFrame {
 					dto.setUserEmail(tfEmail.getText());
 					
 					if(us.selectUser(userId) != null) {
-						JOptionPane.showMessageDialog(UserRegForm.this, "ÀÌ¹Ì Á¸ÀçÇÏ´Â IdÀÔ´Ï´Ù.");
+						JOptionPane.showMessageDialog(UserRegForm.this, "ì´ë¯¸ ì¡´ì¬í•˜ëŠ” Idì…ë‹ˆë‹¤.");
 						tfId.requestFocus();
 						return;
 					}
 					if (!String.valueOf(tfPw.getPassword()).equals(String.valueOf(tfRe.getPassword()))) {
-						JOptionPane.showMessageDialog(UserRegForm.this, "Password¿Í Retry°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.");
+						JOptionPane.showMessageDialog(UserRegForm.this, "Passwordì™€ Retryê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
 						tfPw.requestFocus();
 						return;
 					}
 					if(us.insertUser(dto) > 0) {
-						JOptionPane.showMessageDialog(null, "È¸¿ø°¡ÀÔÀÌ ¿Ï·áµÇ¾ú½À´Ï´Ù.");
+						JOptionPane.showMessageDialog(null, "íšŒì›ê°€ì…ì´ ì™„ë£Œë˜ì—ˆìŠµë‹ˆë‹¤.");
 						dispose();
 					} else {
-						JOptionPane.showMessageDialog(null, "È¸¿ø°¡ÀÔÀ» ½ÇÆĞÇÏ¿´½À´Ï´Ù.");
+						JOptionPane.showMessageDialog(null, "íšŒì›ê°€ì…ì„ ì‹¤íŒ¨í•˜ì˜€ìŠµë‹ˆë‹¤.");
 					}
 					
 					/*
 						users.addUsers(new User(tfId.getText(), String.valueOf(tfPw.getPassword()), tfName.getText(),
 								tfNickName.getText(), getGender(), tfEmail.getText()));
-						JOptionPane.showMessageDialog(UserRegForm.this, "È¸¿ø°¡ÀÔÀ» ¿Ï·áÇß½À´Ï´Ù!");
+						JOptionPane.showMessageDialog(UserRegForm.this, "íšŒì›ê°€ì…ì„ ì™„ë£Œí–ˆìŠµë‹ˆë‹¤!");
 						new UserInForm();
 						dispose();
 					*/

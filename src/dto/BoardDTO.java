@@ -4,39 +4,39 @@ import java.util.Date;
 
 public class BoardDTO extends PageDTO {
 
-	// °Ô½ÃÆÇ ¾ÆÀÌµğ
+	// ê²Œì‹œíŒ ì•„ì´ë””
 	private String boardId;
 
-	// °Ô½ÃÆÇ Á¦¸ñ
+	// ê²Œì‹œíŒ ì œëª©
 	private String boardTitle;
 
-	// °Ô½ÃÆÇ ³»¿ë
+	// ê²Œì‹œíŒ ë‚´ìš©
 	private String boardContent;
 
-	// °Ô½ÃÆÇ ¾à¼Ó ÀÏÀÚ
+	// ê²Œì‹œíŒ ì•½ì† ì¼ì
 	private String boardWordYyyy;
-	// °Ô½ÃÆÇ ¾à¼Ó ÀÏÀÚ
+	// ê²Œì‹œíŒ ì•½ì† ì¼ì
 	private String boardWordMm;
-	// °Ô½ÃÆÇ ¾à¼Ó ÀÏÀÚ
+	// ê²Œì‹œíŒ ì•½ì† ì¼ì
 	private String boardWordDd;
 
-	// °Ô½ÃÆÇ ¾à¼Ó ½Ã°£
+	// ê²Œì‹œíŒ ì•½ì† ì‹œê°„
 	private String boardWordApm;
-	// °Ô½ÃÆÇ ¾à¼Ó ½Ã°£
+	// ê²Œì‹œíŒ ì•½ì† ì‹œê°„
 	private String boardWordHh;
-	// °Ô½ÃÆÇ ¾à¼Ó ½Ã°£
+	// ê²Œì‹œíŒ ì•½ì† ì‹œê°„
 	private String boardWordMi;
 
-	// °Ô½ÃÆÇ ÆÄÀÏ °æ·Î
+	// ê²Œì‹œíŒ íŒŒì¼ ê²½ë¡œ
 	private String boardFilePath;
 
-	// °Ô½ÃÆÇ ÃÖÃÊÀÛ¼º ÀÏÀÚ
+	// ê²Œì‹œíŒ ìµœì´ˆì‘ì„± ì¼ì
 	private Date boardRegDt;
 
-	// °Ô½ÃÆÇ ÃÖÁ¾¼öÁ¤ ÀÏÀÚ
+	// ê²Œì‹œíŒ ìµœì¢…ìˆ˜ì • ì¼ì
 	private Date boardLupDt;
 
-	// °Ô½ÃÆÇ ÀÛ¼ºÀÚ
+	// ê²Œì‹œíŒ ì‘ì„±ì
 	private String userId;
 
 	public String getBoardId() {

@@ -44,7 +44,7 @@ public class UserInForm extends JFrame {
 			public void run() {
 				try {
 					UserInForm frame = new UserInForm();
-					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Á¾·á ½Ã ÇÁ·Î±×·¥ Á¾·á
+					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // ì¢…ë£Œ ì‹œ í”„ë¡œê·¸ë¨ ì¢…ë£Œ
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
@@ -56,36 +56,36 @@ public class UserInForm extends JFrame {
 	 * Create the frame.
 	 */
 	public UserInForm() {
-		setTitle("¸ŞÀÎ È­¸é"); // Ã¢ Á¦¸ñ ¼³Á¤
-		setBounds(650, 0, 500, 750); // Ã¢ À§Ä¡ ¹× Å©±â ¼³Á¤
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // Á¾·á ½Ã ÇÁ·Î±×·¥ Á¾·á
-		setLayout(new BorderLayout()); // ·¹ÀÌ¾Æ¿ô ¼³Á¤
+		setTitle("ë©”ì¸ í™”ë©´"); // ì°½ ì œëª© ì„¤ì •
+		setBounds(650, 0, 500, 750); // ì°½ ìœ„ì¹˜ ë° í¬ê¸° ì„¤ì •
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // ì¢…ë£Œ ì‹œ í”„ë¡œê·¸ë¨ ì¢…ë£Œ
+		setLayout(new BorderLayout()); // ë ˆì´ì•„ì›ƒ ì„¤ì •
 
-		// ¸ŞÀÎ ÆĞ³Î »ı¼º ¹× ¼³Á¤
+		// ë©”ì¸ íŒ¨ë„ ìƒì„± ë° ì„¤ì •
 		JPanel mainPanel = new JPanel();
-		mainPanel.setBackground(new Color(247, 244, 242)); // ¹è°æ»ö ¼³Á¤
-		mainPanel.setLayout(new FlowLayout()); // ÇÃ·Î¿ì ·¹ÀÌ¾Æ¿ô ¼³Á¤
+		mainPanel.setBackground(new Color(247, 244, 242)); // ë°°ê²½ìƒ‰ ì„¤ì •
+		mainPanel.setLayout(new FlowLayout()); // í”Œë¡œìš° ë ˆì´ì•„ì›ƒ ì„¤ì •
 
-		// È¯¿µ ¸Ş½ÃÁö ·¹ÀÌºí
-		JLabel welcomeLabel = new JLabel("È¯¿µÇÕ´Ï´Ù!"); // ÆùÆ® ¼³Á¤ ¾øÀÌ ±âº» »ç¿ë
-		mainPanel.add(welcomeLabel); // ÆĞ³Î¿¡ ·¹ÀÌºí Ãß°¡
+		// í™˜ì˜ ë©”ì‹œì§€ ë ˆì´ë¸”
+		JLabel welcomeLabel = new JLabel("í™˜ì˜í•©ë‹ˆë‹¤!"); // í°íŠ¸ ì„¤ì • ì—†ì´ ê¸°ë³¸ ì‚¬ìš©
+		mainPanel.add(welcomeLabel); // íŒ¨ë„ì— ë ˆì´ë¸” ì¶”ê°€
 
-		add(mainPanel, BorderLayout.CENTER); // ÇÁ·¹ÀÓ¿¡ ¸ŞÀÎ ÆĞ³Î Ãß°¡
+		add(mainPanel, BorderLayout.CENTER); // í”„ë ˆì„ì— ë©”ì¸ íŒ¨ë„ ì¶”ê°€
 
-		// ·Î±×ÀÎ ÆĞ³Î »ı¼º ¹× ¼³Á¤
+		// ë¡œê·¸ì¸ íŒ¨ë„ ìƒì„± ë° ì„¤ì •
 		JPanel loginPanel = new JPanel();
-		loginPanel.setLayout(null); // Àı´ë ·¹ÀÌ¾Æ¿ô »ç¿ë
-		loginPanel.setBackground(new Color(247, 244, 242)); // ¹è°æ»ö ¼³Á¤
+		loginPanel.setLayout(null); // ì ˆëŒ€ ë ˆì´ì•„ì›ƒ ì‚¬ìš©
+		loginPanel.setBackground(new Color(247, 244, 242)); // ë°°ê²½ìƒ‰ ì„¤ì •
 
-		// ÄÄÆ÷³ÍÆ® ÃÊ±âÈ­
+		// ì»´í¬ë„ŒíŠ¸ ì´ˆê¸°í™”
 		lblId = new JLabel("ID:");
 		lblPw = new JLabel("Password:");
 		tfId = new JTextField();
 		tfPw = new JPasswordField();
-		btnLogin = new JButton("·Î±×ÀÎ");
-		btnRegister = new JButton("È¸¿ø°¡ÀÔ");
+		btnLogin = new JButton("ë¡œê·¸ì¸");
+		btnRegister = new JButton("íšŒì›ê°€ì…");
 
-		// ÄÄÆ÷³ÍÆ® À§Ä¡ ¹× Å©±â ¼³Á¤
+		// ì»´í¬ë„ŒíŠ¸ ìœ„ì¹˜ ë° í¬ê¸° ì„¤ì •
 		lblId.setBounds(130, 250, 140, 30);
 		tfId.setBounds(130, 280, 200, 30);
 		lblPw.setBounds(130, 310, 140, 30);
@@ -93,7 +93,7 @@ public class UserInForm extends JFrame {
 		btnLogin.setBounds(130, 400, 90, 30);
 		btnRegister.setBounds(240, 400, 90, 30);
 
-		// ÆĞ³Î¿¡ ÄÄÆ÷³ÍÆ® Ãß°¡
+		// íŒ¨ë„ì— ì»´í¬ë„ŒíŠ¸ ì¶”ê°€
 		loginPanel.add(lblId);
 		loginPanel.add(lblPw);
 		loginPanel.add(tfId);
@@ -101,18 +101,18 @@ public class UserInForm extends JFrame {
 		loginPanel.add(btnLogin);
 		loginPanel.add(btnRegister);
 
-		// ÇÁ·¹ÀÓ¿¡ ÆĞ³Î Ãß°¡
+		// í”„ë ˆì„ì— íŒ¨ë„ ì¶”ê°€
 		add(loginPanel);
 
-		// Ã¢ÀÌ º¸ÀÌµµ·Ï ¼³Á¤
+		// ì°½ì´ ë³´ì´ë„ë¡ ì„¤ì •
 		setVisible(true);
 
-		// È¸¿ø°¡ÀÔ Å¬¸¯ ÀÌº¥Æ®
+		// íšŒì›ê°€ì… í´ë¦­ ì´ë²¤íŠ¸
 		btnRegister.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
 				setVisible(false);
-				JFrame logRegisterForm = new UserRegForm(); // È¸¿ø°¡ÀÔ Æû ¿­±â
+				JFrame logRegisterForm = new UserRegForm(); // íšŒì›ê°€ì… í¼ ì—´ê¸°
 				logRegisterForm.addWindowListener(new WindowAdapter() {
 					@Override
 					public void windowClosed(WindowEvent e) {
@@ -121,12 +121,12 @@ public class UserInForm extends JFrame {
 					}
 				});
 
-				tfId.setText(""); // ÀÔ·Â ÃÊ±âÈ­
-				tfPw.setText(""); // ÀÔ·Â ÃÊ±âÈ­
+				tfId.setText(""); // ì…ë ¥ ì´ˆê¸°í™”
+				tfPw.setText(""); // ì…ë ¥ ì´ˆê¸°í™”
 			}
 		});
 
-		// ·Î±×ÀÎ Å¬¸¯ ÀÌº¥Æ®
+		// ë¡œê·¸ì¸ í´ë¦­ ì´ë²¤íŠ¸
 		btnLogin.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
@@ -134,29 +134,29 @@ public class UserInForm extends JFrame {
 				String userPw = String.valueOf(tfPw.getPassword());
 
 				if (userId.isEmpty()) {
-					JOptionPane.showMessageDialog(null, "¾ÆÀÌµğ¸¦ ÀÔ·ÂÇÏ¼¼¿ä.", "·Î±×ÀÎÆû", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null, "ì•„ì´ë””ë¥¼ ì…ë ¥í•˜ì„¸ìš”.", "ë¡œê·¸ì¸í¼", JOptionPane.WARNING_MESSAGE);
 					return;
 
 				}
 				if (userPw.isEmpty()) {
-					JOptionPane.showMessageDialog(null, "ºñ¹Ğ¹øÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä.", "·Î±×ÀÎÆû", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null, "ë¹„ë°€ë²ˆí˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”.", "ë¡œê·¸ì¸í¼", JOptionPane.WARNING_MESSAGE);
 					return;
 				}
 
 				UserDTO dto = us.selectUser(userId);
 
 				if (dto == null) {
-					JOptionPane.showMessageDialog(null, "Á¸ÀçÇÏÁö ¾Ê´Â IdÀÔ´Ï´Ù.");
+					JOptionPane.showMessageDialog(null, "ì¡´ì¬í•˜ì§€ ì•ŠëŠ” Idì…ë‹ˆë‹¤.");
 					return;
 				}
 				if (!userPw.equals(dto.getUserPw())) {
-					JOptionPane.showMessageDialog(null, "ºñ¹Ğ¹øÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê½À´Ï´Ù.");
+					JOptionPane.showMessageDialog(null, "ë¹„ë°€ë²ˆí˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.");
 					return;
 				}
 				
 				Main.USER = dto;
 				
-				JOptionPane.showMessageDialog(null, dto.getUserNickName()+"´Ô ·Î±×ÀÎ¿¡ ¼º°øÇÏ¼Ì½À´Ï´Ù.", "·Î±×ÀÎÆû", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, dto.getUserNickName()+"ë‹˜ ë¡œê·¸ì¸ì— ì„±ê³µí•˜ì…¨ìŠµë‹ˆë‹¤.", "ë¡œê·¸ì¸í¼", JOptionPane.INFORMATION_MESSAGE);
 				
 				new MainBoard();
 				dispose();

@@ -37,14 +37,14 @@ public class Calendarpp {
 	private JFrame frame;
 	private JPanel calendarPanel;
 	private JButton backButton, nextButton, saveMemoButton, prevButton;
-	// backButton(µÚ·Î°¡±â) nextButton(´Ş·Â´ÙÀ½¿ù¹öÆ°) prevButton(´Ş·ÂÀü¿ù¹öÆ°)
-	// saveMemoButton(ÀÔ·ÂÁ¤º¸¹öÆ°)
+	// backButton(ë’¤ë¡œê°€ê¸°) nextButton(ë‹¬ë ¥ë‹¤ìŒì›”ë²„íŠ¼) prevButton(ë‹¬ë ¥ì „ì›”ë²„íŠ¼)
+	// saveMemoButton(ì…ë ¥ì •ë³´ë²„íŠ¼)
 	private JLabel monthLabel;
 	private JTable calendarTable;
 	private JScrollPane calendarScrollpane;
-	private JTextField healthMemorun;// °Å¸® ÀÔ·Â¶õ
-	private JTextField healthMemotime;// °Å¸® ÀÔ·Â¶õ
-	private JPanel monthhealthMemo;// ¿ùº°Æò±Õ ¶Ú °Å¸® ½Ã°£ ÃÑÄ®·Î¸®
+	private JTextField healthMemorun;// ê±°ë¦¬ ì…ë ¥ë€
+	private JTextField healthMemotime;// ê±°ë¦¬ ì…ë ¥ë€
+	private JPanel monthhealthMemo;// ì›”ë³„í‰ê·  ë›´ ê±°ë¦¬ ì‹œê°„ ì´ì¹¼ë¡œë¦¬
 	private JTextArea memoLabel;
 	private DefaultTableModel calendarTableModel;
 	private int realYear, realMonth, currentYear, currentMonth;
@@ -56,26 +56,26 @@ public class Calendarpp {
 	public Calendarpp() {
 
 		calendarmonthly = new CalendarMonthly();
-		frame = new JFrame("Çï½ºÄÉ¾î");
+		frame = new JFrame("í—¬ìŠ¤ì¼€ì–´");
 		frame.setSize(500, 850);
 		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		frame.setLayout(null);
 
-		backButton = new JButton("µÚ·Î°¡±â");
+		backButton = new JButton("ë’¤ë¡œê°€ê¸°");
 		prevButton = new JButton("<");
 		nextButton = new JButton(">");
-		saveMemoButton = new JButton("±â·ÏÇÏ±â");
+		saveMemoButton = new JButton("ê¸°ë¡í•˜ê¸°");
 		monthLabel = new JLabel("", JLabel.CENTER);
-		dateInfoLabel = new JLabel("¼±ÅÃÇÑ ³¯Â¥");
-		ImageIcon icon=new ImageIcon("src/img/¼Öµ¥½ºÅ©.png");
+		dateInfoLabel = new JLabel("ì„ íƒí•œ ë‚ ì§œ");
+		ImageIcon icon=new ImageIcon("src/img/ì†”ë°ìŠ¤í¬.png");
 		imageLabel=new JLabel(icon);
-		// Ä¶¸°´õ ÀÏÁÖÀÏ
+		// ìº˜ë¦°ë” ì¼ì£¼ì¼
 
 		calendarTableModel = new DefaultTableModel(new Object[6][7],
-				new String[] { "¿ù", "È­", "¼ö", "¸ñ", "±İ", "Åä", "ÀÏ" }) { // Çì´õ¿Í ÇÔ²² µ¥ÀÌÅÍ ÃÊ±âÈ­
+				new String[] { "ì›”", "í™”", "ìˆ˜", "ëª©", "ê¸ˆ", "í† ", "ì¼" }) { // í—¤ë”ì™€ í•¨ê»˜ ë°ì´í„° ì´ˆê¸°í™”
 
 			public boolean isCellEditable(int rowIndex, int columnIndex) {
-				return false; // ¸ğµç ¼¿À» ¼öÁ¤ÇÒ ¼ö ¾øµµ·Ï ¼³Á¤
+				return false; // ëª¨ë“  ì…€ì„ ìˆ˜ì •í•  ìˆ˜ ì—†ë„ë¡ ì„¤ì •
 			}
 		};
 
@@ -86,25 +86,25 @@ public class Calendarpp {
 		calendarTable.setFillsViewportHeight(true);
 		
 
-		// ¸Ş¸ğÄ­ ¸¸µé±â
-		healthMemorun = new JTextField(10); // °Å¸® ÀÔ·Â¶õ ÃÊ±âÈ­
-		healthMemotime = new JTextField(10); // ½Ã°£ ÀÔ·Â¶õ ÃÊ±âÈ­
+		// ë©”ëª¨ì¹¸ ë§Œë“¤ê¸°
+		healthMemorun = new JTextField(10); // ê±°ë¦¬ ì…ë ¥ë€ ì´ˆê¸°í™”
+		healthMemotime = new JTextField(10); // ì‹œê°„ ì…ë ¥ë€ ì´ˆê¸°í™”
 
 		JPanel inputPanel = new JPanel();
 		inputPanel.setLayout(new BoxLayout(inputPanel, BoxLayout.Y_AXIS));
-		inputPanel.setBorder(BorderFactory.createTitledBorder("ÀÔ·Â Á¤º¸"));
+		inputPanel.setBorder(BorderFactory.createTitledBorder("ì…ë ¥ ì •ë³´"));
 
 		monthhealthMemo = new JPanel();
-		memoLabel = new JTextArea("");// ¸Ş¸ğ ³»¿ëÀ» Ç¥½Ã
-		memoLabel.setLineWrap(true);// ¿©·¯ÁÙ Ç¥½Ã
+		memoLabel = new JTextArea("");// ë©”ëª¨ ë‚´ìš©ì„ í‘œì‹œ
+		memoLabel.setLineWrap(true);// ì—¬ëŸ¬ì¤„ í‘œì‹œ
 		memoLabel.setWrapStyleWord(true);
 		memoLabel.setEditable(false);
 		inputPanel.revalidate();
 		inputPanel.repaint();
-		// ¹öÆ° Ãß°¡
-		inputPanel.add(new JLabel("°Å¸® ÀÔ·Â(km)"));
+		// ë²„íŠ¼ ì¶”ê°€
+		inputPanel.add(new JLabel("ê±°ë¦¬ ì…ë ¥(km)"));
 		inputPanel.add(healthMemorun);
-		inputPanel.add(new JLabel("½Ã°£ ÀÔ·Â(ºĞ)"));
+		inputPanel.add(new JLabel("ì‹œê°„ ì…ë ¥(ë¶„)"));
 		inputPanel.add(healthMemotime);
 		inputPanel.add(Box.createVerticalGlue());
 
@@ -124,7 +124,7 @@ public class Calendarpp {
 		calendarPanel.add(saveMemoButton);
 		calendarPanel.add(dateInfoLabel);
 		calendarPanel.add(imageLabel);
-		// ¹öÆ° ºñÈ°¼ºÈ­ ÃÊ±âÈ­
+		// ë²„íŠ¼ ë¹„í™œì„±í™” ì´ˆê¸°í™”
 
 		saveMemoButton.setEnabled(false);
 		DocumentListener inputListener = new DocumentListener() {
@@ -150,21 +150,21 @@ public class Calendarpp {
 		healthMemorun.getDocument().addDocumentListener(inputListener);
 		healthMemotime.getDocument().addDocumentListener(inputListener);
 
-		// ¹öÆ° ÆÇ³Ú Å©±â ³Ö±â
-		inputPanel.setBounds(25, 470, 220, 120);//ÀÔ·ÂÁ¤º¸ ¹Ú½º
-		imageLabel.setBounds(20, 630 ,435 ,100);//¼Öµ¥½ºÅ© ÀÌ¹ÌÁö
-		dateInfoLabel.setBounds(30, 440, 350, 30);//³¯Â¥¼±ÅÃÇÏ¸é º¸¿©ÁÖ±â
-		saveMemoButton.setBounds(27, 590, 216, 27);// ±â·ÏÇÏ±â ¹öÆ°
-		calendarScrollpane.setBounds(25, 70, 440, 253);// ´Ş·ÂÀüÃ¼
-		prevButton.setBounds(25, 30, 50, 30);// ¿ù ÀÌÀü¹öÆ°
-		nextButton.setBounds(415, 30, 50, 30);// ¿ù ´ÙÀ½¹öÆ°
-		monthLabel.setBounds(150, 30, 200, 30);// ³â¿ù º¸¿©ÁÖ´Â ÆÇ³Ú
-		backButton.setBounds(90, 750, 300, 45);// µÚ·Î°¡±â
-		memoLabel.setBounds(25, 330, 440, 80);// ´Ş·Â¿¡ ÀÔ·ÂµÈ°Å º¸¿©ÁÖ´Â¸Ş¸ğ
-		monthhealthMemo.setBounds(250, 470, 200, 150);// ¿ù°£Åë°è¸Ş¸ğ
+		// ë²„íŠ¼ íŒë„¬ í¬ê¸° ë„£ê¸°
+		inputPanel.setBounds(25, 470, 220, 120);//ì…ë ¥ì •ë³´ ë°•ìŠ¤
+		imageLabel.setBounds(20, 630 ,435 ,100);//ì†”ë°ìŠ¤í¬ ì´ë¯¸ì§€
+		dateInfoLabel.setBounds(30, 440, 350, 30);//ë‚ ì§œì„ íƒí•˜ë©´ ë³´ì—¬ì£¼ê¸°
+		saveMemoButton.setBounds(27, 590, 216, 27);// ê¸°ë¡í•˜ê¸° ë²„íŠ¼
+		calendarScrollpane.setBounds(25, 70, 440, 253);// ë‹¬ë ¥ì „ì²´
+		prevButton.setBounds(25, 30, 50, 30);// ì›” ì´ì „ë²„íŠ¼
+		nextButton.setBounds(415, 30, 50, 30);// ì›” ë‹¤ìŒë²„íŠ¼
+		monthLabel.setBounds(150, 30, 200, 30);// ë…„ì›” ë³´ì—¬ì£¼ëŠ” íŒë„¬
+		backButton.setBounds(90, 750, 300, 45);// ë’¤ë¡œê°€ê¸°
+		memoLabel.setBounds(25, 330, 440, 80);// ë‹¬ë ¥ì— ì…ë ¥ëœê±° ë³´ì—¬ì£¼ëŠ”ë©”ëª¨
+		monthhealthMemo.setBounds(250, 470, 200, 150);// ì›”ê°„í†µê³„ë©”ëª¨
 		monthhealthMemo.setLayout(new BoxLayout(monthhealthMemo, BoxLayout.Y_AXIS));
-		monthhealthMemo.setBorder(BorderFactory.createTitledBorder("¿ù°£ Åë°è"));
-		calendarPanel.setBounds(0, 0, 500, 850);// ÀüÃ¼ Å©±â
+		monthhealthMemo.setBorder(BorderFactory.createTitledBorder("ì›”ê°„ í†µê³„"));
+		calendarPanel.setBounds(0, 0, 500, 850);// ì „ì²´ í¬ê¸°
 		
 		backButton.addActionListener(new ActionListener() {
 
@@ -176,7 +176,7 @@ public class Calendarpp {
 			}
 		});
 		//
-		// ´Ş·Â Àü¿ù ¹öÆ°¾×¼Ç
+		// ë‹¬ë ¥ ì „ì›” ë²„íŠ¼ì•¡ì…˜
 		prevButton.addActionListener(new ActionListener() {
 
 			@Override
@@ -192,7 +192,7 @@ public class Calendarpp {
 			}
 
 		});
-		// ´Ş·Â ´ÙÀ½¿ù ¹öÆ°¾×¼Ç
+		// ë‹¬ë ¥ ë‹¤ìŒì›” ë²„íŠ¼ì•¡ì…˜
 		nextButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
 				if (currentMonth == 11) {
@@ -204,14 +204,14 @@ public class Calendarpp {
 				updateCalendar(currentMonth, currentYear);
 			}
 		});
-		// ¸Ş¸ğ º¸¿©ÁÖ´Â Ã¢
+		// ë©”ëª¨ ë³´ì—¬ì£¼ëŠ” ì°½
 		calendarTable.addMouseListener(new MouseAdapter() {
 			public void mouseClicked(MouseEvent me) {
 				int row = calendarTable.getSelectedRow();
 				int col = calendarTable.getSelectedColumn();
 				String date = (String) calendarTableModel.getValueAt(row, col);
 				if (date == null || date.isEmpty()) {
-					memoLabel.setText("À¯È¿ÇÑ ³¯Â¥¸¦ ¼±ÅÃÇÏ¼¼¿ä");
+					memoLabel.setText("ìœ íš¨í•œ ë‚ ì§œë¥¼ ì„ íƒí•˜ì„¸ìš”");
 				} else {
 					showMemo(date);
 					updateDateInfo(row, col);
@@ -222,7 +222,7 @@ public class Calendarpp {
 				int day = Integer.parseInt((String) calendarTableModel.getValueAt(row, col));
 				LocalDate selectedDate = LocalDate.of(currentYear, currentMonth + 1, day);
 
-				dateInfoLabel.setText(String.format("¼±ÅÃÇÑ ³¯Â¥: %d³â, %d¿ù, %dÀÏ", selectedDate.getYear(),
+				dateInfoLabel.setText(String.format("ì„ íƒí•œ ë‚ ì§œ: %dë…„, %dì›”, %dì¼", selectedDate.getYear(),
 						selectedDate.getMonthValue(), selectedDate.getDayOfMonth()));
 				System.out.println(dateInfoLabel.getText());
 				dateInfoLabel.revalidate();
@@ -235,37 +235,37 @@ public class Calendarpp {
 				if (memo != null && !memo.isEmpty()) {
 					memoLabel.setText(memo);
 				} else {
-					memoLabel.setText("±â·ÏÀÌ ¾ø½À´Ï´Ù");
+					memoLabel.setText("ê¸°ë¡ì´ ì—†ìŠµë‹ˆë‹¤");
 				}
 
 			}
 		});
-		// ¸Ş¸ğ ÀúÀåÇÏ±â ¹öÆ°
+		// ë©”ëª¨ ì €ì¥í•˜ê¸° ë²„íŠ¼
 
 		saveMemoButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent ae) {
 				int row = calendarTable.getSelectedRow();
 				int col = calendarTable.getSelectedColumn();
 				if (row < 0 || col < 0) {
-					JOptionPane.showMessageDialog(frame, "³¯Â¥¸¦ ¼±ÅÃÇÏ¼¼¿ä.");
+					JOptionPane.showMessageDialog(frame, "ë‚ ì§œë¥¼ ì„ íƒí•˜ì„¸ìš”.");
 					return;
 				}
 				String selectedDate = (String) calendarTableModel.getValueAt(row, col);
 				System.out.println("selected" + selectedDate);
 				if (selectedDate == null || selectedDate.isEmpty()) {
-					JOptionPane.showMessageDialog(frame, "À¯È¿ÇÑ ³¯Â¥¸¦ ¼±ÅÃÇÏ¼¼¿ä");
+					JOptionPane.showMessageDialog(frame, "ìœ íš¨í•œ ë‚ ì§œë¥¼ ì„ íƒí•˜ì„¸ìš”");
 					return;
 				}
 				String distanceText = healthMemorun.getText();
 				String timeText = healthMemotime.getText();
-				// ÀÔ·Â°ªÀ» ¼ıÀÚ·Î º¯È¯
+				// ì…ë ¥ê°’ì„ ìˆ«ìë¡œ ë³€í™˜
 				try {
 					int yyyy = currentYear;
 					int mm = currentMonth;
 					int dd = Integer.parseInt(selectedDate);
 					double distance = Double.parseDouble(distanceText);// km
-					double time = Double.parseDouble(timeText);// ºĞ
-					// Æò±Õ¼Óµµ ¹× Ä®·Î¸® °è»ê
+					double time = Double.parseDouble(timeText);// ë¶„
+					// í‰ê· ì†ë„ ë° ì¹¼ë¡œë¦¬ ê³„ì‚°
 					double speed = (distance / (time / 60));
 					double calories = time * 7.33;
 
@@ -281,31 +281,31 @@ public class Calendarpp {
 					updateMonthHealthMemo();
 
 				} catch (NumberFormatException e) {
-					JOptionPane.showMessageDialog(frame, e.getMessage(), "ÀÔ·Â¿À·ù", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(frame, e.getMessage(), "ì…ë ¥ì˜¤ë¥˜", JOptionPane.ERROR_MESSAGE);
 				}
 
 			}
 
 			private void updateMonthHealthMemo() {
 				/*
-				 * // ¿ù°£ Åë°è ¾÷µ¥ÀÌÆ® calendarmonthly.removeEntry(selectedDate);
+				 * // ì›”ê°„ í†µê³„ ì—…ë°ì´íŠ¸ calendarmonthly.removeEntry(selectedDate);
 				 * calendarmonthly.addEntry(selectedDate, distance, time); String result =
-				 * String.format("°Å¸®: %.2f km, ½Ã°£: %.2f ºĞ, Æò±Õ ¼Óµµ: %.2f km/h, Ä®·Î¸®: %.2f kcal",
+				 * String.format("ê±°ë¦¬: %.2f km, ì‹œê°„: %.2f ë¶„, í‰ê·  ì†ë„: %.2f km/h, ì¹¼ë¡œë¦¬: %.2f kcal",
 				 * distance, time, averageSpeed, calories); JOptionPane.showMessageDialog(frame,
-				 * "ÀúÀåµÇ¾ú½À´Ï´Ù."); memoData.put(selectedDate, result);
+				 * "ì €ì¥ë˜ì—ˆìŠµë‹ˆë‹¤."); memoData.put(selectedDate, result);
 				 */
 				monthhealthMemo.removeAll();
 				monthhealthMemo.setLayout(new BoxLayout(monthhealthMemo, BoxLayout.Y_AXIS));
-				// °Å¸®
-				JLabel distanceLabel = new JLabel(String.format("ÃÑ°Å¸®: %.2f km", calendarmonthly.getTotalDistance()));
+				// ê±°ë¦¬
+				JLabel distanceLabel = new JLabel(String.format("ì´ê±°ë¦¬: %.2f km", calendarmonthly.getTotalDistance()));
 				distanceLabel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
 				monthhealthMemo.add(distanceLabel);
-				// ½Ã°£
-				JLabel timeLabel = new JLabel(String.format("ÃÑ½Ã°£: %.2f ºĞ", calendarmonthly.getTotalTime()));
+				// ì‹œê°„
+				JLabel timeLabel = new JLabel(String.format("ì´ì‹œê°„: %.2f ë¶„", calendarmonthly.getTotalTime()));
 				timeLabel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
 				monthhealthMemo.add(timeLabel);
-				// Ä®·Î¸®
-				JLabel caloriesLabel = new JLabel(String.format("ÃÑÄ®·Î¸®: %.2f Kcal", calendarmonthly.getTotalCalories()));
+				// ì¹¼ë¡œë¦¬
+				JLabel caloriesLabel = new JLabel(String.format("ì´ì¹¼ë¡œë¦¬: %.2f Kcal", calendarmonthly.getTotalCalories()));
 				caloriesLabel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
 				monthhealthMemo.add(caloriesLabel);
 
@@ -331,32 +331,32 @@ public class Calendarpp {
 	}// class calendar
 
 	public void updateCalendar(int month, int year) {
-		calendarTableModel.setRowCount(0); // ±âÁ¸ µ¥ÀÌÅÍ ÃÊ±âÈ­
+		calendarTableModel.setRowCount(0); // ê¸°ì¡´ ë°ì´í„° ì´ˆê¸°í™”
 
-		// ¿ùº° Çì´õ Ãß°¡
+		// ì›”ë³„ í—¤ë” ì¶”ê°€
 
 		DateTimeFormatter formatter = DateTimeFormatter.ofPattern("MMMM yyyy");
-		LocalDate firstDayOfMonth = LocalDate.of(year, month + 1, 1); // month´Â 0ºÎÅÍ ½ÃÀÛÇÏ¹Ç·Î +1
+		LocalDate firstDayOfMonth = LocalDate.of(year, month + 1, 1); // monthëŠ” 0ë¶€í„° ì‹œì‘í•˜ë¯€ë¡œ +1
 		String monthText = firstDayOfMonth.format(formatter);
-		monthLabel.setText(monthText); // ¿ù°ú ¿¬µµ ·¹ÀÌºí ¼³Á¤
+		monthLabel.setText(monthText); // ì›”ê³¼ ì—°ë„ ë ˆì´ë¸” ì„¤ì •
 
-		// ´Ş·Â ÃÊ±âÈ­ ¼³Á¤
+		// ë‹¬ë ¥ ì´ˆê¸°í™” ì„¤ì •
 		calendarTable.setRowHeight(38);
-		int startDay = firstDayOfMonth.getDayOfWeek().getValue(); // 1(¿ù¿äÀÏ) ~ 7(ÀÏ¿äÀÏ)
-		int daysInMonth = firstDayOfMonth.lengthOfMonth(); // ÇØ´ç ¿ùÀÇ ÀÏ ¼ö
+		int startDay = firstDayOfMonth.getDayOfWeek().getValue(); // 1(ì›”ìš”ì¼) ~ 7(ì¼ìš”ì¼)
+		int daysInMonth = firstDayOfMonth.lengthOfMonth(); // í•´ë‹¹ ì›”ì˜ ì¼ ìˆ˜
 
 		for (int i = 0; i < 6; i++) {
 			calendarTableModel.addRow(new Object[7]);
 		}
 
-		// ³¯Â¥¸¦ Å×ÀÌºí¿¡ Ãß°¡
+		// ë‚ ì§œë¥¼ í…Œì´ë¸”ì— ì¶”ê°€
 		for (int day = 1; day <= daysInMonth; day++) {
-			int row = (day + startDay - 2) / 7; // Çà °è»ê
-			int col = (day + startDay - 2) % 7; // ¿­ °è»ê
-			calendarTableModel.setValueAt(Integer.toString(day), row, col); // +1À» ÅëÇØ ¾Æ·¡·Î ³»¸®±â
+			int row = (day + startDay - 2) / 7; // í–‰ ê³„ì‚°
+			int col = (day + startDay - 2) % 7; // ì—´ ê³„ì‚°
+			calendarTableModel.setValueAt(Integer.toString(day), row, col); // +1ì„ í†µí•´ ì•„ë˜ë¡œ ë‚´ë¦¬ê¸°
 		}
 
-		// UI ¾÷µ¥ÀÌÆ®
+		// UI ì—…ë°ì´íŠ¸
 		calendarTable.revalidate();
 		calendarTable.repaint();
 
