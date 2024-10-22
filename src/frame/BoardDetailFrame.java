@@ -106,7 +106,7 @@ public class BoardDetailFrame extends JFrame {
 		contentPane.add(commentScrollPane);
 
 		// 댓글 입력 필드
-		commentField = new JTextField("댓글을 입력하세요...");
+		commentField = new JTextField();
 		commentField.setBounds(40, 755, 305, 30);
 		contentPane.add(commentField);
 

@@ -25,7 +25,7 @@
 				AND USER_ID = #{userId}
 			</if>
 		</where>
-		ORDER BY COMMENT_ID DESC
+		ORDER BY COMMENT_ID ASC
 	</select>
 	
 </mapper>
