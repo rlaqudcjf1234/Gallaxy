@@ -30,12 +30,18 @@ import javax.swing.event.DocumentListener;
 import javax.swing.table.DefaultTableModel;
 
 import dto.HealthDTO;
+import main.Main;
+import service.HealthService;
+import service.impl.HealthServiceImpl;
 
 import java.util.Calendar;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
 public class Calendarpp {
+
+	HealthService hs = new HealthServiceImpl();
+	
 	private CalendarMonthly calendarmonthly;
 	private JFrame frame;
 	private JPanel calendarPanel;
@@ -312,12 +318,27 @@ public class Calendarpp {
 				dateInfoLabel.setVisible(true);
 			}
 
-			public void showMemo(String date) {
-				String memo = memoData.get(date);
-				if (memo != null && !memo.isEmpty()) {
-					memoLabel.setText(memo);
+			public void showMemo(String dd) {
+				//                 * String.format("거리: %.2f km, 시간: %.2f 분, 평균 속도: %.2f km/h, 칼로리: %.2f kcal",
+
+				int yyyy = currentYear;
+				int mm = currentMonth;
+
+				HealthDTO dto = new HealthDTO();
+				if(Main.USER != null) {
+					dto.setUserId(Main.USER.getUserId());
+				}
+				dto.setHealthYyyy(yyyy);
+				dto.setHealthMm(mm);
+				dto.setHealthDd(Integer.parseInt(dd));
+
+				HealthDTO result = hs.selectHealth(dto);
+				if (result == null) {
+					memoLabel.setText("기록이 없습니다.");
 				} else {
-					memoLabel.setText("기록이 없습니다");
+					memoLabel.setText(String.format("거리: %d km, 시간: %d 분, 평균 속도: %.2f km/h, 칼로리: %.2f kcal",
+							result.getHealthDistance(), result.getHealthTime(), result.getHealthSpeed(),
+							result.getHealthCalories()));
 				}
 
 			}
@@ -353,6 +374,9 @@ public class Calendarpp {
 					double calories = time * 7.33;
 
 					HealthDTO dto = new HealthDTO();
+					if(Main.USER != null) {
+						dto.setUserId(Main.USER.getUserId());
+					}
 					dto.setHealthYyyy(yyyy);
 					dto.setHealthMm(mm);
 					dto.setHealthDd(dd);
@@ -361,39 +385,17 @@ public class Calendarpp {
 					dto.setHealthSpeed(speed);
 					dto.setHealthCalories(calories);
 
+					if (hs.insertHealth(dto) > 0) {
+						JOptionPane.showMessageDialog(frame, "기록되었습니다.", "기록완료", JOptionPane.ERROR_MESSAGE);
+					} else {
+						JOptionPane.showMessageDialog(frame, "기록이 입력되지 않았습니다.", "기록오류", JOptionPane.ERROR_MESSAGE);
+					}
+
 					updateMonthHealthMemo();
 
 				} catch (NumberFormatException e) {
 					JOptionPane.showMessageDialog(frame, e.getMessage(), "입력오류", JOptionPane.ERROR_MESSAGE);
 				}
-
-			}
-
-			private void updateMonthHealthMemo() {
-				/*
-				 * // 월간 통계 업데이트 calendarmonthly.removeEntry(selectedDate);
-				 * calendarmonthly.addEntry(selectedDate, distance, time); String result =
-				 * String.format("거리: %.2f km, 시간: %.2f 분, 평균 속도: %.2f km/h, 칼로리: %.2f kcal",
-				 * distance, time, averageSpeed, calories); JOptionPane.showMessageDialog(frame,
-				 * "저장되었습니다."); memoData.put(selectedDate, result);
-				 */
-				monthhealthMemo.removeAll();
-				monthhealthMemo.setLayout(new BoxLayout(monthhealthMemo, BoxLayout.Y_AXIS));
-				// 거리
-				JLabel distanceLabel = new JLabel(String.format("총거리: %.2f km", calendarmonthly.getTotalDistance()));
-				distanceLabel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
-				monthhealthMemo.add(distanceLabel);
-				// 시간
-				JLabel timeLabel = new JLabel(String.format("총시간: %.2f 분", calendarmonthly.getTotalTime()));
-				timeLabel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
-				monthhealthMemo.add(timeLabel);
-				// 칼로리
-				JLabel caloriesLabel = new JLabel(String.format("총칼로리: %.2f Kcal", calendarmonthly.getTotalCalories()));
-				caloriesLabel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
-				monthhealthMemo.add(caloriesLabel);
-
-				monthhealthMemo.revalidate();
-				monthhealthMemo.repaint();
 
 			}
 
@@ -411,7 +413,62 @@ public class Calendarpp {
 		frame.setLocationRelativeTo(null);
 		frame.setAlwaysOnTop(true);
 
+		updateMonthHealthMemo();
 	}// class calendar
+
+	private void updateMonthHealthMemo() {
+		
+		int yyyy = currentYear;
+		int mm = currentMonth;
+
+		HealthDTO dto = new HealthDTO();
+		if(Main.USER != null) {
+			dto.setUserId(Main.USER.getUserId());
+		}
+		dto.setHealthYyyy(yyyy);
+		dto.setHealthMm(mm);
+
+		HealthDTO result = hs.selectHealthSt(dto);
+
+		if (result != null) {
+			monthhealthMemo.removeAll();
+			monthhealthMemo.setLayout(new BoxLayout(monthhealthMemo, BoxLayout.Y_AXIS));
+			// 거리
+			JLabel distanceLabel = new JLabel(String.format("총거리: %d km", result.getHealthDistance()));
+			distanceLabel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
+			monthhealthMemo.add(distanceLabel);
+			// 시간
+			JLabel timeLabel = new JLabel(String.format("총시간: %d 분", result.getHealthTime()));
+			timeLabel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
+			monthhealthMemo.add(timeLabel);
+			// 칼로리
+			JLabel caloriesLabel = new JLabel(String.format("총칼로리: %.2f Kcal", result.getHealthCalories()));
+			caloriesLabel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
+			monthhealthMemo.add(caloriesLabel);
+
+			monthhealthMemo.revalidate();
+			monthhealthMemo.repaint();
+		} else {
+			monthhealthMemo.removeAll();
+			monthhealthMemo.setLayout(new BoxLayout(monthhealthMemo, BoxLayout.Y_AXIS));
+			// 거리
+			JLabel distanceLabel = new JLabel(String.format("총거리: %d km", 0));
+			distanceLabel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
+			monthhealthMemo.add(distanceLabel);
+			// 시간
+			JLabel timeLabel = new JLabel(String.format("총시간: %d 분", 0));
+			timeLabel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
+			monthhealthMemo.add(timeLabel);
+			// 칼로리
+			JLabel caloriesLabel = new JLabel(String.format("총칼로리: %.2f Kcal", 0.0));
+			caloriesLabel.setAlignmentX(JLabel.LEFT_ALIGNMENT);
+			monthhealthMemo.add(caloriesLabel);
+
+			monthhealthMemo.revalidate();
+			monthhealthMemo.repaint();
+		}
+
+	}
 
 	public void updateCalendar(int month, int year) {
 		calendarTableModel.setRowCount(0); // 기존 데이터 초기화
@@ -439,12 +496,11 @@ public class Calendarpp {
 			calendarTableModel.setValueAt(Integer.toString(day), row, col); // +1을 통해 아래로 내리기
 		}
 
-		
 		// UI 업데이트
 		calendarTable.revalidate();
 		calendarTable.repaint();
-		
 
+		updateMonthHealthMemo();
 	}// updateCalendar
 
 	public static void main(String[] args) {
