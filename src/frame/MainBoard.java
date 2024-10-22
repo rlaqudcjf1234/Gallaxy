@@ -8,11 +8,12 @@ import java.awt.event.WindowEvent;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.SwingUtilities;
 
 public class MainBoard extends JFrame {
-	
+
 	private ImageIcon imgComm, imgMyP, imgHC, imgLogoA;
 	private JButton btnComm, btnMyP, btnHC;
 
@@ -41,57 +42,89 @@ public class MainBoard extends JFrame {
 	}
 
 	private void addImage() {
-		// 패널 생성 및 레이아웃 설정
-		JPanel mainBoard = new JPanel(null); // null 레이아웃 사용
-		mainBoard.setBounds(0, 0, 500, 750); // 패널 위치와 크기 설정(이후 세로길이 850으로 수정)
+		JPanel mainBoard = new JPanel(null);
+		mainBoard.setBounds(0, 0, 500, 750); // 이후 850로 변경 가능
+		mainBoard.setBackground(new Color(247, 244, 242)); // 패널 배경
 
-		// 이미지 아이콘 생성
-		imgComm = new ImageIcon("resources/community.png");
-		imgHC = new ImageIcon("resources/hc.png");
-		imgMyP = new ImageIcon("resources/mypage.png");
-		imgLogoA = new ImageIcon("resources/logo.png");
+		// 이미지 크기 조정 및 버튼에 설정
+		imgComm = resizeImage(new ImageIcon("image/Community.png"), 80, 80);
+		imgHC = resizeImage(new ImageIcon("image/HealthCare.png"), 80, 80);
+		imgMyP = resizeImage(new ImageIcon("image/MyPage.png"), 80, 80);
+		imgLogoA = resizeImage(new ImageIcon("image/Galaxy_Logo.png"), 200, 200);
 
-		// 이미지 크기 조정 (필요 시)
-		Image imgLogo = imgLogoA.getImage().getScaledInstance(100, 100, Image.SCALE_SMOOTH);
-		imgLogoA = new ImageIcon(imgLogo); // 조정된 이미지로 업데이트
+		// 로고를 JLabel에 추가
+		JLabel lblLogo = new JLabel(imgLogoA);
+		lblLogo.setBounds(150, 50, 200, 200); // 중앙 상단에 위치
 
-		// 버튼 생성 및 이미지 아이콘 추가
+		// 버튼 생성 및 설정
 		btnComm = new JButton("커뮤니티", imgComm);
 		btnHC = new JButton("헬스 케어", imgHC);
 		btnMyP = new JButton("마이 페이지", imgMyP);
 
-		// 버튼 위치 및 크기 설정
-		btnComm.setBounds(29, 412, 127, 127);
-		btnHC.setBounds(185, 256, 127, 127);
-		btnMyP.setBounds(341, 100, 127, 127);
+		// 버튼 위치 설정
+		btnComm.setBounds(29, 300, 127, 127);
+		btnHC.setBounds(185, 300, 127, 127);
+		btnMyP.setBounds(341, 300, 127, 127);
 
+		// 버튼 배경색 및 테두리 설정
+		btnComm.setBackground(new Color(247, 244, 242));
+		btnHC.setBackground(new Color(247, 244, 242));
+		btnMyP.setBackground(new Color(247, 244, 242));
+
+		btnComm.setBorderPainted(false);
+		btnHC.setBorderPainted(false);
+		btnMyP.setBorderPainted(false);
+
+		// 텍스트와 이미지 정렬 설정
+		btnComm.setHorizontalTextPosition(JButton.CENTER);
+		btnComm.setVerticalTextPosition(JButton.BOTTOM);
+
+		btnHC.setHorizontalTextPosition(JButton.CENTER);
+		btnHC.setVerticalTextPosition(JButton.BOTTOM);
+
+		btnMyP.setHorizontalTextPosition(JButton.CENTER);
+		btnMyP.setVerticalTextPosition(JButton.BOTTOM);
+		
 		// 패널에 버튼 추가
 		mainBoard.add(btnComm);
 		mainBoard.add(btnHC);
 		mainBoard.add(btnMyP);
+		mainBoard.add(lblLogo);
 
-		// 버튼 이벤트 -> 커뮤니티
-		btnComm.addActionListener(e -> { //BoardListFrame 및 다른 파일에 생성자 있어야됨
-			System.out.println("커뮤니티 버튼 클릭됨!"); // 디버그용 메시지
-			 new BoardListFrame(); // 새로운 창 열기
-			 
-			dispose(); // 현재 창 닫기
+		// 여백 설정
+		btnComm.setMargin(new java.awt.Insets(5, 5, 5, 5));
+		btnHC.setMargin(new java.awt.Insets(5, 5, 5, 5));
+		btnMyP.setMargin(new java.awt.Insets(5, 5, 5, 5));
+
+		btnComm.setForeground(Color.BLACK);
+		btnHC.setForeground(Color.BLACK);
+		btnMyP.setForeground(Color.BLACK);
+
+		// 이벤트 리스너 추가 (기존과 동일)
+		btnComm.addActionListener(e -> {
+			System.out.println("커뮤니티 버튼 클릭됨!");
+			new BoardListFrame();
+			dispose();
 		});
-		// 버튼 이벤트 -> 헬스 케어
 		btnHC.addActionListener(e -> {
-			System.out.println("헬스 케어 버튼 클릭됨!"); // 디버그용 메시지
-			new Calendarpp(); // 이후에 BoardListFrame을 헬스케어 파일로 변경
-			dispose(); // 현재 창 닫기
+			System.out.println("헬스 케어 버튼 클릭됨!");
+			new Calendarpp();
+			dispose();
 		});
-		// 버튼 이벤트 -> 마이페이지
 		btnMyP.addActionListener(e -> {
-			System.out.println("마이 페이지 버튼 클릭됨!"); // 디버그용 메시지
-			new myPageBegin(); // 이후에 BoardListFrame을 마이 페이지 파일로 변경
-			dispose(); // 현재 창 닫기
+			System.out.println("마이 페이지 버튼 클릭됨!");
+			new myPageBegin();
+			dispose();
 		});
+
 		// 패널을 JFrame에 추가
 		add(mainBoard);
+	}
 
+	// 이미지 크기 조절 메서드
+	private ImageIcon resizeImage(ImageIcon icon, int width, int height) {
+		Image img = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
+		return new ImageIcon(img);
 	}
 
 	public static void main(String[] args) {
