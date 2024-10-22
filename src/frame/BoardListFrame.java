@@ -231,7 +231,8 @@ public class BoardListFrame extends JFrame {
 			}
 		});
 		mainFrame.add(btnAd);
-
+		
+		
 		// 게시물 목록 패널 설정
 		postListPanel.setLayout(new BoxLayout(postListPanel, BoxLayout.Y_AXIS)); // 세로로 버튼 나열
 		JScrollPane scrollPane = new JScrollPane(postListPanel); // 스크롤 가능하게
