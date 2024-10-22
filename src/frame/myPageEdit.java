@@ -1,6 +1,7 @@
 package frame;
 
 
+import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -24,31 +25,32 @@ public class myPageEdit extends JPanel {
 	        frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	        frame.setBounds(100,100,500,400);
 	        frame.setLayout(null); // null 레이아웃 사용
-
+	        
 	        panel = new JPanel();
 	        panel.setLayout(null); // 패널도 null 레이아웃 사용
 	        panel.setBounds(0, 0, 500, 400); // 패널 크기 설정
-
+	        panel.setBackground(new Color(247, 244, 242));
+	        
 	        // 컴포넌트 생성
 	        JLabel passwordLabel = new JLabel("비밀번호");
 	        JPasswordField passwordField = new JPasswordField();
 	        JButton confirmButton = new JButton("확인");
 	        JButton backToMyPageBegin = new JButton("뒤로가기");
-	        JButton logoutButton = new JButton("로그아웃");
+	        
 
 	        // 위치 및 크기 설정
 	        passwordLabel.setBounds(110, 120, 200, 30); // (x, y, width, height)
 	        passwordField.setBounds(170, 120, 200, 30);
 	        confirmButton.setBounds(90, 170, 300, 30);
 	        backToMyPageBegin.setBounds(90, 210, 300, 30);
-	        logoutButton.setBounds(90, 250, 300, 30); // 로그아웃 버튼 위치
+	        
 
 	        // 패널에 컴포넌트 추가
 	        panel.add(passwordLabel);
 	        panel.add(passwordField);
 	        panel.add(confirmButton);
 	        panel.add(backToMyPageBegin);
-	        panel.add(logoutButton); 
+	        
 	        
 	        //프레임에 패널 추가
 	        frame.add(panel);
@@ -79,14 +81,14 @@ public class myPageEdit extends JPanel {
 			}
 		});
 		
-		 logoutButton.addActionListener(new ActionListener() {
-	            @Override
-	            public void actionPerformed(ActionEvent e) {
-	                logoutUser();
-	                new UserInForm(); 
-	                frame.dispose(); 
-	            }
-	        });
+//		 logoutButton.addActionListener(new ActionListener() {
+//	            @Override
+//	            public void actionPerformed(ActionEvent e) {
+//	                logoutUser();
+//	                new UserInForm(); 
+//	                frame.dispose(); 
+//	            }
+//	        });
 
 		frame.setVisible(true);
 	}
