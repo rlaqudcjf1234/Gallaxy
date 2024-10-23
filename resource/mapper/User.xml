@@ -21,7 +21,7 @@
 		UPDATE USERS SET
 			USER_NICK_NAME = #{userNickName}, 
 			USER_EMAIL = #{userEmail}
-			<if test='#{userPw != null and userPw != ""'>
+			<if test='#{userPw != null and userPw != ""}'>
 				, USER_PW = #{userPw}
 			</if>
 		WHERE USER_ID = #{userId}

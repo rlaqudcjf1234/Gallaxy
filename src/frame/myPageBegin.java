@@ -6,6 +6,9 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -14,7 +17,9 @@ import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
+import javax.swing.JPasswordField;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -168,7 +173,80 @@ public class myPageBegin extends JFrame {
 		btnEdit.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new myPageEdit();
+				JFrame frame = new JFrame("회원정보 수정");
+				frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				frame.setBounds(100, 100, 500, 400);
+				frame.setLayout(null); // null 레이아웃 사용
+				frame.setBackground(Color.WHITE);
+
+				JPanel panel = new JPanel();
+				panel.setLayout(null); // 패널도 null 레이아웃 사용
+				panel.setBounds(0, 0, 500, 400); // 패널 크기 설정
+				panel.setBackground(Color.WHITE);
+
+				// 컴포넌트 생성
+				JLabel passwordLabel = new JLabel("비밀번호");
+				JPasswordField passwordField = new JPasswordField();
+				JButton confirmButton = new JButton("확인");
+				JButton backToMyPageBegin = new JButton("뒤로가기");
+
+				// 위치 및 크기 설정
+				passwordLabel.setBounds(110, 120, 200, 30); // (x, y, width, height)
+				passwordField.setBounds(170, 120, 200, 30);
+				confirmButton.setBounds(90, 170, 300, 30);
+				backToMyPageBegin.setBounds(90, 210, 300, 30);
+
+				// 패널에 컴포넌트 추가
+				panel.add(passwordLabel);
+				panel.add(passwordField);
+				panel.add(confirmButton);
+				panel.add(backToMyPageBegin);
+
+				// 프레임에 패널 추가
+				frame.add(panel);
+
+				panel.setVisible(true);
+
+				confirmButton.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						String enteredPassword = new String(passwordField.getPassword());
+						if (checkPassword(enteredPassword)) {
+							frame.dispose(); // 현재 창 닫기
+							JFrame myPageEdit = new myPageEdit();
+							myPageEdit.addWindowListener(new WindowAdapter() {
+								@Override
+								public void windowClosed(WindowEvent e) {
+									// TODO Auto-generated method stub
+									if(Main.USER != null) {
+										String userId = Main.USER.getUserId();
+										String userName = Main.USER.getUserName();
+										String userNickName = Main.USER.getUserNickName();
+										String userEmail = Main.USER.getUserEmail();
+										
+										String html = "<html>" + "&emsp;&emsp;&emsp;&emsp; " + userNickName + " (" + userId + ")<br>"
+										+ "&emsp;&emsp;&emsp;&emsp; 이름 : " + userName + "<br>" + "&emsp;&emsp;&emsp;&emsp; E-Mail : " + " ("
+										+ userEmail + ")<br>" + "</html>";
+										infoLabel.setText(html);
+									}
+									
+								}
+							});
+						} else {
+							JOptionPane.showMessageDialog(frame, "비밀번호가 틀렸습니다.", "오류", JOptionPane.ERROR_MESSAGE);
+						}
+					}
+				});
+
+				backToMyPageBegin.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent panel) {
+						frame.dispose();
+					}
+				});
+
+				frame.setVisible(true);
+				// new myPageEdit();
 				// myPageBase.getInstance(new myPageEdit());
 			}
 		});
@@ -188,6 +266,11 @@ public class myPageBegin extends JFrame {
 		panel.add(btnLogout);
 		add(panel); // 패널을 프레임에 추가
 		setVisible(true); // 프레임을 보이도록 설정
+	}
+
+	private boolean checkPassword(String password) {
+		String correctPassword = Main.USER.getUserPw();
+		return password.equals(correctPassword);
 	}
 
 	private void loadPosts() {
