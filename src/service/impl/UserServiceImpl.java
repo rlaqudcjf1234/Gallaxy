@@ -53,4 +53,23 @@ public class UserServiceImpl implements UserService {
 		return cnt;
 	}
 
+	@Override
+	public int updateUser(UserDTO dto) {
+		// TODO Auto-generated method stub
+		SqlSession session = MySqlSessionFactory.getSqlSession();
+		int cnt = 0;
+		try {
+			cnt = userDao.updateUser(session, dto);
+		} catch (Exception e) {
+			// TODO: handle exception\
+			e.printStackTrace();
+			session.rollback();
+		} finally {
+			session.commit();
+			session.close();
+		}
+
+		return cnt;
+	}
+
 }

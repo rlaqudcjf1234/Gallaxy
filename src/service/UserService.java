@@ -8,4 +8,5 @@ public interface UserService {
 	
 	public int insertUser(UserDTO dto);
 
+	public int updateUser(UserDTO dto);
 }

@@ -16,4 +16,16 @@
 			#{userId}, #{userPw}, #{userName}, #{userNickName}, #{userGender}, #{userEmail}
 		)
 	</insert>
+	
+	<update id="updateUser" parameterType="dto.UserDTO">
+		UPDATE USERS SET
+			USER_NAME = #{userName}, 
+			USER_NICK_NAME = #{userNickName}, 
+			USER_GENDER = #{userGender}, 
+			USER_EMAIL = #{userEmail}
+			<if test='#{userPw != null and #{userPw} != ""'>
+				, USER_PW = #{userPw}
+			</if>
+		WHERE USER_ID = #{userId}
+	</update>
 </mapper>

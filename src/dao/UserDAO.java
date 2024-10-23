@@ -16,4 +16,8 @@ public class UserDAO {
 		return session.insert("user.insertUser", dto);
 	}
 
+	public int updateUser(SqlSession session, UserDTO dto) {
+		return session.update("user.updateUser", dto);
+	}
+
 }
