@@ -79,7 +79,7 @@ public class BoardWriteFrame extends JFrame {
 	private JComboBox<String> apmCbx;
 	private JComboBox<String> hhCbx;
 	private JComboBox<String> miCbx;
-	private String filePath = "temp/서울특별시 종로구 종로 13-3 구두수선대.jpg";
+	private String filePath = "temp/서울특별시 종로구 종로12길 15 종로코아.jpg";
 
 	/* BoardSFrame */
 	private JFrame searchFrame;
