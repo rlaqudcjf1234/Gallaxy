@@ -108,7 +108,7 @@ public class BoardWriteFrame extends JFrame {
 	 */
 	public BoardWriteFrame() {
 		// 프레임 타이틀바
-		setTitle("BoardWriteFrame");
+		setTitle("글 작성");
 		// 프레임 위치, 크기(픽셀)
 		setBounds(700, 100, 500, 850);
 		// 배경 흰색
