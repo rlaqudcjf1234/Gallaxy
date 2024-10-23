@@ -17,6 +17,7 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import dto.BoardDTO;
@@ -34,6 +35,7 @@ public class myPageBegin extends JFrame {
 
 	public myPageBegin() {
 		MP();
+
 	}
 
 	public void MP() {
@@ -41,19 +43,18 @@ public class myPageBegin extends JFrame {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(500, 850); // 프레임 사이즈
 		setLayout(null); // null 레이아웃 사용
-		setBackground(new Color(247, 244, 242));
-		
+		setBackground(Color.WHITE);
 
 		JPanel panel = new JPanel();
 		panel.setLayout(null); // 패널도 null 레이아웃 사용
 		panel.setBounds(0, 0, 500, 850); // 패널 크기 설정
-		panel.setBackground(new Color(247, 244, 242));
+		panel.setBackground(Color.WHITE);
 
 		JButton btnBack = new JButton("뒤로가기");
 		JButton btnEdit = new JButton("회원정보 변경");
 		JButton btnLogout = new JButton("로그아웃");
 		JButton btnMyPageTitle = new JButton("마이페이지");
-		
+
 		JButton btnLogo = new JButton();
 
 		ImageIcon logoIcon = new ImageIcon("LogoImage_130x130.png");
@@ -69,29 +70,27 @@ public class myPageBegin extends JFrame {
 		btnBack.setContentAreaFilled(false); // 배경 제거
 		btnBack.setBorderPainted(false); // 테두리 제거
 		btnBack.setForeground(Color.BLUE);
-		
+
 		btnEdit.setSize(110, 25);
 		btnEdit.setLocation(310, 10); // btnBack 위에 위치
 		btnEdit.setFont(new Font("맑은고딕", Font.BOLD, 11));
 		btnEdit.setContentAreaFilled(false); // 배경 제거
 		btnEdit.setBorderPainted(false); // 테두리 제거
 		btnEdit.setForeground(Color.BLUE);
-		
+
 		btnLogout.setSize(110, 25);
 		btnLogout.setLocation(230, 10); // btnBack 위에 위치
 		btnLogout.setFont(new Font("맑은고딕", Font.BOLD, 11));
 		btnLogout.setContentAreaFilled(false); // 배경 제거
 		btnLogout.setBorderPainted(false); // 테두리 제거
 		btnLogout.setForeground(Color.BLUE);
-		
+
 		btnMyPageTitle.setSize(320, 50);
 		btnMyPageTitle.setLocation(175, 100); // btnBack 위에 위치
 		btnMyPageTitle.setFont(new Font("맑은 고딕", Font.BOLD, 45));
 		btnMyPageTitle.setContentAreaFilled(false); // 배경 제거
 		btnMyPageTitle.setBorderPainted(false); // 테두리 제거
 		btnMyPageTitle.setForeground(Color.BLACK);
-		
-		
 
 		// 정보 표시용 JLabel 설정
 		String userId = Main.USER.getUserId();
@@ -113,10 +112,6 @@ public class myPageBegin extends JFrame {
 		// 게시글 목록 초기화
 		posts = new ArrayList<>();
 		loadPosts(); // 게시글 로드
-		
-
-		// 테이블의 칼럼명 설정
-		String[] columnNames = { "순번", "제목", "댓글" };
 
 		// 데이터를 2D 배열로 변환
 		Object[][] data = new Object[posts.size()][3];
@@ -126,9 +121,15 @@ public class myPageBegin extends JFrame {
 			data[i][1] = post.getBoardTitle();
 			data[i][2] = post.getCommentCnt();
 		}
+		// 테이블의 칼럼명 설정
+		String[] columnNames = { "순번", "제목", "댓글" };
 
 		// 테이블 모델 생성
 		DefaultTableModel model = new DefaultTableModel(data, columnNames);
+
+		// 가운데 정렬 렌더러 설정
+		DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+		centerRenderer.setHorizontalAlignment(JLabel.CENTER); // 가운데 정렬 설정
 
 		// JTable 생성
 		JTable postTable = new JTable(model);
@@ -137,6 +138,9 @@ public class myPageBegin extends JFrame {
 		postTable.getColumnModel().getColumn(0).setPreferredWidth(35); // 순번 칼럼 크기 설정
 		postTable.getColumnModel().getColumn(1).setPreferredWidth(385); // 제목 칼럼 크기 설정
 		postTable.getColumnModel().getColumn(2).setPreferredWidth(30); // 댓글 수 칼럼 크기 설정
+		// 0번째(순번)와 2번째(댓글 수) 칼럼에 렌더러 적용
+		postTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer); // 0번째 칼럼 (순번)
+		postTable.getColumnModel().getColumn(2).setCellRenderer(centerRenderer); // 2번째 칼럼 (댓글 수)
 
 		// 테이블 클릭 이벤트 추가
 		postTable.addMouseListener(new MouseAdapter() {
@@ -168,15 +172,15 @@ public class myPageBegin extends JFrame {
 				// myPageBase.getInstance(new myPageEdit());
 			}
 		});
-		
+
 		btnLogout.addActionListener(new ActionListener() {
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				new UserInForm(); 
+				new UserInForm();
 				dispose();
 			}
 		});
-		
+
 		panel.add(btnMyPageTitle);
 		panel.add(btnLogo);
 		panel.add(btnBack);
@@ -187,7 +191,6 @@ public class myPageBegin extends JFrame {
 	}
 
 	private void loadPosts() {
-		
 
 		BoardDTO dto = new BoardDTO();
 		dto.setPageSize(10);
@@ -209,8 +212,6 @@ public class myPageBegin extends JFrame {
 			add(emptyPost); // panel은 이 메소드에서 사용 중인 JPanel 객체입니다.
 
 		}
-		
 
-		
 	}
 }
