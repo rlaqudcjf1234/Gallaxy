@@ -2,11 +2,10 @@ package frame;
 
 import java.awt.Color;
 import java.awt.Desktop;
+import java.awt.EventQueue;
 import java.awt.Image;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
@@ -16,33 +15,57 @@ import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JPanel;
-import javax.swing.SwingUtilities;
 
-public class MainBoard extends JFrame {
+import dto.UserDTO;
+import main.Main;
 
+public class MainFrame extends JFrame {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -2404755582124014856L;
+	
 	private ImageIcon imgComm, imgMyP, imgHC, imgLogoA;
 	private JButton btnComm, btnMyP, btnHC, btnAd;
 
-	public MainBoard() {
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					UserDTO userDTO = new UserDTO();
+					userDTO.setUserId("테스트");
+					Main.USER = userDTO;
+					
+					MainFrame frame = new MainFrame();
+					// X버튼 종료
+					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
+
+
+	public MainFrame() {
 		// 메인 화면 생성
 		mainView();
 		addImage(); // 이미지 및 버튼 추가
 	}
 
 	public void mainView() {
+		// 프레임 타이틀바
 		setTitle("메인화면");
-		setBounds(700, 100, 500, 850); // 위치와 크기 (이후 850)
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 종료시 프로그램 종료
+		// 프레임 위치, 크기(픽셀)
+		setBounds(700, 100, 500, 850);
+		// 종료시 프로그램 종료
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		getContentPane().setBackground(new Color(247, 244, 242)); // 배경 색
 		setLayout(null); // 절대 레이아웃 사용
-
-		// 종료 이벤트 추가
-		addWindowListener(new WindowAdapter() {
-			@Override
-			public void windowClosing(WindowEvent e) {
-				System.exit(0);
-			}
-		});
 		setVisible(true);
 		// JFrame 보이게 설정
 	}
@@ -109,17 +132,18 @@ public class MainBoard extends JFrame {
 		// 이벤트 리스너 추가 (기존과 동일)
 		btnComm.addActionListener(e -> {
 			System.out.println("커뮤니티 버튼 클릭됨!");
+			BoardListFrame.search = null;
 			new BoardListFrame();
 			dispose();
 		});
 		btnHC.addActionListener(e -> {
 			System.out.println("헬스 케어 버튼 클릭됨!");
-			new Calendarpp();
+			new CalendarFrame();
 			dispose();
 		});
 		btnMyP.addActionListener(e -> {
 			System.out.println("마이 페이지 버튼 클릭됨!");
-			new myPageBegin();
+			new MyInfoReadFrame();
 			dispose();
 		});
 		
@@ -156,9 +180,5 @@ public class MainBoard extends JFrame {
 	private ImageIcon resizeImage(ImageIcon icon, int width, int height) {
 		Image img = icon.getImage().getScaledInstance(width, height, Image.SCALE_SMOOTH);
 		return new ImageIcon(img);
-	}
-
-	public static void main(String[] args) {
-		SwingUtilities.invokeLater(() -> new MainBoard());
 	}
 }

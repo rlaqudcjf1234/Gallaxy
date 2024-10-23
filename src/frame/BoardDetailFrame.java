@@ -1,6 +1,7 @@
 package frame;
 
 import java.awt.Color;
+import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -25,7 +26,9 @@ import javax.swing.border.EmptyBorder;
 import dto.BoardDTO;
 import dto.CommentDTO;
 import main.Main;
+import service.BoardService;
 import service.CommentService;
+import service.impl.BoardServiceImpl;
 import service.impl.CommentServiceImpl;
 
 public class BoardDetailFrame extends JFrame {
@@ -35,27 +38,55 @@ public class BoardDetailFrame extends JFrame {
 	 */
 	private static final long serialVersionUID = 1730899176307489779L;
 
-	CommentService cs = new CommentServiceImpl();
+	private BoardService bs = new BoardServiceImpl();
+	private CommentService cs = new CommentServiceImpl();
 
 	// 게시물 정보를 표시할 라벨과 텍스트 영역
+	private BoardDTO dto;
+
 	private JTextArea contentArea;
 	private JLabel imageLabel;
-
-	// 게시물 정보 클래스 변수
-	private BoardDTO board;
-
 	private JTextField commentField;
 	private JPanel commentPanel;
 
-	public BoardDetailFrame(BoardDTO board) {
-		this.board = board; // 전달받은 게시물 정보를 저장
-		DetailFrame();
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					BoardDetailFrame frame = new BoardDetailFrame(31);
+					// X버튼 종료
+					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
 	}
 
-	private void DetailFrame() {
+	/**
+	 * Create the frame.
+	 */
+	public BoardDetailFrame(int boardId) {
 
-		setTitle("게시물 세부 정보");
-		setBounds(1200, 100, 500, 850);
+		// 게시물 내용 조회
+		dto = bs.selectBoard(boardId);
+		// 게시물이 없을 경우 list페이지로
+		if (dto == null) {
+			JOptionPane.showMessageDialog(null, "대상을 찾을 수 없습니다.", "오류", JOptionPane.ERROR_MESSAGE);
+			new BoardListFrame();
+			dispose();
+			return;
+		}
+		// 프레임 타이틀바
+		setTitle("러닝 메이트 보기");
+		// 프레임 위치, 크기(픽셀)
+		setBounds(700, 100, 500, 850);
+		// 종료시 프로그램 종료
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
 
 		JPanel contentPane = new JPanel();
 		// 배경 흰색
@@ -63,8 +94,8 @@ public class BoardDetailFrame extends JFrame {
 		contentPane.setLayout(null);
 
 		// 게시물 이미지가 있는 경우 표시
-		if (board.getBoardFilePath() != null && !board.getBoardFilePath().isEmpty()) {
-			ImageIcon img = new ImageIcon(board.getBoardFilePath());
+		if (dto.getBoardFilePath() != null && !dto.getBoardFilePath().isEmpty()) {
+			ImageIcon img = new ImageIcon(dto.getBoardFilePath());
 			imageLabel = new JLabel(img);
 			imageLabel.setBounds(10, 20, 460, 250); // 이미지 위치 설정
 			contentPane.add(imageLabel);
@@ -77,7 +108,7 @@ public class BoardDetailFrame extends JFrame {
 		contentPane.add(titleLabel);
 
 		// 제목을 표시할 텍스트 필드
-		JTextField titleField = new JTextField(board.getBoardTitle());
+		JTextField titleField = new JTextField(dto.getBoardTitle());
 		titleField.setFont(new Font("맑은 고딕", Font.BOLD, 14));
 		titleField.setBounds(85, 280, 370, 40); // 제목 위치 설정
 		titleField.setEditable(false); // 제목 수정 불가
@@ -93,7 +124,7 @@ public class BoardDetailFrame extends JFrame {
 		contentPane.add(authorLabel);
 
 		// 작성자를 표시할 텍스트 필드
-		JTextField authorField = new JTextField(board.getUserNickName());
+		JTextField authorField = new JTextField(dto.getUserNickName());
 		authorField.setFont(new Font("맑은 고딕", Font.BOLD, 14));
 		authorField.setBounds(85, 310, 370, 40); // 작성자 위치 설정
 		authorField.setEditable(false); // 작성자 수정 불가
@@ -110,7 +141,7 @@ public class BoardDetailFrame extends JFrame {
 
 		// 날짜를 표시할 텍스트 필드
 		JTextField dateField = new JTextField(
-				board.getBoardWordYyyy() + " " + board.getBoardWordMm() + " " + board.getBoardWordDd());
+				dto.getBoardWordYyyy() + " " + dto.getBoardWordMm() + " " + dto.getBoardWordDd());
 		dateField.setFont(new Font("맑은 고딕", Font.BOLD, 14));
 		dateField.setBounds(85, 340, 250, 40); // 날짜 위치 설정
 		dateField.setEditable(false); // 날짜 수정 불가
@@ -127,7 +158,7 @@ public class BoardDetailFrame extends JFrame {
 
 		// 시간을 표시할 텍스트 필드
 		JTextField timeField = new JTextField(
-				board.getBoardWordApm() + " " + board.getBoardWordHh() + " " + board.getBoardWordMi());
+				dto.getBoardWordApm() + " " + dto.getBoardWordHh() + " " + dto.getBoardWordMi());
 		timeField.setFont(new Font("맑은 고딕", Font.BOLD, 14));
 		timeField.setBounds(85, 370, 250, 40); // 시간 위치 설정
 		timeField.setEditable(false); // 시간 수정 불가
@@ -136,25 +167,42 @@ public class BoardDetailFrame extends JFrame {
 		timeField.setBackground(Color.white);
 		contentPane.add(timeField);
 
-		if (Main.USER != null && Main.USER.getUserId().equals(board.getUserId())) {
+		if (Main.USER != null && Main.USER.getUserId().equals(dto.getUserId())) {
 			// 수정 버튼
 			JButton modifyButton = new JButton("수정");
-			modifyButton.setBounds(380, 380, 70, 30);
+			modifyButton.setBounds(300, 380, 70, 30);
 			contentPane.add(modifyButton);
-			
-			// 글 작성 버튼 클릭 이벤트 추가
+
+			// 수정 버튼 클릭 이벤트 추가
 			modifyButton.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
 
-					// BoardWriteFrame 열기
-					new BoardModifyFrame(board.getBoardId());
+					// BoardModifyFrame 열기
+					new BoardModifyFrame(dto.getBoardId());
 					dispose();
 				}
 			});
 		}
+
+		// 목록 버튼
+		JButton returnButton = new JButton("목록");
+		returnButton.setBounds(380, 380, 70, 30);
+		contentPane.add(returnButton);
+
+		// 목록 버튼 클릭 이벤트 추가
+		returnButton.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+
+				// BoardListFrame 열기
+				new BoardListFrame();
+				dispose();
+			}
+		});
+		
 		// 게시물 내용을 표시하는 텍스트 영역
-		contentArea = new JTextArea(board.getBoardContent());
+		contentArea = new JTextArea(dto.getBoardContent());
 		contentArea.setWrapStyleWord(true);
 		contentArea.setLineWrap(true);
 		contentArea.setEditable(false); // 내용 수정 불가
@@ -205,10 +253,10 @@ public class BoardDetailFrame extends JFrame {
 				String comment = commentField.getText();
 				if (!comment.trim().isEmpty()) {
 					/*
-					comments.add(comment); // 댓글 저장
-					*/
+					 * comments.add(comment); // 댓글 저장
+					 */
 					CommentDTO dto = new CommentDTO();
-					dto.setBoardId(board.getBoardId());
+					dto.setBoardId(dto.getBoardId());
 					dto.setCommentContent(comment);
 					if (Main.USER != null) {
 						dto.setUserId(Main.USER.getUserId());
@@ -241,7 +289,7 @@ public class BoardDetailFrame extends JFrame {
 
 	private void updateCommentPanel() {
 		CommentDTO dto = new CommentDTO();
-		dto.setBoardId(board.getBoardId());
+		dto.setBoardId(dto.getBoardId());
 		List<CommentDTO> list = cs.selectCommentList(dto);
 		if (list != null && list.size() > 0) {
 			commentPanel.removeAll(); // 기존 댓글 초기화
@@ -253,10 +301,5 @@ public class BoardDetailFrame extends JFrame {
 			commentPanel.revalidate(); // UI 업데이트
 			commentPanel.repaint(); // UI 갱신
 		}
-	}
-
-	// 게시물 세부 정보를 출력하는 메서드 (예: 게시물 선택 시 호출)
-	public void showBoardDetail(BoardDTO board) {
-		new BoardDetailFrame(board);
 	}
 }

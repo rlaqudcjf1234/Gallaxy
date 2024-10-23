@@ -18,11 +18,11 @@ import main.Main;
 import service.UserService;
 import service.impl.UserServiceImpl;
 
-public class myPageEdit extends JFrame {
+public class MyInfoModifyFrame extends JFrame {
 
 	private UserService us = new UserServiceImpl();
 
-	public myPageEdit() {
+	public MyInfoModifyFrame() {
 		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(500, 800); // 프레임 사이즈
 		setLayout(null); // null 레이아웃 사용

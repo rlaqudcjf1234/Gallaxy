@@ -183,7 +183,7 @@ public class UserInForm extends JFrame {
 				
 				JOptionPane.showMessageDialog(null, dto.getUserNickName()+"님 로그인에 성공하셨습니다.", "로그인폼", JOptionPane.INFORMATION_MESSAGE);
 				
-				new MainBoard();
+				new MainFrame();
 				dispose();
 			}
 		});

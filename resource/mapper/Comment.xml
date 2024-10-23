@@ -19,13 +19,13 @@
 			B.USER_ID, B.USER_NICK_NAME
 		FROM BOARD_COMMENT A, USERS B
 		WHERE A.USER_ID = B.USER_ID
-			<if test="boardId != null">
+			<if test="boardId != null and boardId > 0">
 				AND BOARD_ID = #{boardId}
 			</if>
 			<if test="userId != null">
-				AND USER_ID = #{userId}
+				AND A.USER_ID = #{userId}
 			</if>
-		ORDER BY COMMENT_ID ASC
+		ORDER BY COMMENT_ID ${commentOrder ? "ASC":"DESC"}
 	</select>
 	
 </mapper>

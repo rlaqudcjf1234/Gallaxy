@@ -63,7 +63,7 @@ public class CalendarMonthly {
 		return totalCalories;
 	}
 
-	public String getstats() {
+	public String getStats() {
 		return String.format("총 거리: %.2f km \n총 시간: %2f 분 \n총 칼로리: %.2f kcal",
 				totalDistance,totalTime,totalCalories);
 	}

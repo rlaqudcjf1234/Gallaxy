@@ -9,6 +9,8 @@ public class CommentDTO extends BoardDTO {
 	private String commentRegDt;
 
 	private String commentLupDt;
+	
+	private boolean commentOrder = true;
 
 	public String getCommentId() {
 		return commentId;
@@ -40,6 +42,14 @@ public class CommentDTO extends BoardDTO {
 
 	public void setCommentLupDt(String commentLupDt) {
 		this.commentLupDt = commentLupDt;
+	}
+
+	public boolean isCommentOrder() {
+		return commentOrder;
+	}
+
+	public void setCommentOrder(boolean commentOrder) {
+		this.commentOrder = commentOrder;
 	}
 
 }

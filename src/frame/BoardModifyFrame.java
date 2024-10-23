@@ -111,22 +111,22 @@ public class BoardModifyFrame extends JFrame {
 	 */
 	public BoardModifyFrame(int boardId) {
 
-		// 대상 조회
+		// 게시물 내용 조회
 		dto = bs.selectBoard(boardId);
+		// 게시물이 없을 경우 list페이지로
 		if (dto == null) {
 			JOptionPane.showMessageDialog(null, "대상을 찾을 수 없습니다.", "오류", JOptionPane.ERROR_MESSAGE);
+			new BoardListFrame();
 			dispose();
 			return;
 		}
 
 		// 프레임 타이틀바
-		setTitle("BoardWriteFrame");
+		setTitle("러닝 메이트 수정");
 		// 프레임 위치, 크기(픽셀)
 		setBounds(700, 100, 500, 850);
-		// 배경 흰색
-		setBackground(Color.white);
-		// 절대 레이아웃 사용
-		getContentPane().setLayout(null);
+		// 종료시 프로그램 종료
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JPanel contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));
@@ -378,9 +378,10 @@ public class BoardModifyFrame extends JFrame {
 				int cnt = bs.updateBoard(dto);
 				if (cnt > 0) {
 					JOptionPane.showMessageDialog(null, "작성이 완료되었습니다.", "알림", JOptionPane.INFORMATION_MESSAGE);
-
-					dispose(); // 현재 프레임 닫기
-					new BoardListFrame(); // 게시물 목록 창 열기
+					// 게시물 상세보기 창 열기
+					new BoardDetailFrame(dto.getBoardId()); 
+					// 현재 프레임 닫기
+					dispose(); 
 				} else {
 					JOptionPane.showMessageDialog(null, "오류가 발생하였습니다.", "오류", JOptionPane.ERROR_MESSAGE);
 				}
@@ -392,7 +393,10 @@ public class BoardModifyFrame extends JFrame {
 		cancelBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				dispose();
+				// 게시물 상세보기 창 열기
+				new BoardDetailFrame(dto.getBoardId()); 
+				// 현재 프레임 닫기
+				dispose(); 
 			}
 		});
 

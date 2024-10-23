@@ -110,9 +110,11 @@ public class BoardWriteFrame extends JFrame {
 	 */
 	public BoardWriteFrame() {
 		// 프레임 타이틀바
-		setTitle("글 작성");
+		setTitle("러닝 메이트 작성");
 		// 프레임 위치, 크기(픽셀)
 		setBounds(700, 100, 500, 850);
+		// 종료시 프로그램 종료
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JPanel contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));

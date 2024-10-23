@@ -1,23 +1,17 @@
 package frame;
 
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Dimension;
+import java.awt.EventQueue;
 import java.awt.Font;
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
-import java.util.HashMap;
-import java.util.Map;
-import javax.swing.BorderFactory;
 import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
-import javax.swing.JComponent;
-import javax.swing.JDialog;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JOptionPane;
@@ -41,13 +35,15 @@ import java.util.Calendar;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
-public class Calendarpp {
+public class CalendarFrame extends CommonFrame {
 
-	HealthService hs = new HealthServiceImpl();
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = -1680876028498795456L;
 
-	private CalendarMonthly calendarmonthly;
-	private JFrame frame;
-	private JPanel calendarPanel;
+	private HealthService hs = new HealthServiceImpl();
+
 	private JButton backButton, nextButton, saveMemoButton, prevButton;
 	// backButton(뒤로가기) nextButton(달력다음월버튼) prevButton(달력전월버튼)
 	// saveMemoButton(입력정보버튼)
@@ -60,19 +56,57 @@ public class Calendarpp {
 	private JTextArea memoLabel;
 	private DefaultTableModel calendarTableModel;
 	private int realYear, realMonth, currentYear, currentMonth;
-	private Map<String, String> memoData = new HashMap<>();
-	private JComponent inputPanel;
 	private JLabel dateInfoLabel;
 	private JLabel imageLabel;
 
-	public Calendarpp() {
+	/**
+	 * Launch the application.
+	 */
+	public static void main(String[] args) {
+		EventQueue.invokeLater(new Runnable() {
+			public void run() {
+				try {
+					UserDTO userDTO = new UserDTO();
+					userDTO.setUserId("테스트");
+					Main.USER = userDTO;
 
-		calendarmonthly = new CalendarMonthly();
-		frame = new JFrame("헬스케어");
-		frame.setSize(500, 850);
-		frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		frame.setLayout(null);
+					CalendarFrame frame = new CalendarFrame();
+					// X버튼 종료
+					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			}
+		});
+	}
 
+	@Override
+	public JLabel setSecondLabel() {
+		// TODO Auto-generated method stub
+		JLabel secondLbl = new JLabel("마이페이지");
+
+		// 마이페이지 클릭 이벤트 추가
+		secondLbl.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				new MyInfoReadFrame();
+				dispose();
+			}
+		});
+		return secondLbl;
+	}
+
+	public CalendarFrame() {
+		// 영역 넓이 시작 20 ~ 470
+		setTitle("헬스 케어");
+		/*
+		JLabel labelLogo = new JLabel(); // 이미지 표시를 위한 Label
+		ImageIcon icon2 = new ImageIcon("gaesipan23.png");
+		labelLogo.setIcon(icon2); // JLabel에 이미지 설정
+		labelLogo.setBounds(100, 110, 300, 50); // 이미지 위치 및 크기 설정
+		add(labelLogo);
+		*/
+		
 		backButton = new JButton("뒤로가기");
 		prevButton = new JButton("<");
 		nextButton = new JButton(">");
@@ -82,10 +116,10 @@ public class Calendarpp {
 		ImageIcon icon = new ImageIcon("src/img/솔데스크.png");
 		imageLabel = new JLabel(icon);
 		// 캘린더 일주일
-
 		calendarTableModel = new DefaultTableModel(new Object[6][7],
 				new String[] { "월", "화", "수", "목", "금", "토", "일" }) { // 헤더와 함께 데이터 초기화
 
+			@Override
 			public boolean isCellEditable(int rowIndex, int columnIndex) {
 				return false; // 모든 셀을 수정할 수 없도록 설정
 			}
@@ -93,10 +127,7 @@ public class Calendarpp {
 
 		calendarTable = new JTable(calendarTableModel);
 		calendarScrollpane = new JScrollPane(calendarTable);
-		calendarPanel = new JPanel(null);
-		calendarPanel.setLayout(null);
 		calendarTable.setFillsViewportHeight(true);
-		calendarPanel.setBackground(Color.WHITE);
 		// 메모칸 만들기
 		healthMemorun = new JTextField(10); // 거리 입력란 초기화
 		healthMemotime = new JTextField(10); // 시간 입력란 초기화
@@ -124,17 +155,17 @@ public class Calendarpp {
 		healthMemorun.setPreferredSize(inputSize);
 		healthMemotime.setPreferredSize(inputSize);
 
-		calendarPanel.add(prevButton);
-		calendarPanel.add(nextButton);
-		calendarPanel.add(monthLabel);
-		calendarPanel.add(backButton);
-		calendarPanel.add(calendarScrollpane);
-		calendarPanel.add(memoLabel);
-		calendarPanel.add(monthhealthMemo);
-		calendarPanel.add(inputPanel);
-		calendarPanel.add(saveMemoButton);
-		calendarPanel.add(dateInfoLabel);
-		calendarPanel.add(imageLabel);
+		add(prevButton);
+		add(nextButton);
+		add(monthLabel);
+		add(backButton);
+		add(calendarScrollpane);
+		add(memoLabel);
+		add(monthhealthMemo);
+		add(inputPanel);
+		add(saveMemoButton);
+		add(dateInfoLabel);
+		add(imageLabel);
 
 		// 버튼 비활성화 초기화
 
@@ -180,90 +211,14 @@ public class Calendarpp {
 		monthhealthMemo.setBounds(250, 620, 200, 150);// 월간통계메모
 		monthhealthMemo.setLayout(new BoxLayout(monthhealthMemo, BoxLayout.Y_AXIS));
 		monthhealthMemo.setBorder(new TitledBorder(null, "월간 통계", 4, 0, new Font("맑은고딕", Font.BOLD, 15)));
-		calendarPanel.setBounds(0, 0, 500, 850);// 전체 크기
 		monthhealthMemo.setBackground(Color.WHITE);
-		// 로고 버튼 생성
-		JLabel mainPageLabel = new JLabel("메인화면");
-		mainPageLabel.setForeground(Color.BLUE); // 텍스트 색상 변경
-		mainPageLabel.setBounds(410, 25, 100, 40); // 위치와 크기 조정
-		mainPageLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // 손 모양 커서
-
-		// 로그아웃 클릭 이벤트 추가
-		mainPageLabel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				new MainBoard();
-				frame.dispose();
-			}
-		});
-
-		calendarPanel.add(mainPageLabel); // 프레임에 메인화면 텍스트 추가
-		JButton btnLogo = new JButton();
-
-		ImageIcon logoIcon = new ImageIcon("LogoImage_130x130.png");
-		btnLogo.setIcon(logoIcon);
-		btnLogo.setBorderPainted(false); // 버튼 테두리 제거
-		btnLogo.setContentAreaFilled(false); // 버튼 배경 제거
-		btnLogo.setFocusPainted(false); // 포커스 효과 제거
-		btnLogo.setBounds(20, 10, 130, 130); // 버튼 위치 및 크기 설정
-		calendarPanel.add(btnLogo);
-
-		// 클릭 이벤트 추가
-		btnLogo.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				new MainBoard();
-				frame.dispose();
-			}
-		});
-		JLabel logoutLabel = new JLabel("로그아웃");
-		logoutLabel.setForeground(Color.BLUE); // 텍스트 색상 변경
-		logoutLabel.setBounds(250, 25, 80, 40); // 위치와 크기 조정
-		logoutLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // 손 모양 커서
-
-		// 로그아웃 클릭 이벤트 추가
-		logoutLabel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				JOptionPane.showMessageDialog(frame, "로그아웃 합니다!");
-				new UserInForm();
-				frame.dispose();
-			}
-		});
-
-		calendarPanel.add(logoutLabel); // 프레임에 마이페이지 텍스트 추가
-
-		// 로그아웃 텍스트 추가
-		JLabel myPageLabel = new JLabel("마이페이지");
-		myPageLabel.setForeground(Color.BLUE); // 텍스트 색상 변경
-		myPageLabel.setBounds(325, 25, 100, 40); // 위치와 크기 조정
-		myPageLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // 손 모양 커서
-
-		// 로그아웃 클릭 이벤트 추가
-		myPageLabel.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				new myPageBegin();
-				frame.dispose();
-			}
-		});
-
-		calendarPanel.add(myPageLabel); // 프레임에 마이페이지 텍스트 추가
-
-		JLabel labelLogo = new JLabel(); // 이미지 표시를 위한 Label
-		ImageIcon icon2 = new ImageIcon("gaesipan23.png");
-		labelLogo.setIcon(icon2); // JLabel에 이미지 설정
-		labelLogo.setBounds(100, 110, 300, 50); // 이미지 위치 및 크기 설정
-
-		// 프레임에 Label 추가
-		calendarPanel.add(labelLogo);
 
 		backButton.addActionListener(new ActionListener() {
 
 			@Override
 			public void actionPerformed(ActionEvent ae) {
-				frame.dispose();
-				new MainBoard();
+				dispose();
+				new MainFrame();
 
 			}
 		});
@@ -316,7 +271,7 @@ public class Calendarpp {
 
 				dateInfoLabel.setText(String.format("선택한 날짜: %d년, %d월, %d일", selectedDate.getYear(),
 						selectedDate.getMonthValue(), selectedDate.getDayOfMonth()));
-				
+
 				System.out.println(dateInfoLabel.getText());
 				dateInfoLabel.revalidate();
 				dateInfoLabel.repaint();
@@ -356,13 +311,13 @@ public class Calendarpp {
 				int row = calendarTable.getSelectedRow();
 				int col = calendarTable.getSelectedColumn();
 				if (row < 0 || col < 0) {
-					JOptionPane.showMessageDialog(frame, "날짜를 선택하세요.");
+					JOptionPane.showMessageDialog(null, "날짜를 선택하세요.");
 					return;
 				}
 				String selectedDate = (String) calendarTableModel.getValueAt(row, col);
 				System.out.println("selected" + selectedDate);
 				if (selectedDate == null || selectedDate.isEmpty()) {
-					JOptionPane.showMessageDialog(frame, "유효한 날짜를 선택하세요");
+					JOptionPane.showMessageDialog(null, "유효한 날짜를 선택하세요");
 					return;
 				}
 				String distanceText = healthMemorun.getText();
@@ -391,15 +346,15 @@ public class Calendarpp {
 					dto.setHealthCalories(calories);
 
 					if (hs.insertHealth(dto) > 0) {
-						JOptionPane.showMessageDialog(frame, "기록되었습니다.", "기록완료", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "기록되었습니다.", "기록완료", JOptionPane.ERROR_MESSAGE);
 					} else {
-						JOptionPane.showMessageDialog(frame, "기록이 입력되지 않았습니다.", "기록오류", JOptionPane.ERROR_MESSAGE);
+						JOptionPane.showMessageDialog(null, "기록이 입력되지 않았습니다.", "기록오류", JOptionPane.ERROR_MESSAGE);
 					}
 
 					updateMonthHealthMemo();
 
 				} catch (NumberFormatException e) {
-					JOptionPane.showMessageDialog(frame, e.getMessage(), "입력오류", JOptionPane.ERROR_MESSAGE);
+					JOptionPane.showMessageDialog(null, e.getMessage(), "입력오류", JOptionPane.ERROR_MESSAGE);
 				}
 
 			}
@@ -413,10 +368,9 @@ public class Calendarpp {
 
 		updateCalendar(currentMonth, currentYear);
 
-		frame.add(calendarPanel);
-		frame.setVisible(true);
-		frame.setLocationRelativeTo(null);
-		frame.setAlwaysOnTop(true);
+		setVisible(true);
+		setLocationRelativeTo(null);
+		setAlwaysOnTop(true);
 
 		updateMonthHealthMemo();
 	}// class calendar
@@ -509,19 +463,5 @@ public class Calendarpp {
 
 		updateMonthHealthMemo();
 	}// updateCalendar
-
-	public static void main(String[] args) {
-		/*
-		 * SwingUtilities.invokeLater(new Runnable() { public void run() {
-		 * 
-		 * } });
-		 */
-		 UserDTO userDTO = new UserDTO();
-		 userDTO.setUserId("1111");
-		 
-		 Main.USER = userDTO;
-		 new Calendarpp();
-		 
-	}
 
 }
