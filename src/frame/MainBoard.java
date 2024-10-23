@@ -1,9 +1,15 @@
 package frame;
 
 import java.awt.Color;
+import java.awt.Desktop;
 import java.awt.Image;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.WindowAdapter;
 import java.awt.event.WindowEvent;
+import java.io.IOException;
+import java.net.URI;
+import java.net.URISyntaxException;
 
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
@@ -15,7 +21,7 @@ import javax.swing.SwingUtilities;
 public class MainBoard extends JFrame {
 
 	private ImageIcon imgComm, imgMyP, imgHC, imgLogoA;
-	private JButton btnComm, btnMyP, btnHC;
+	private JButton btnComm, btnMyP, btnHC, btnAd;
 
 	public MainBoard() {
 		// 메인 화면 생성
@@ -25,7 +31,7 @@ public class MainBoard extends JFrame {
 
 	public void mainView() {
 		setTitle("메인화면");
-		setBounds(700, 100, 500, 750); // 위치와 크기 (이후 850)
+		setBounds(700, 100, 500, 850); // 위치와 크기 (이후 850)
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 종료시 프로그램 종료
 		getContentPane().setBackground(new Color(247, 244, 242)); // 배경 색
 		setLayout(null); // 절대 레이아웃 사용
@@ -57,9 +63,9 @@ public class MainBoard extends JFrame {
 		lblLogo.setBounds(150, 50, 200, 200); // 중앙 상단에 위치
 
 		// 버튼 생성 및 설정
-		btnComm = new JButton("커뮤니티", imgComm);
+		btnComm = new JButton("러닝 메이트", imgComm);
 		btnHC = new JButton("헬스 케어", imgHC);
-		btnMyP = new JButton("마이 페이지", imgMyP);
+		btnMyP = new JButton("내 정보", imgMyP);
 
 		// 버튼 위치 설정
 		btnComm.setBounds(29, 300, 127, 127);
@@ -116,6 +122,31 @@ public class MainBoard extends JFrame {
 			new myPageBegin();
 			dispose();
 		});
+		
+
+		ImageIcon logoIcon2 = resizeImage(new ImageIcon("SolDesk_Ad.png"), 500, 300); // 버튼 크기에 맞게 조정
+		btnAd = new JButton();
+		btnAd.setIcon(logoIcon2);
+		btnAd.setBorderPainted(false); // 버튼 테두리 제거
+		btnAd.setContentAreaFilled(false); // 버튼 배경 제거
+		btnAd.setFocusPainted(false); // 포커스 효과 제거
+		btnAd.setMargin(null);  // 마진 제거
+		btnAd.setBounds(0, 585, 490, 130); // 버튼 위치 및 크기 설정
+		// 클릭 이벤트 추가
+		btnAd.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				String url = "https://soldesk.com/";
+
+				try {
+					// URI로 변환하고 기본 웹 브라우저에서 열기
+					Desktop.getDesktop().browse(new URI(url));
+				} catch (IOException | URISyntaxException ex) {
+					ex.printStackTrace(); // 예외 처리
+				}
+			}
+		});
+		mainBoard.add(btnAd);
 
 		// 패널을 JFrame에 추가
 		add(mainBoard);

@@ -251,9 +251,9 @@ public class Calendarpp {
 		calendarPanel.add(myPageLabel); // 프레임에 마이페이지 텍스트 추가
 
 		JLabel labelLogo = new JLabel(); // 이미지 표시를 위한 Label
-		ImageIcon icon2 = new ImageIcon("gaesipan25.png");
+		ImageIcon icon2 = new ImageIcon("gaesipan23.png");
 		labelLogo.setIcon(icon2); // JLabel에 이미지 설정
-		labelLogo.setBounds(150, 110, 300, 50); // 이미지 위치 및 크기 설정
+		labelLogo.setBounds(100, 110, 300, 50); // 이미지 위치 및 크기 설정
 
 		// 프레임에 Label 추가
 		calendarPanel.add(labelLogo);

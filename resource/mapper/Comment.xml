@@ -15,16 +15,16 @@
 	</insert>
 	
 	<select id="selectCommentList" parameterType="dto.CommentDTO" resultType="dto.CommentDTO">
-		SELECT BOARD_ID, COMMENT_ID, COMMENT_CONTENT, COMMENT_REG_DT, COMMENT_LUP_DT, USER_ID
-		FROM BOARD_COMMENT
-		<where>
+		SELECT BOARD_ID, COMMENT_ID, COMMENT_CONTENT, COMMENT_REG_DT, COMMENT_LUP_DT, 
+			B.USER_ID, B.USER_NICK_NAME
+		FROM BOARD_COMMENT A, USERS B
+		WHERE A.USER_ID = B.USER_ID
 			<if test="boardId != null">
 				AND BOARD_ID = #{boardId}
 			</if>
 			<if test="userId != null">
 				AND USER_ID = #{userId}
 			</if>
-		</where>
 		ORDER BY COMMENT_ID ASC
 	</select>
 	

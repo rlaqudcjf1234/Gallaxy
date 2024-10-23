@@ -1,8 +1,6 @@
 package dto;
 
-public class CommentDTO {
-
-	private String boardId;
+public class CommentDTO extends BoardDTO {
 
 	private String commentId;
 
@@ -11,16 +9,6 @@ public class CommentDTO {
 	private String commentRegDt;
 
 	private String commentLupDt;
-
-	private String userId;
-
-	public String getBoardId() {
-		return boardId;
-	}
-
-	public void setBoardId(String boardId) {
-		this.boardId = boardId;
-	}
 
 	public String getCommentId() {
 		return commentId;
@@ -52,14 +40,6 @@ public class CommentDTO {
 
 	public void setCommentLupDt(String commentLupDt) {
 		this.commentLupDt = commentLupDt;
-	}
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
 	}
 
 }

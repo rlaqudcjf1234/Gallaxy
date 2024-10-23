@@ -54,14 +54,15 @@ public class UserRegForm extends JFrame {
 
 	public UserRegForm() {
 		setTitle("회원가입 페이지"); // 창 제목 설정
-		setBounds(650, 0, 500, 750); // 창 크기 설정
+		setBounds(700, 100, 500, 850); // 창 크기 설정
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 종료 시 프로그램 종료
 		setBackground(new Color(247, 244, 242));
 		setLayout(null); // 절대 레이아웃 사용
 
 		// 회원가입 폼 패널 생성
 		JPanel signupPanel = new JPanel();
 		signupPanel.setLayout(null); // 절대 레이아웃 사용
-		signupPanel.setBounds(0, 0, 500, 750); // 위치 및 크기 설정
+		signupPanel.setBounds(0, 0, 500, 850); // 위치 및 크기 설정
 		signupPanel.setBackground(new Color(247, 244, 242)); // 배경색 설정
 
 		imgLogoA = resizeImage(new ImageIcon("image/Galaxy_Logo.png"), 200, 200);
@@ -82,7 +83,7 @@ public class UserRegForm extends JFrame {
 		lblRe.setBounds(130, 360, 80, 25);
 		lblName.setBounds(130, 400, 80, 25); // 위치 및 크기 설정
 		lblEmail.setBounds(130, 440, 80, 25); // 위치 및 크기 설정
-		lblNickName.setBounds(130, 470, 80, 25);
+		lblNickName.setBounds(130, 480, 80, 25);
 
 		tfId = new JTextField();
 		tfPw = new JPasswordField();

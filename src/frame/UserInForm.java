@@ -4,7 +4,6 @@ import java.awt.BorderLayout;
 import java.awt.Color;
 import java.awt.Desktop;
 import java.awt.EventQueue;
-import java.awt.FlowLayout;
 import java.awt.Image;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -66,7 +65,7 @@ public class UserInForm extends JFrame {
 	 */
 	public UserInForm() {
 		setTitle("메인 화면"); // 창 제목 설정
-		setBounds(650, 0, 500, 750); // 창 위치 및 크기 설정
+		setBounds(700, 100, 500, 850); // 창 위치 및 크기 설정
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 종료 시 프로그램 종료
 		setLayout(new BorderLayout()); // 레이아웃 설정
 

@@ -1,6 +1,6 @@
 package dto;
 
-public class UserDTO {
+public class UserDTO extends PageDTO {
 
 	private String userId;
 
