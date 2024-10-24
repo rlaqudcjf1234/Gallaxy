@@ -1,6 +1,7 @@
 package frame;
 
 import java.awt.Color;
+import java.awt.Component;
 import java.awt.Dimension;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -23,6 +24,7 @@ import javax.swing.JTextField;
 import javax.swing.border.TitledBorder;
 import javax.swing.event.DocumentEvent;
 import javax.swing.event.DocumentListener;
+import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 
 import dto.HealthDTO;
@@ -32,6 +34,8 @@ import service.HealthService;
 import service.impl.HealthServiceImpl;
 
 import java.util.Calendar;
+import java.util.HashSet;
+import java.util.Set;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
@@ -59,9 +63,28 @@ public class CalendarFrame extends CommonFrame {
 	private JLabel dateInfoLabel;
 	private JLabel imageLabel;
 	private JLabel mainText;
+	private Set<String> recordedDates=new HashSet<>();
+	
 	/**
 	 * Launch the application.
 	 */
+	class CustomTableCellRenderer extends DefaultTableCellRenderer {
+	   	@Override
+	    public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus, int row, int column) {
+	        Component cell = super.getTableCellRendererComponent(table, value, isSelected, hasFocus, row, column);
+	        	        
+	        // 토요일(5)과 일요일(6)의 경우 색상 변경
+	        if (column == 5) { // 토요일
+	            cell.setForeground(Color.BLUE);
+	        } else if (column == 6) { // 일요일
+	            cell.setForeground(Color.RED);
+	        } else {
+	            cell.setForeground(Color.BLACK); // 기본 색상
+	        }
+	        
+	        return cell;
+	    }
+	}
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -186,6 +209,7 @@ public class CalendarFrame extends CommonFrame {
 			private void checkInput() {
 				String distance = healthMemorun.getText();
 				String time = healthMemotime.getText();
+						
 				saveMemoButton.setEnabled(!distance.isEmpty() && !time.isEmpty());
 			}
 		};
@@ -455,7 +479,8 @@ public class CalendarFrame extends CommonFrame {
 			int col = (day + startDay - 2) % 7; // 열 계산
 			calendarTableModel.setValueAt(Integer.toString(day), row, col); // +1을 통해 아래로 내리기
 		}
-
+		
+		calendarTable.setDefaultRenderer(Object.class,new CustomTableCellRenderer());
 		// UI 업데이트
 		calendarTable.revalidate();
 		calendarTable.repaint();
