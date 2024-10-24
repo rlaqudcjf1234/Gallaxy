@@ -105,7 +105,7 @@ public class MyInfoModifyFrame extends JFrame {
 				// 이메일, 닉네임 업데이트
 
 				// 비밀번호 확인
-				if (newPassword.equals("")) {
+				if (!newPassword.equals("")) {
 					if (!newPassword.equals(confirmPassword)) {
 						JOptionPane.showMessageDialog(null, "비밀번호가 일치하지 않습니다.", "오류", JOptionPane.ERROR_MESSAGE);
 						return; // 비밀번호가 일치하지 않으면 이후 로직 실행 중지
