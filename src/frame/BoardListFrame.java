@@ -130,6 +130,12 @@ public class BoardListFrame extends CommonFrame {
 		searchButton.setBackground(Color.LIGHT_GRAY);
 		searchButton.setBounds(390, 590, 80, 30);
 		add(searchButton);
+		
+		 // 새로운 라벨 추가
+	    JLabel TitleLabel = new JLabel("러닝메이트");
+	    TitleLabel.setFont(new Font("돋움체", Font.BOLD, 35));
+	    TitleLabel.setBounds(150, 115, 250, 40); // 라벨 위치 및 크기 설정
+	    add(TitleLabel);
 
 		// 버튼(searchBtn) 클릭 이벤트
 		searchButton.addActionListener(new ActionListener() {
