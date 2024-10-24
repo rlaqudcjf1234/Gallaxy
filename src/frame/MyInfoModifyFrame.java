@@ -53,6 +53,7 @@ public class MyInfoModifyFrame extends JFrame {
 		JTextField emailField = new JTextField(Main.USER.getUserEmail());
 		JButton saveButton = new JButton("저장");
 		JButton backToCheck = new JButton("뒤로가기");
+		
 
 		newPasswordField.setForeground(Color.GRAY);
 		confirmPasswordLabel.setForeground(Color.GRAY);
