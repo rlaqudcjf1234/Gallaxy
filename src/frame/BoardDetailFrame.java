@@ -61,7 +61,7 @@ public class BoardDetailFrame extends JFrame {
 					userDTO.setUserId("hjs");
 					Main.USER = userDTO;
 					
-					BoardDetailFrame frame = new BoardDetailFrame(2);
+					BoardDetailFrame frame = new BoardDetailFrame(1);
 					// X버튼 종료
 					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				} catch (Exception e) {
