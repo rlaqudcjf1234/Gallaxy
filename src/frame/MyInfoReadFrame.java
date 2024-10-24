@@ -79,6 +79,7 @@ public class MyInfoReadFrame extends CommonFrame {
 			public void mouseClicked(MouseEvent e) {
 				JFrame frame = new JFrame("내 정보 수정");
 				frame.setBounds(100, 100, 500, 400);
+				frame.setLocation(1200, 100);
 				frame.setLayout(null); // null 레이아웃 사용
 				frame.setBackground(Color.WHITE);
 
@@ -162,7 +163,7 @@ public class MyInfoReadFrame extends CommonFrame {
 		infoLabel = new JLabel("<html>" + "&emsp;&emsp;&emsp;&emsp; " + userNickName + " (" + userId + ")<br>"
 				+ "&emsp;&emsp;&emsp;&emsp; 이름 : " + userName + "<br>" + "&emsp;&emsp;&emsp;&emsp; E-Mail : " + " ("
 				+ userEmail + ")<br>" + "</html>");
-		infoLabel.setFont(new Font("돋움", Font.BOLD, 18));
+		infoLabel.setFont(new Font("맑은 고딕", Font.BOLD, 18));
 		infoLabel.setOpaque(true); // 배경색을 보이게 설정
 		infoLabel.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2)); // 테두리 추가
 
@@ -199,7 +200,7 @@ public class MyInfoReadFrame extends CommonFrame {
 			JLabel emptyPost = new JLabel("작성된 게시글이 없습니다.");
 			emptyPost.setForeground(Color.BLACK); // 글자 색상 설정
 			emptyPost.setFont(new Font("맑은고딕", Font.BOLD, 18));
-			emptyPost.setBounds(140, 425, 220, 50); // 위치 및 크기 설정
+			emptyPost.setBounds(140, 425, 270, 50); // 위치 및 크기 설정
 			// 패널에 JLabel 추가 (예를 들어 panel은 JPanel입니다)
 			add(emptyPost,  BorderLayout.CENTER); // panel은 이 메소드에서 사용 중인 JPanel 객체입니다.
 		}

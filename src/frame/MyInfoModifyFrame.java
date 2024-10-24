@@ -25,6 +25,7 @@ public class MyInfoModifyFrame extends JFrame {
 	public MyInfoModifyFrame() {
 		// setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setSize(500, 800); // 프레임 사이즈
+		setLocation(1200, 100);
 		setLayout(null); // null 레이아웃 사용
 
 		// 로고이미지
@@ -52,7 +53,6 @@ public class MyInfoModifyFrame extends JFrame {
 		JLabel emailLabel = new JLabel("이메일 :");
 		JTextField emailField = new JTextField(Main.USER.getUserEmail());
 		JButton saveButton = new JButton("저장");
-		JButton backToCheck = new JButton("뒤로가기");
 		
 
 		newPasswordField.setForeground(Color.GRAY);
@@ -70,8 +70,7 @@ public class MyInfoModifyFrame extends JFrame {
 		confirmPasswordLabel.setBounds(80, 450, 150, 30);
 		confirmPasswordField.setBounds(175, 450, 200, 30);
 		saveButton.setBounds(80, 500, 300, 30);
-		backToCheck.setBounds(80, 540, 300, 30);
-
+		//backToCheck.setBounds(80, 540, 300, 30);
 		// 패널에 컴포넌트 추가
 		panel.add(nickNameLabel);
 		panel.add(nickNameField);
@@ -82,7 +81,6 @@ public class MyInfoModifyFrame extends JFrame {
 		panel.add(confirmPasswordLabel);
 		panel.add(confirmPasswordField);
 		panel.add(saveButton);
-		panel.add(backToCheck);
 		panel.add(logo);
 
 		// 프레임에 패널 추가
