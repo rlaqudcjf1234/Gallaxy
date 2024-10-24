@@ -58,7 +58,7 @@ public class CalendarFrame extends CommonFrame {
 	private int realYear, realMonth, currentYear, currentMonth;
 	private JLabel dateInfoLabel;
 	private JLabel imageLabel;
-
+	private JLabel mainText;
 	/**
 	 * Launch the application.
 	 */
@@ -106,7 +106,7 @@ public class CalendarFrame extends CommonFrame {
 		labelLogo.setBounds(100, 110, 300, 50); // 이미지 위치 및 크기 설정
 		add(labelLogo);
 		*/
-		
+		mainText = new JLabel("헬스 케어");
 		backButton = new JButton("뒤로가기");
 		prevButton = new JButton("<");
 		nextButton = new JButton(">");
@@ -166,7 +166,7 @@ public class CalendarFrame extends CommonFrame {
 		add(saveMemoButton);
 		add(dateInfoLabel);
 		add(imageLabel);
-
+		add(mainText);
 		// 버튼 비활성화 초기화
 
 		saveMemoButton.setEnabled(false);
@@ -194,6 +194,8 @@ public class CalendarFrame extends CommonFrame {
 		healthMemotime.getDocument().addDocumentListener(inputListener);
 
 		// 버튼 판넬 크기 넣기
+		mainText.setBounds(165, 35, 200, 200);
+		mainText.setFont(new Font("돋움체",Font.BOLD,35));
 		inputPanel.setBounds(25, 620, 220, 120);// 입력정보 박스 200 오름
 		inputPanel.setBorder(new TitledBorder(null, "입력 정보", 4, 0, new Font("맑은고딕", Font.BOLD, 15)));
 		// imageLabel.setBounds(20, 630 ,435 ,100);//솔데스크 이미지
