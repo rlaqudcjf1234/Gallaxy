@@ -264,7 +264,7 @@ public class BoardDetailFrame extends JFrame {
 					commentDTO.setBoardId(dto.getBoardId());
 					commentDTO.setCommentContent(comment);
 					if (Main.USER != null) {
-						dto.setUserId(Main.USER.getUserId());
+						commentDTO.setUserId(Main.USER.getUserId());
 					}
 
 					int cnt = cs.insertComment(commentDTO);
