@@ -91,20 +91,17 @@ public class MyInfoReadFrame extends CommonFrame {
 				JLabel passwordLabel = new JLabel("비밀번호");
 				JPasswordField passwordField = new JPasswordField();
 				JButton confirmButton = new JButton("확인");
-				JButton backToMyPageBegin = new JButton("뒤로가기");
-
+				
 				// 위치 및 크기 설정
 				passwordLabel.setBounds(110, 120, 200, 30); // (x, y, width, height)
 				passwordField.setBounds(170, 120, 200, 30);
 				confirmButton.setBounds(90, 170, 300, 30);
-				backToMyPageBegin.setBounds(90, 210, 300, 30);
-
+				
 				// 패널에 컴포넌트 추가
 				panel.add(passwordLabel);
 				panel.add(passwordField);
 				panel.add(confirmButton);
-				panel.add(backToMyPageBegin);
-
+				
 				// 프레임에 패널 추가
 				frame.add(panel);
 
@@ -142,12 +139,7 @@ public class MyInfoReadFrame extends CommonFrame {
 					}
 				});
 
-				backToMyPageBegin.addActionListener(new ActionListener() {
-					@Override
-					public void actionPerformed(ActionEvent panel) {
-						frame.dispose();
-					}
-				});
+			
 
 				frame.setVisible(true);
 				// new myPageEdit();
@@ -177,6 +169,27 @@ public class MyInfoReadFrame extends CommonFrame {
 		// 크기 및 위치 설정
 		infoLabel.setBounds(20, 150, 450, 150); // 중앙 정렬 및 크기 설정
 		add(infoLabel); // JLabel 추가
+		
+		  JLabel subTitle = new JLabel("내 정보");
+			JLabel myWriting = new JLabel("-내가 쓴 게시글");
+			JLabel comments = new JLabel("-내가 쓴 댓글");
+			
+			subTitle.setFont(new Font("돋움체", Font.BOLD, 38));
+			myWriting.setFont(new Font("돋움체", Font.BOLD, 16));
+			comments.setFont(new Font("돋움체", Font.BOLD, 16));
+			
+			subTitle.setBounds(181, 76, 200, 100);
+			myWriting.setBounds(20, 276, 200, 100);
+			comments.setBounds(20, 516, 200, 100);
+			
+			 add(subTitle);
+		     add(myWriting);
+		     add(comments);
+		     
+		     // JFrame 표시
+		     setVisible(true);
+
+		
 
 		// 게시글 불러오기
 		Object[][] boardArray = getBoardList(); 
