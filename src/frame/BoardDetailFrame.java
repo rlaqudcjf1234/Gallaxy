@@ -25,6 +25,7 @@ import javax.swing.border.EmptyBorder;
 
 import dto.BoardDTO;
 import dto.CommentDTO;
+import dto.UserDTO;
 import main.Main;
 import service.BoardService;
 import service.CommentService;
@@ -56,7 +57,11 @@ public class BoardDetailFrame extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					BoardDetailFrame frame = new BoardDetailFrame(31);
+					UserDTO userDTO = new UserDTO();
+					userDTO.setUserId("hjs");
+					Main.USER = userDTO;
+					
+					BoardDetailFrame frame = new BoardDetailFrame(2);
 					// X버튼 종료
 					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 				} catch (Exception e) {
@@ -143,7 +148,7 @@ public class BoardDetailFrame extends JFrame {
 		JTextField dateField = new JTextField(
 				dto.getBoardWordYyyy() + " " + dto.getBoardWordMm() + " " + dto.getBoardWordDd());
 		dateField.setFont(new Font("맑은 고딕", Font.BOLD, 14));
-		dateField.setBounds(85, 340, 250, 40); // 날짜 위치 설정
+		dateField.setBounds(85, 340, 200, 40); // 날짜 위치 설정
 		dateField.setEditable(false); // 날짜 수정 불가
 		dateField.setBorder(null);
 		// 배경 흰색
@@ -160,7 +165,7 @@ public class BoardDetailFrame extends JFrame {
 		JTextField timeField = new JTextField(
 				dto.getBoardWordApm() + " " + dto.getBoardWordHh() + " " + dto.getBoardWordMi());
 		timeField.setFont(new Font("맑은 고딕", Font.BOLD, 14));
-		timeField.setBounds(85, 370, 250, 40); // 시간 위치 설정
+		timeField.setBounds(85, 370, 200, 40); // 시간 위치 설정
 		timeField.setEditable(false); // 시간 수정 불가
 		timeField.setBorder(null);
 		// 배경 흰색
