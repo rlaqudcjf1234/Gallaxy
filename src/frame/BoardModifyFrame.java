@@ -192,7 +192,8 @@ public class BoardModifyFrame extends JFrame {
 		imagePane.setBackground(Color.white);
 		contentPane.add(imagePane);
 
-		imageLbl = new JLabel(new ImageIcon(dto.getBoardFilePath()));
+		filePath = dto.getBoardFilePath();
+		imageLbl = new JLabel(new ImageIcon(filePath));
 		imagePane.add(imageLbl);
 
 		JPanel titlePane = new JPanel();
