@@ -209,7 +209,7 @@ public class BoardListFrame extends CommonFrame {
 					@Override
 					public void mouseClicked(MouseEvent e) {
 						// 내용 상세
-						new BoardDetailFrame(board.getBoardId());
+						new BoardDetailFrame(board.getBoardId(), 'b');
 						dispose();
 					}
 				});

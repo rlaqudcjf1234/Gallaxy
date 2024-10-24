@@ -56,7 +56,7 @@ public class MyInfoReadFrame extends CommonFrame {
 			public void run() {
 				try {
 					UserDTO userDTO = new UserDTO();
-					userDTO.setUserId("테스트");
+					userDTO.setUserId("hjs");
 					Main.USER = userDTO;
 					MyInfoReadFrame frame = new MyInfoReadFrame();
 					// X버튼 종료
@@ -210,7 +210,8 @@ public class MyInfoReadFrame extends CommonFrame {
 			public void mouseClicked(MouseEvent e) {
 				int row = boardTable.getSelectedRow(); // 클릭된 행의 인덱스
 				BoardDTO dto = boardList.get(row); // 해당 게시글 가져오기
-				new BoardDetailFrame(dto.getBoardId());
+				new BoardDetailFrame(dto.getBoardId(), 'm');
+				dispose();
 			}
 		});
 
@@ -245,7 +246,8 @@ public class MyInfoReadFrame extends CommonFrame {
 			public void mouseClicked(MouseEvent e) {
 				int row = commentTable.getSelectedRow(); // 클릭된 행의 인덱스
 				CommentDTO dto = commentList.get(row); // 해당 게시글 가져오기
-				new BoardDetailFrame(dto.getBoardId());
+				new BoardDetailFrame(dto.getBoardId(), 'm');
+				dispose();
 			}
 		});
 

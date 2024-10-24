@@ -38,6 +38,8 @@ public class BoardDetailFrame extends JFrame {
 	 * 
 	 */
 	private static final long serialVersionUID = 1730899176307489779L;
+	
+	private static char gubun;
 
 	private BoardService bs = new BoardServiceImpl();
 	private CommentService cs = new CommentServiceImpl();
@@ -60,7 +62,7 @@ public class BoardDetailFrame extends JFrame {
 					UserDTO userDTO = new UserDTO();
 					userDTO.setUserId("hjs");
 					Main.USER = userDTO;
-					
+
 					BoardDetailFrame frame = new BoardDetailFrame(1);
 					// X버튼 종료
 					frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -70,18 +72,31 @@ public class BoardDetailFrame extends JFrame {
 			}
 		});
 	}
+	/**
+	 * Create the frame.
+	 */
+	public BoardDetailFrame(int boardId, char gubun) {
+		BoardDetailFrame.gubun = gubun;
+		new BoardDetailFrame(boardId);
+	}
 
 	/**
 	 * Create the frame.
 	 */
 	public BoardDetailFrame(int boardId) {
-
 		// 게시물 내용 조회
 		dto = bs.selectBoard(boardId);
 		// 게시물이 없을 경우 list페이지로
 		if (dto == null) {
 			JOptionPane.showMessageDialog(null, "대상을 찾을 수 없습니다.", "오류", JOptionPane.ERROR_MESSAGE);
-			new BoardListFrame();
+			
+			if (gubun == 'b') {
+				// BoardListFrame 열기
+				new BoardListFrame();
+			} else if (gubun == 'm') {
+				// BoardListFrame 열기
+				new MyInfoReadFrame();
+			}
 			dispose();
 			return;
 		}
@@ -91,7 +106,6 @@ public class BoardDetailFrame extends JFrame {
 		setBounds(700, 100, 500, 850);
 		// 종료시 프로그램 종료
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-
 
 		JPanel contentPane = new JPanel();
 		// 배경 흰색
@@ -191,7 +205,15 @@ public class BoardDetailFrame extends JFrame {
 		}
 
 		// 목록 버튼
-		JButton returnButton = new JButton("목록");
+		JButton returnButton = new JButton();
+
+		if (gubun == 'b') {
+			// BoardListFrame 열기
+			returnButton.setText("목록");
+		} else if (gubun == 'm') {
+			// BoardListFrame 열기
+			returnButton.setText("뒤로");
+		}
 		returnButton.setBounds(380, 380, 70, 30);
 		contentPane.add(returnButton);
 
@@ -200,12 +222,17 @@ public class BoardDetailFrame extends JFrame {
 			@Override
 			public void mouseClicked(MouseEvent e) {
 
-				// BoardListFrame 열기
-				new BoardListFrame();
+				if (gubun == 'b') {
+					// BoardListFrame 열기
+					new BoardListFrame();
+				} else if (gubun == 'm') {
+					// BoardListFrame 열기
+					new MyInfoReadFrame();
+				}
 				dispose();
 			}
 		});
-		
+
 		// 게시물 내용을 표시하는 텍스트 영역
 		contentArea = new JTextArea(dto.getBoardContent());
 		contentArea.setWrapStyleWord(true);
