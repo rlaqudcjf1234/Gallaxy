@@ -217,7 +217,9 @@ public class BoardListFrame extends CommonFrame {
 				postListPanel.add(postLabel); // 패널에 게시물 추가
 			}
 		} else {
-			JOptionPane.showMessageDialog(null, "검색결과가 존재하지 않습니다.");
+			if (search != null && !search.equals("")) {
+				JOptionPane.showMessageDialog(null, "검색결과가 존재하지 않습니다.");
+			}
 		}
 		// UI 업데이트
 		postListPanel.revalidate();
