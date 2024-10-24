@@ -64,7 +64,7 @@ public class UserInForm extends JFrame {
 	 * Create the frame.
 	 */
 	public UserInForm() {
-		setTitle("메인 화면"); // 창 제목 설정
+		setTitle("로그인"); // 창 제목 설정
 		setBounds(700, 100, 500, 850); // 창 위치 및 크기 설정
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 종료 시 프로그램 종료
 		setLayout(new BorderLayout()); // 레이아웃 설정
@@ -159,12 +159,12 @@ public class UserInForm extends JFrame {
 				String userPw = String.valueOf(tfPw.getPassword());
 
 				if (userId.isEmpty()) {
-					JOptionPane.showMessageDialog(null, "아이디를 입력하세요.", "로그인폼", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null, "아이디를 입력하세요.", "로그인", JOptionPane.WARNING_MESSAGE);
 					return;
 
 				}
 				if (userPw.isEmpty()) {
-					JOptionPane.showMessageDialog(null, "비밀번호를 입력하세요.", "로그인폼", JOptionPane.WARNING_MESSAGE);
+					JOptionPane.showMessageDialog(null, "비밀번호를 입력하세요.", "로그인", JOptionPane.WARNING_MESSAGE);
 					return;
 				}
 
@@ -181,7 +181,7 @@ public class UserInForm extends JFrame {
 				
 				Main.USER = dto;
 				
-				JOptionPane.showMessageDialog(null, dto.getUserNickName()+"님 로그인에 성공하셨습니다.", "로그인폼", JOptionPane.INFORMATION_MESSAGE);
+				JOptionPane.showMessageDialog(null, dto.getUserNickName()+"님 로그인에 성공하셨습니다.", "로그인", JOptionPane.INFORMATION_MESSAGE);
 				
 				new MainFrame();
 				dispose();

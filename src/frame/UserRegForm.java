@@ -53,7 +53,7 @@ public class UserRegForm extends JFrame {
 	}
 
 	public UserRegForm() {
-		setTitle("회원가입 페이지"); // 창 제목 설정
+		setTitle("회원가입"); // 창 제목 설정
 		setBounds(700, 100, 500, 850); // 창 크기 설정
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE); // 종료 시 프로그램 종료
 		setBackground(new Color(247, 244, 242));
