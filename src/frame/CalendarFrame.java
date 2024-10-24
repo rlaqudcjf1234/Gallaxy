@@ -371,9 +371,6 @@ public class CalendarFrame extends CommonFrame {
 		updateCalendar(currentMonth, currentYear);
 
 		setVisible(true);
-		setLocationRelativeTo(null);
-		setAlwaysOnTop(true);
-
 		updateMonthHealthMemo();
 	}// class calendar
 
