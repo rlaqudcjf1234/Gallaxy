@@ -8,6 +8,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -108,13 +110,11 @@ public class BoardWriteFrame extends JFrame {
 	 */
 	public BoardWriteFrame() {
 		// 프레임 타이틀바
-		setTitle("글 작성");
+		setTitle("러닝 메이트 작성");
 		// 프레임 위치, 크기(픽셀)
 		setBounds(700, 100, 500, 850);
-		// 배경 흰색
-		setBackground(Color.white);
-		// 절대 레이아웃 사용
-		getContentPane().setLayout(null);
+		// 종료시 프로그램 종료
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JPanel contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));
@@ -197,6 +197,22 @@ public class BoardWriteFrame extends JFrame {
 		textFld = new JTextField(textInit);
 		textFld.setFont(new Font("맑은 고딕", Font.PLAIN, 13));
 		titlePane.add(textFld);
+		
+		// 글자수 제한
+		textFld.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				int max = 30;
+				if(textFld.getText().length() > max+1) {
+					e.consume();
+					String shortened = textFld.getText().substring(0, max);
+					textFld.setText(shortened);
+				}else if(textFld.getText().length() > max) {
+					e.consume();
+				}
+			}
+		});
 
 		// 클릭 이벤트 기본 텍스트(textFld) 삭제
 		textFld.addMouseListener(new MouseAdapter() {
@@ -292,6 +308,22 @@ public class BoardWriteFrame extends JFrame {
 				}
 			}
 		});
+		
+		// 글자수 제한
+		detailFld.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				int max = 1000;
+				if(detailFld.getText().length() > max+1) {
+					e.consume();
+					String shortened = detailFld.getText().substring(0, max);
+					detailFld.setText(shortened);
+				}else if(detailFld.getText().length() > max) {
+					e.consume();
+				}
+			}
+		});
 
 		JPanel buttonPane = new JPanel();
 		buttonPane.setBorder(new EmptyBorder(5, 5, 55, 5));
@@ -356,12 +388,8 @@ public class BoardWriteFrame extends JFrame {
 				int cnt = bs.insertBoard(dto);
 				if (cnt > 0) {
 					JOptionPane.showMessageDialog(null, "작성이 완료되었습니다.", "알림", JOptionPane.INFORMATION_MESSAGE);
-
-					List<BoardDTO> updatedBoardList = bs.selectBoardList(new BoardDTO());
-					BoardListFrame.updateBoardList(updatedBoardList); // 게시물 목록 갱신
-
 					dispose(); // 현재 프레임 닫기
-					BoardListFrame.showBoardList(); // 게시물 목록 창 열기
+					new BoardListFrame(); // 게시물 목록 창 열기
 				} else {
 					JOptionPane.showMessageDialog(null, "오류가 발생하였습니다.", "오류", JOptionPane.ERROR_MESSAGE);
 				}

@@ -2,10 +2,10 @@ package dto;
 
 import java.util.Date;
 
-public class BoardDTO extends PageDTO {
+public class BoardDTO extends UserDTO {
 
 	// 게시판 아이디
-	private String boardId;
+	private int boardId;
 
 	// 게시판 제목
 	private String boardTitle;
@@ -36,17 +36,14 @@ public class BoardDTO extends PageDTO {
 	// 게시판 최종수정 일자
 	private Date boardLupDt;
 
-	// 게시판 작성자
-	private String userId;
-	
 	// 게시판 작성 코멘트 수
 	private int commentCnt;
 
-	public String getBoardId() {
+	public int getBoardId() {
 		return boardId;
 	}
 
-	public void setBoardId(String boardId) {
+	public void setBoardId(int boardId) {
 		this.boardId = boardId;
 	}
 
@@ -136,14 +133,6 @@ public class BoardDTO extends PageDTO {
 
 	public void setBoardLupDt(Date boardLupDt) {
 		this.boardLupDt = boardLupDt;
-	}
-
-	public String getUserId() {
-		return userId;
-	}
-
-	public void setUserId(String userId) {
-		this.userId = userId;
 	}
 
 	public int getCommentCnt() {

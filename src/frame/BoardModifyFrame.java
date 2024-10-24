@@ -8,6 +8,8 @@ import java.awt.Font;
 import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -109,22 +111,22 @@ public class BoardModifyFrame extends JFrame {
 	 */
 	public BoardModifyFrame(int boardId) {
 
-		// 대상 조회
+		// 게시물 내용 조회
 		dto = bs.selectBoard(boardId);
+		// 게시물이 없을 경우 list페이지로
 		if (dto == null) {
 			JOptionPane.showMessageDialog(null, "대상을 찾을 수 없습니다.", "오류", JOptionPane.ERROR_MESSAGE);
+			new BoardListFrame();
 			dispose();
 			return;
 		}
 
 		// 프레임 타이틀바
-		setTitle("BoardWriteFrame");
+		setTitle("러닝 메이트 수정");
 		// 프레임 위치, 크기(픽셀)
 		setBounds(700, 100, 500, 850);
-		// 배경 흰색
-		setBackground(Color.white);
-		// 절대 레이아웃 사용
-		getContentPane().setLayout(null);
+		// 종료시 프로그램 종료
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
 		JPanel contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(15, 15, 15, 15));
@@ -208,6 +210,22 @@ public class BoardModifyFrame extends JFrame {
 		textFld.setFont(new Font("맑은 고딕", Font.PLAIN, 13));
 		titlePane.add(textFld);
 
+		// 글자수 제한
+		textFld.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				int max = 30;
+				if(textFld.getText().length() > max+1) {
+					e.consume();
+					String shortened = textFld.getText().substring(0, max);
+					textFld.setText(shortened);
+				}else if(textFld.getText().length() > max) {
+					e.consume();
+				}
+			}
+		});
+
 		JPanel datePane = new JPanel();
 		datePane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		datePane.setLayout(new BoxLayout(datePane, BoxLayout.X_AXIS));
@@ -283,6 +301,22 @@ public class BoardModifyFrame extends JFrame {
 		JScrollPane detailScrolPane = new JScrollPane(detailFld);
 		detailPane.add(detailScrolPane);
 
+		// 글자수 제한
+		detailFld.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyTyped(KeyEvent e) {
+				// TODO Auto-generated method stub
+				int max = 1000;
+				if(detailFld.getText().length() > max+1) {
+					e.consume();
+					String shortened = detailFld.getText().substring(0, max);
+					detailFld.setText(shortened);
+				}else if(detailFld.getText().length() > max) {
+					e.consume();
+				}
+			}
+		});
+
 		JPanel buttonPane = new JPanel();
 		buttonPane.setLayout(new BoxLayout(buttonPane, BoxLayout.X_AXIS));
 		// 배경 흰색
@@ -344,12 +378,10 @@ public class BoardModifyFrame extends JFrame {
 				int cnt = bs.updateBoard(dto);
 				if (cnt > 0) {
 					JOptionPane.showMessageDialog(null, "작성이 완료되었습니다.", "알림", JOptionPane.INFORMATION_MESSAGE);
-
-					List<BoardDTO> updatedBoardList = bs.selectBoardList(new BoardDTO());
-					BoardListFrame.updateBoardList(updatedBoardList); // 게시물 목록 갱신
-
-					dispose(); // 현재 프레임 닫기
-					BoardListFrame.showBoardList(); // 게시물 목록 창 열기
+					// 게시물 상세보기 창 열기
+					new BoardDetailFrame(dto.getBoardId()); 
+					// 현재 프레임 닫기
+					dispose(); 
 				} else {
 					JOptionPane.showMessageDialog(null, "오류가 발생하였습니다.", "오류", JOptionPane.ERROR_MESSAGE);
 				}
@@ -361,7 +393,10 @@ public class BoardModifyFrame extends JFrame {
 		cancelBtn.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				dispose();
+				// 게시물 상세보기 창 열기
+				new BoardDetailFrame(dto.getBoardId()); 
+				// 현재 프레임 닫기
+				dispose(); 
 			}
 		});
 

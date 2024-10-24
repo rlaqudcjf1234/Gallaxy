@@ -6,7 +6,6 @@ import org.apache.ibatis.session.SqlSession;
 
 import config.MySqlSessionFactory;
 import dao.CommentDAO;
-import dto.BoardDTO;
 import dto.CommentDTO;
 import service.CommentService;
 
@@ -54,5 +53,4 @@ public class CommentServiceImpl implements CommentService {
 
 		return list;
 	}
-	
 }
