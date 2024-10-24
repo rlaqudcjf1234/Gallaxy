@@ -83,9 +83,9 @@ public class CalendarFrame extends CommonFrame {
 	@Override
 	public JLabel setSecondLabel() {
 		// TODO Auto-generated method stub
-		JLabel secondLbl = new JLabel("마이페이지");
+		JLabel secondLbl = new JLabel("내 정보 확인");
 
-		// 마이페이지 클릭 이벤트 추가
+		// 내 정보 클릭 이벤트 추가
 		secondLbl.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {

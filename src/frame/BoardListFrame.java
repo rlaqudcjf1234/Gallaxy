@@ -1,7 +1,6 @@
 package frame;
 
 import java.awt.Color;
-import java.awt.Cursor;
 import java.awt.Desktop;
 import java.awt.EventQueue;
 import java.awt.Font;
@@ -23,7 +22,10 @@ import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
+import javax.swing.JTable;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 
 import dto.BoardDTO;
 import dto.UserDTO;
@@ -42,7 +44,7 @@ public class BoardListFrame extends CommonFrame {
 
 	private JPanel postListPanel; // 게시물 목록 패널
 	private TextField searchField;
-	
+
 	public static String search;
 
 	/**
@@ -68,9 +70,9 @@ public class BoardListFrame extends CommonFrame {
 	@Override
 	public JLabel setSecondLabel() {
 		// TODO Auto-generated method stub
-		JLabel secondLbl = new JLabel("마이페이지");
+		JLabel secondLbl = new JLabel("내 정보 확인");
 
-		// 마이페이지 클릭 이벤트 추가
+		// 내 정보 클릭 이벤트 추가
 		secondLbl.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
@@ -84,15 +86,6 @@ public class BoardListFrame extends CommonFrame {
 	public BoardListFrame() {
 		// 영역 넓이 시작 20 ~ 470
 		setTitle("러닝 메이트");
-
-		/*
-		// 이미지 추가
-		JLabel labelLogo = new JLabel(); // 이미지 표시를 위한 Label
-		ImageIcon icon = new ImageIcon("gaesipan22.png");
-		labelLogo.setIcon(icon); // JLabel에 이미지 설정
-		labelLogo.setBounds(100, 120, 250, 40); // 이미지 위치 및 크기 설정 
-		add(labelLogo);
-		 */
 
 		// 글 작성 버튼 생성
 		JButton writeButton = new JButton("글 작성");
@@ -115,9 +108,9 @@ public class BoardListFrame extends CommonFrame {
 		// 게시물 목록 패널 설정
 		postListPanel = new JPanel();
 		postListPanel.setLayout(new BoxLayout(postListPanel, BoxLayout.Y_AXIS)); // 세로로 버튼 나열
-		JScrollPane postScrollPane = new JScrollPane(postListPanel); // 스크롤 가능하게
-		postScrollPane.setBounds(20, 180, 450, 400);
-		add(postScrollPane);
+//		JScrollPane postScrollPane = new JScrollPane(postListPanel); // 스크롤 가능하게
+		postListPanel.setBounds(20, 180, 450, 400);
+		add(postListPanel);
 
 		// 글 검색 필드
 		searchField = new TextField(); // 제목 입력
@@ -130,12 +123,12 @@ public class BoardListFrame extends CommonFrame {
 		searchButton.setBackground(Color.LIGHT_GRAY);
 		searchButton.setBounds(390, 590, 80, 30);
 		add(searchButton);
-		
-		 // 새로운 라벨 추가
-	    JLabel TitleLabel = new JLabel("러닝메이트");
-	    TitleLabel.setFont(new Font("돋움체", Font.BOLD, 35));
-	    TitleLabel.setBounds(150, 115, 250, 40); // 라벨 위치 및 크기 설정
-	    add(TitleLabel);
+
+		// 새로운 라벨 추가
+		JLabel TitleLabel = new JLabel("러닝메이트");
+		TitleLabel.setFont(new Font("돋움체", Font.BOLD, 35));
+		TitleLabel.setBounds(150, 115, 250, 40); // 라벨 위치 및 크기 설정
+		add(TitleLabel);
 
 		// 버튼(searchBtn) 클릭 이벤트
 		searchButton.addActionListener(new ActionListener() {
@@ -182,45 +175,61 @@ public class BoardListFrame extends CommonFrame {
 	public void updateBoardList(String search) {
 		// 기존 게시물 목록 초기화
 		postListPanel.removeAll();
+
 		BoardDTO boardDTO = new BoardDTO();
 		boardDTO.setPageSize(100);
 		if (search != null && !search.equals("")) {
 			boardDTO.setBoardTitle(search);
 		}
+
 		List<BoardDTO> list = bs.selectBoardList(boardDTO); // 게시물
+
 		if (list != null && list.size() > 0) {
-			for (BoardDTO board : list) {
-				JLabel postLabel = new JLabel(board.getBoardTitle()); // 게시물 제목으로 JLabel 생성
-				postLabel.setHorizontalAlignment(SwingConstants.LEFT); // 텍스트 정렬
-				postLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // 손 모양 커서
-				postLabel.setFont(new Font("맑은 고딕", Font.PLAIN, 14)); // 글씨 크기 설정
 
-				postLabel.addMouseListener(new MouseAdapter() {
-					@Override
-					public void mouseEntered(MouseEvent e) {
-						postLabel.setText("<html><u>" + board.getBoardTitle() + "</u></html>"); // 밑줄 효과
-					}
+			Object[][] boardArray = new Object[list.size()][3];
 
-					@Override
-					public void mouseExited(MouseEvent e) {
-						postLabel.setText(board.getBoardTitle()); // 기본 상태로 되돌림
-					}
-
-					@Override
-					public void mouseClicked(MouseEvent e) {
-						// 내용 상세
-						new BoardDetailFrame(board.getBoardId(), 'b');
-						dispose();
-					}
-				});
-
-				postListPanel.add(postLabel); // 패널에 게시물 추가
+			for (int i = 0; i < list.size(); i++) {
+				BoardDTO post = list.get(i);
+				boardArray[i][0] = i + 1; // 순번
+				boardArray[i][1] = post.getBoardTitle(); // 게시물 제목
+				boardArray[i][2] = post.getUserNickName(); // 작성자 이름
 			}
+
+			// JTable 생성
+			JTable boardTable = new JTable(
+					new DefaultTableModel(boardArray, new String[] { "순번", "제목", "작성자"}));
+			boardTable.setRowHeight(45); // 행 높이 설정
+
+			// 칼럼 너비 설정
+			boardTable.getColumnModel().getColumn(0).setPreferredWidth(30); // 순번
+			boardTable.getColumnModel().getColumn(1).setPreferredWidth(300); // 제목
+			boardTable.getColumnModel().getColumn(2).setPreferredWidth(70); // 작성자
+			
+
+			// 중앙 정렬 렌더러 설정 (순번과 댓글 수 칼럼에만 적용)
+			DefaultTableCellRenderer centerRenderer = new DefaultTableCellRenderer();
+			centerRenderer.setHorizontalAlignment(SwingConstants.CENTER);
+			boardTable.getColumnModel().getColumn(0).setCellRenderer(centerRenderer); // 순번 칼럼
+			boardTable.getColumnModel().getColumn(2).setCellRenderer(centerRenderer); // 작성자 칼럼
+
+			// 테이블 클릭 이벤트 추가 (클릭 시 상세 페이지로 이동)
+			boardTable.addMouseListener(new MouseAdapter() {
+				public void mouseClicked(MouseEvent e) {
+					int row = boardTable.getSelectedRow(); // 클릭된 행의 인덱스
+					BoardDTO selectedBoard = list.get(row); // 해당 게시물 정보 가져오기
+					new BoardDetailFrame(selectedBoard.getBoardId(), 'b'); // 게시물 상세 페이지로 이동
+					dispose(); // 현재 창 닫기
+				}
+			});
+			// 테이블을 스크롤 가능하게 설정
+			JScrollPane scrollPane = new JScrollPane(boardTable);
+			scrollPane.setBounds(20, 180, 350, 400); // 스크롤 패널 위치 및 크기 설정
+			postListPanel.add(scrollPane); // 스크롤 패널 추가
 		} else {
-			if (search != null && !search.equals("")) {
-				JOptionPane.showMessageDialog(null, "검색결과가 존재하지 않습니다.");
-			}
+			// 검색 결과가 없을 경우 메시지 표시
+			JOptionPane.showMessageDialog(null, "검색결과가 존재하지 않습니다.");
 		}
+
 		// UI 업데이트
 		postListPanel.revalidate();
 		// UI 갱신

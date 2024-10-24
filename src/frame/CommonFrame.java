@@ -65,7 +65,7 @@ public abstract class CommonFrame extends JFrame {
 		firstLabel.setForeground(Color.BLUE); // 텍스트 색상 변경
 		firstLabel.setBounds(265, 30, 60, 40); // 위치와 크기 조정
 		firstLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // 손 모양 커서
-		contentPanel.add(firstLabel); // 프레임에 마이페이지 텍스트 추가
+		contentPanel.add(firstLabel); // 프레임에 내 정보 텍스트 추가
 
 		// 로그아웃 클릭 이벤트 추가
 		firstLabel.addMouseListener(new MouseAdapter() {
@@ -76,12 +76,12 @@ public abstract class CommonFrame extends JFrame {
 			}
 		});
 
-		// 마이페이지 텍스트 추가
+		// 내 정보 텍스트 추가
 		secondLabel = setSecondLabel();
 		secondLabel.setForeground(Color.BLUE); // 텍스트 색상 변경
 		secondLabel.setBounds(335, 30, 75, 40); // 위치와 크기 조정
 		secondLabel.setCursor(Cursor.getPredefinedCursor(Cursor.HAND_CURSOR)); // 손 모양 커서
-		contentPanel.add(secondLabel); // 프레임에 마이페이지 텍스트 추가
+		contentPanel.add(secondLabel); // 프레임에 내 정보 텍스트 추가
 
 		// 메인화면 텍스트 추가
 		thirdLabel = new JLabel("메인화면");
