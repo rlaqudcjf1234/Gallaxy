@@ -260,14 +260,14 @@ public class BoardDetailFrame extends JFrame {
 					/*
 					 * comments.add(comment); // 댓글 저장
 					 */
-					CommentDTO dto = new CommentDTO();
-					dto.setBoardId(dto.getBoardId());
-					dto.setCommentContent(comment);
+					CommentDTO commentDTO = new CommentDTO();
+					commentDTO.setBoardId(dto.getBoardId());
+					commentDTO.setCommentContent(comment);
 					if (Main.USER != null) {
 						dto.setUserId(Main.USER.getUserId());
 					}
 
-					int cnt = cs.insertComment(dto);
+					int cnt = cs.insertComment(commentDTO);
 					if (cnt == 0) {
 						// 뎃글 등록 실패 알림 추가
 						return;
@@ -293,9 +293,9 @@ public class BoardDetailFrame extends JFrame {
 	}
 
 	private void updateCommentPanel() {
-		CommentDTO dto = new CommentDTO();
-		dto.setBoardId(dto.getBoardId());
-		List<CommentDTO> list = cs.selectCommentList(dto);
+		CommentDTO commentDTO = new CommentDTO();
+		commentDTO.setBoardId(dto.getBoardId());
+		List<CommentDTO> list = cs.selectCommentList(commentDTO);
 		if (list != null && list.size() > 0) {
 			commentPanel.removeAll(); // 기존 댓글 초기화
 			for (CommentDTO result : list) {
