@@ -118,7 +118,7 @@ public class MyInfoModifyFrame extends JFrame {
 					// 데이터베이스에 정보 저장 로직 추가
 					Main.USER.setUserEmail(email);
 					Main.USER.setUserNickName(nickName);
-					if (newPassword != "") {
+					if (!newPassword.equals("")) {
 						Main.USER.setUserPw(newPassword);
 					}
 					JOptionPane.showMessageDialog(null, "회원정보가 수정되었습니다.");
